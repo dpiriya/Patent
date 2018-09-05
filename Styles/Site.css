@@ -1,0 +1,163 @@
+﻿/* DEFAULTS
+----------------------------------------------------------*/
+
+/* FORM ELEMENTS   
+----------------------------------------------------------*/
+body
+{
+	font-family:Times New Roman Serif;
+	font-size:14px;
+	font-weight:400;	
+}
+div.mainLog
+{
+ width:900;
+ height:700px;
+ margin:0px auto;
+ padding:0px;
+ position:relative; 
+}
+#img1
+{
+left:0px;
+top:0px;
+position:absolute;
+}
+#img2
+{
+left:-0px;
+bottom:0px;
+position:absolute;
+}
+#img3
+{
+right:0px;
+bottom:0px;
+position:absolute;
+}
+#img4
+{
+right:0px;
+top:0px;
+position:absolute;
+}
+fieldset
+{
+    margin: 0px 0px 0px 0px;
+    padding: 1em;
+    border: 2px #d58d2b;
+    border-radius:10px;
+    border-style:solid;
+    width:310px;    
+}
+
+fieldset p 
+{
+    margin:2px 12px 10px 10px;
+}
+
+fieldset.login label, fieldset.register label, fieldset.changePassword label
+{
+    display: block;
+}
+
+fieldset label.inline 
+{
+    display: inline;
+    font-weight:600;
+    color:#382103;	
+}
+
+legend 
+{
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 2px 4px 8px 4px;    
+}
+
+input.textEntry 
+{
+    width: 180px;
+    border: 1px solid #fe9302;
+    height:20px;
+}
+
+input.passwordEntry 
+{
+    width: 180px;
+    border: 1px solid #fe9302;
+    height:20px;
+}
+
+div.accountInfo
+{
+    width: 42%;    
+}
+
+/* MISC  
+----------------------------------------------------------*/
+
+.clear
+{
+    clear: both;
+}
+
+.title
+{
+    display: block;
+    float: left;
+    text-align: left;
+    width: auto;
+}
+
+.loginDisplay
+{
+    font-size: 1.1em;
+    display: block;
+    text-align: right;
+    padding: 10px;
+    color: White;
+}
+
+.loginDisplay a:link
+{
+    color: white;
+}
+
+.loginDisplay a:visited
+{
+    color: white;
+}
+
+.loginDisplay a:hover
+{
+    color: white;
+}
+
+.failureNotification
+{
+    font-size: 1.2em;
+    color: Red;
+   
+}
+
+.bold
+{
+    font-weight: bold;
+}
+
+.submitButton
+{
+    text-align: right;
+    padding-right: 10px;
+}
+
+.submitButtonStyle
+{
+	background-color:#f9c072;
+	border-color:#b57825;
+	border-style:outset;
+	font-family:Times New Roman Serif;
+	font-weight:bold;
+	font-size:14px;
+}

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsExaminationReport" targetNamespace="http://tempuri.org/dsExaminationReport.xsd" xmlns:mstns="http://tempuri.org/dsExaminationReport.xsd" xmlns="http://tempuri.org/dsExaminationReport.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsExaminationReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsExaminationReport" msprop:Generator_DataSetName="dsExaminationReport">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtExaminationRpt" msprop:Generator_UserTableName="dtExaminationRpt" msprop:Generator_RowDeletedName="dtExaminationRptRowDeleted" msprop:Generator_RowChangedName="dtExaminationRptRowChanged" msprop:Generator_RowClassName="dtExaminationRptRow" msprop:Generator_RowChangingName="dtExaminationRptRowChanging" msprop:Generator_RowEvArgName="dtExaminationRptRowChangeEvent" msprop:Generator_RowEvHandlerName="dtExaminationRptRowChangeEventHandler" msprop:Generator_TableClassName="dtExaminationRptDataTable" msprop:Generator_TableVarName="tabledtExaminationRpt" msprop:Generator_RowDeletingName="dtExaminationRptRowDeleting" msprop:Generator_TablePropName="dtExaminationRpt">
+          <xs:complexType>
+            <xs:sequence>
+			  <xs:element name="FileNo" msprop:Generator_UserColumnName="FileNo" msprop:Generator_ColumnVarNameInTable="columnFileNo" msprop:Generator_ColumnPropNameInRow="FileNo" msprop:Generator_ColumnPropNameInTable="FileNoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="ExaminationReport" msprop:Generator_UserColumnName="ExaminationReport" msprop:Generator_ColumnVarNameInTable="columnExaminationReport" msprop:Generator_ColumnPropNameInRow="ExaminationReport" msprop:Generator_ColumnPropNameInTable="ExaminationReportColumn" type="xs:string" minOccurs="0" />
+				<xs:element name="SlNo" msprop:Generator_UserColumnName="SlNo" msprop:Generator_ColumnPropNameInRow="SlNo" msprop:Generator_ColumnVarNameInTable="columnSlNo" msprop:Generator_ColumnPropNameInTable="SlNoColumn" type="xs:int" minOccurs="0" />
+				<xs:element name="ExaminationDate" msprop:Generator_UserColumnName="ExaminationDate" msprop:Generator_ColumnVarNameInTable="columnExaminationDate" msprop:Generator_ColumnPropNameInRow="ExaminationDate" msprop:Generator_ColumnPropNameInTable="ExaminationDateColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ExaminationDocument" msprop:Generator_UserColumnName="ExaminationDocument" msprop:Generator_ColumnVarNameInTable="columnExaminationDocument" msprop:Generator_ColumnPropNameInRow="ExaminationDocument" msprop:Generator_ColumnPropNameInTable="ExaminationDocumentColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" msprop:Generator_UserColumnName="Remarks" msprop:Generator_ColumnPropNameInRow="Remarks" msprop:Generator_ColumnVarNameInTable="columnRemarks" msprop:Generator_ColumnPropNameInTable="RemarksColumn" type="xs:string" minOccurs="0" />              
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtExaminationResponse" msprop:Generator_UserTableName="dtExaminationResponse" msprop:Generator_RowDeletedName="dtExaminationResponseRowDeleted" msprop:Generator_RowChangedName="dtExaminationResponseRowChanged" msprop:Generator_RowClassName="dtExaminationResponseRow" msprop:Generator_RowChangingName="dtExaminationResponseRowChanging" msprop:Generator_RowEvArgName="dtExaminationResponseRowChangeEvent" msprop:Generator_RowEvHandlerName="dtExaminationResponseRowChangeEventHandler" msprop:Generator_TableClassName="dtExaminationResponseDataTable" msprop:Generator_TableVarName="tabledtExaminationResponse" msprop:Generator_RowDeletingName="dtExaminationResponseRowDeleting" msprop:Generator_TablePropName="dtExaminationResponse">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FileNo" msprop:Generator_UserColumnName="FileNo" msprop:Generator_ColumnVarNameInTable="columnFileNo" msprop:Generator_ColumnPropNameInRow="FileNo" msprop:Generator_ColumnPropNameInTable="FileNoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="ExaminationReport" msprop:Generator_UserColumnName="ExaminationReport" msprop:Generator_ColumnVarNameInTable="columnExaminationReport" msprop:Generator_ColumnPropNameInRow="ExaminationReport" msprop:Generator_ColumnPropNameInTable="ExaminationReportColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="ResponseSlNo" msprop:Generator_UserColumnName="ResponseSlNo" msprop:Generator_ColumnVarNameInTable="columnResponseSlNo" msprop:Generator_ColumnPropNameInRow="ResponseSlNo" msprop:Generator_ColumnPropNameInTable="ResponseSlNoColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="ResponseDate" msprop:Generator_UserColumnName="ResponseDate" msprop:Generator_ColumnVarNameInTable="columnResponseDate" msprop:Generator_ColumnPropNameInRow="ResponseDate" msprop:Generator_ColumnPropNameInTable="ResponseDateColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ResponseDocument" msprop:Generator_UserColumnName="ResponseDocument" msprop:Generator_ColumnVarNameInTable="columnResponseDocument" msprop:Generator_ColumnPropNameInRow="ResponseDocument" msprop:Generator_ColumnPropNameInTable="ResponseDocumentColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" msprop:Generator_UserColumnName="Remarks" msprop:Generator_ColumnPropNameInRow="Remarks" msprop:Generator_ColumnVarNameInTable="columnRemarks" msprop:Generator_ColumnPropNameInTable="RemarksColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

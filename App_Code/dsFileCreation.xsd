@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsFileCreation" targetNamespace="http://tempuri.org/dsFileCreation.xsd" xmlns:mstns="http://tempuri.org/dsFileCreation.xsd" xmlns="http://tempuri.org/dsFileCreation.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsFileCreation" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsFileCreation" msprop:Generator_DataSetName="dsFileCreation">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtInventionSource" msprop:Generator_UserTableName="dtInventionSource" msprop:Generator_RowDeletedName="dtInventionSourceRowDeleted" msprop:Generator_RowChangedName="dtInventionSourceRowChanged" msprop:Generator_RowClassName="dtInventionSourceRow" msprop:Generator_RowChangingName="dtInventionSourceRowChanging" msprop:Generator_RowEvArgName="dtInventionSourceRowChangeEvent" msprop:Generator_RowEvHandlerName="dtInventionSourceRowChangeEventHandler" msprop:Generator_TableClassName="dtInventionSourceDataTable" msprop:Generator_TableVarName="tabledtInventionSource" msprop:Generator_RowDeletingName="dtInventionSourceRowDeleting" msprop:Generator_TablePropName="dtInventionSource">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SlNo" msprop:Generator_UserColumnName="SlNo" msprop:Generator_ColumnPropNameInRow="SlNo" msprop:Generator_ColumnVarNameInTable="columnSlNo" msprop:Generator_ColumnPropNameInTable="SlNoColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="ProjectType" msprop:Generator_UserColumnName="ProjectType" msprop:Generator_ColumnPropNameInRow="ProjectType" msprop:Generator_ColumnVarNameInTable="columnProjectType" msprop:Generator_ColumnPropNameInTable="ProjectTypeColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="FinancialYear" msprop:Generator_UserColumnName="FinancialYear" msprop:Generator_ColumnVarNameInTable="columnFinancialYear" msprop:Generator_ColumnPropNameInRow="FinancialYear" msprop:Generator_ColumnPropNameInTable="FinancialYearColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="ProjectNumber" msprop:Generator_UserColumnName="ProjectNumber" msprop:Generator_ColumnPropNameInRow="ProjectNumber" msprop:Generator_ColumnVarNameInTable="columnProjectNumber" msprop:Generator_ColumnPropNameInTable="ProjectNumberColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="FundingAgency" msprop:Generator_UserColumnName="FundingAgency" msprop:Generator_ColumnPropNameInRow="FundingAgency" msprop:Generator_ColumnVarNameInTable="columnFundingAgency" msprop:Generator_ColumnPropNameInTable="FundingAgencyColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="ProjectTitle" msprop:Generator_UserColumnName="ProjectTitle" msprop:Generator_ColumnPropNameInRow="ProjectTitle" msprop:Generator_ColumnVarNameInTable="columnProjectTitle" msprop:Generator_ColumnPropNameInTable="ProjectTitleColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

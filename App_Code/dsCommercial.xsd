@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsCommercial" targetNamespace="http://tempuri.org/dsCommercial.xsd" xmlns:mstns="http://tempuri.org/dsCommercial.xsd" xmlns="http://tempuri.org/dsCommercial.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsCommercial" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsCommercial" msprop:Generator_DataSetName="dsCommercial">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CommStatus" msprop:Generator_UserTableName="CommStatus" msprop:Generator_RowDeletedName="CommStatusRowDeleted" msprop:Generator_RowChangedName="CommStatusRowChanged" msprop:Generator_RowClassName="CommStatusRow" msprop:Generator_RowChangingName="CommStatusRowChanging" msprop:Generator_RowEvArgName="CommStatusRowChangeEvent" msprop:Generator_RowEvHandlerName="CommStatusRowChangeEventHandler" msprop:Generator_TableClassName="CommStatusDataTable" msprop:Generator_TableVarName="tableCommStatus" msprop:Generator_RowDeletingName="CommStatusRowDeleting" msprop:Generator_TablePropName="CommStatus">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FileNo" msprop:Generator_UserColumnName="FileNo" msprop:Generator_ColumnPropNameInRow="FileNo" msprop:Generator_ColumnVarNameInTable="columnFileNo" msprop:Generator_ColumnPropNameInTable="FileNoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="TITLE" msprop:Generator_UserColumnName="TITLE" msprop:Generator_ColumnPropNameInRow="TITLE" msprop:Generator_ColumnVarNameInTable="columnTITLE" msprop:Generator_ColumnPropNameInTable="TITLEColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="INVENTOR1" msprop:Generator_UserColumnName="INVENTOR1" msprop:Generator_ColumnPropNameInRow="INVENTOR1" msprop:Generator_ColumnVarNameInTable="columnINVENTOR1" msprop:Generator_ColumnPropNameInTable="INVENTOR1Column" type="xs:string" minOccurs="0" />
+              <xs:element name="INDUSTRY1" msprop:Generator_UserColumnName="INDUSTRY1" msprop:Generator_ColumnPropNameInRow="INDUSTRY1" msprop:Generator_ColumnVarNameInTable="columnINDUSTRY1" msprop:Generator_ColumnPropNameInTable="INDUSTRY1Column" type="xs:string" minOccurs="0" />
+              <xs:element name="INDUSTRY2" msprop:Generator_UserColumnName="INDUSTRY2" msprop:Generator_ColumnPropNameInRow="INDUSTRY2" msprop:Generator_ColumnVarNameInTable="columnINDUSTRY2" msprop:Generator_ColumnPropNameInTable="INDUSTRY2Column" type="xs:string" minOccurs="0" />
+              <xs:element name="ABSTRACT" msprop:Generator_UserColumnName="ABSTRACT" msprop:Generator_ColumnVarNameInTable="columnABSTRACT" msprop:Generator_ColumnPropNameInRow="ABSTRACT" msprop:Generator_ColumnPropNameInTable="ABSTRACTColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="DEVELOPMENTSTATUS" msprop:Generator_UserColumnName="DEVELOPMENTSTATUS" msprop:Generator_ColumnPropNameInRow="DEVELOPMENTSTATUS" msprop:Generator_ColumnVarNameInTable="columnDEVELOPMENTSTATUS" msprop:Generator_ColumnPropNameInTable="DEVELOPMENTSTATUSColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="COMMERCIALIZED" msprop:Generator_UserColumnName="COMMERCIALIZED" msprop:Generator_ColumnPropNameInRow="COMMERCIALIZED" msprop:Generator_ColumnVarNameInTable="columnCOMMERCIALIZED" msprop:Generator_ColumnPropNameInTable="COMMERCIALIZEDColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="MARKETING_PROJECT" msprop:Generator_UserColumnName="MARKETING_PROJECT" msprop:Generator_ColumnPropNameInRow="MARKETING_PROJECT" msprop:Generator_ColumnVarNameInTable="columnMARKETING_PROJECT" msprop:Generator_ColumnPropNameInTable="MARKETING_PROJECTColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CommercialStatus" msprop:Generator_UserTableName="CommercialStatus" msprop:Generator_RowDeletedName="CommercialStatusRowDeleted" msprop:Generator_TableClassName="CommercialStatusDataTable" msprop:Generator_RowChangedName="CommercialStatusRowChanged" msprop:Generator_RowClassName="CommercialStatusRow" msprop:Generator_RowChangingName="CommercialStatusRowChanging" msprop:Generator_RowEvArgName="CommercialStatusRowChangeEvent" msprop:Generator_RowEvHandlerName="CommercialStatusRowChangeEventHandler" msprop:Generator_TablePropName="CommercialStatus" msprop:Generator_TableVarName="tableCommercialStatus" msprop:Generator_RowDeletingName="CommercialStatusRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="INDUSTRY" msprop:Generator_UserColumnName="INDUSTRY" msprop:Generator_ColumnPropNameInRow="INDUSTRY" msprop:Generator_ColumnVarNameInTable="columnINDUSTRY" msprop:Generator_ColumnPropNameInTable="INDUSTRYColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="COMMERCIALIZED" msprop:Generator_UserColumnName="COMMERCIALIZED" msprop:Generator_ColumnPropNameInRow="COMMERCIALIZED" msprop:Generator_ColumnVarNameInTable="columnCOMMERCIALIZED" msprop:Generator_ColumnPropNameInTable="COMMERCIALIZEDColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

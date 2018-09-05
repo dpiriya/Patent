@@ -1,0 +1,11 @@
+The Software is owned by Bloomberg BNA or
+its successors, assigns, or suppliers (as determined
+solely by Bloomberg BNA) and is protected by United States
+copyright laws and international treaty provisions.
+Therefore, you must treat the Software like any
+other copyrighted material (e.g., a book or
+musical recording) except that you may either (a)
+make one copy of the Software solely for backup
+or archival purposes, or (b) transfer the Software
+to a single hard disk provided you keep the
+original solely for backup or archival purposes.

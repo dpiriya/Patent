@@ -1,0 +1,73 @@
+﻿body {
+}
+.neTable
+{
+	 border-spacing:0px;
+	 border-style:none;
+	 vertical-align:middle;
+	 font-family:Arial,MS Serif;
+	 font-size:12px;
+	 font-style:normal;
+	 font-weight:bold;
+	 color:#000000;
+}
+
+/*.neTable td */
+.tdTable
+{
+	 background-color: #f3efe0;
+	 height:35px;
+}
+.tdTable1
+{
+	 background-color:#ffffff;
+	 height:35px;
+}
+
+.calender.ajax_calender_container
+{
+	 border-style:solid;
+	 border-width:1px;
+	 border-color : #e8461a;
+	 background-color:White;
+	 
+}
+.borderStyle
+{
+	border-style:solid;
+	border-width:2px;
+	border-radius:10px;
+	border-color:#9c9f84;	
+}
+.submitButton
+{
+	Font-Size:12px;
+	font-family:Arial;
+	font-weight:bold;
+	color:Ivory;
+	border-color:#994c00;
+	border-style:outset;
+	background-color:#d2691e;
+}
+.TitleStyle
+{
+	Font-Size:14px;
+	font-family:Arial;
+	font-style:normal;
+	font-weight:bold;
+	color:#844904;
+}
+.MVStyle
+{
+	border-bottom-left-radius:10px;
+	border-top-right-radius:10px;
+}
+.HeaderStyle
+{
+	Font-Size:13px;
+	Color:Ivory;
+	background-color:#d2691e;
+	border-color:#994c00;
+	border-style:Solid; 
+	border-width:1px;	
+	}

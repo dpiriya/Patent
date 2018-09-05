@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsContract" targetNamespace="http://tempuri.org/dsContract.xsd" xmlns:mstns="http://tempuri.org/dsContract.xsd" xmlns="http://tempuri.org/dsContract.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsContract" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="dsContract" msprop:Generator_UserDSName="dsContract">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtContract" msprop:Generator_UserTableName="dtContract" msprop:Generator_RowEvArgName="dtContractRowChangeEvent" msprop:Generator_TableVarName="tabledtContract" msprop:Generator_TablePropName="dtContract" msprop:Generator_RowDeletingName="dtContractRowDeleting" msprop:Generator_RowChangingName="dtContractRowChanging" msprop:Generator_RowDeletedName="dtContractRowDeleted" msprop:Generator_RowEvHandlerName="dtContractRowChangeEventHandler" msprop:Generator_TableClassName="dtContractDataTable" msprop:Generator_RowChangedName="dtContractRowChanged" msprop:Generator_RowClassName="dtContractRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ContractNo" msprop:Generator_ColumnVarNameInTable="columnContractNo" msprop:Generator_ColumnPropNameInRow="ContractNo" msprop:Generator_ColumnPropNameInTable="ContractNoColumn" msprop:Generator_UserColumnName="ContractNo" type="xs:string" minOccurs="0" />
+              <xs:element name="AgreementType" msprop:Generator_ColumnVarNameInTable="columnAgreementType" msprop:Generator_ColumnPropNameInRow="AgreementType" msprop:Generator_ColumnPropNameInTable="AgreementTypeColumn" msprop:Generator_UserColumnName="AgreementType" type="xs:string" minOccurs="0" />
+              <xs:element name="AgreementNo" msprop:Generator_ColumnVarNameInTable="columnAgreementNo" msprop:Generator_ColumnPropNameInRow="AgreementNo" msprop:Generator_ColumnPropNameInTable="AgreementNoColumn" msprop:Generator_UserColumnName="AgreementNo" type="xs:string" minOccurs="0" />
+              <xs:element name="Title" msprop:Generator_ColumnVarNameInTable="columnTitle" msprop:Generator_ColumnPropNameInRow="Title" msprop:Generator_ColumnPropNameInTable="TitleColumn" msprop:Generator_UserColumnName="Title" type="xs:string" minOccurs="0" />
+              <xs:element name="Scope" msprop:Generator_ColumnVarNameInTable="columnScope" msprop:Generator_ColumnPropNameInRow="Scope" msprop:Generator_ColumnPropNameInTable="ScopeColumn" msprop:Generator_UserColumnName="Scope" type="xs:string" minOccurs="0" />
+              <xs:element name="Party" msprop:Generator_ColumnVarNameInTable="columnParty" msprop:Generator_ColumnPropNameInRow="Party" msprop:Generator_ColumnPropNameInTable="PartyColumn" msprop:Generator_UserColumnName="Party" type="xs:string" minOccurs="0" />
+              <xs:element name="CoordinatingPerson" msprop:Generator_ColumnVarNameInTable="columnCoordinatingPerson" msprop:Generator_ColumnPropNameInRow="CoordinatingPerson" msprop:Generator_ColumnPropNameInTable="CoordinatingPersonColumn" msprop:Generator_UserColumnName="CoordinatingPerson" type="xs:string" minOccurs="0" />
+              <xs:element name="Dept" msprop:Generator_ColumnVarNameInTable="columnDept" msprop:Generator_ColumnPropNameInRow="Dept" msprop:Generator_ColumnPropNameInTable="DeptColumn" msprop:Generator_UserColumnName="Dept" type="xs:string" minOccurs="0" />
+              <xs:element name="EffectiveDt" msprop:Generator_ColumnVarNameInTable="columnEffectiveDt" msprop:Generator_ColumnPropNameInRow="EffectiveDt" msprop:Generator_ColumnPropNameInTable="EffectiveDtColumn" msprop:Generator_UserColumnName="EffectiveDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ExpiryDt" msprop:Generator_ColumnVarNameInTable="columnExpiryDt" msprop:Generator_ColumnPropNameInRow="ExpiryDt" msprop:Generator_ColumnPropNameInTable="ExpiryDtColumn" msprop:Generator_UserColumnName="ExpiryDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" type="xs:string" minOccurs="0" />
+              <xs:element name="TechTransfer" msprop:Generator_ColumnVarNameInTable="columnTechTransfer" msprop:Generator_ColumnPropNameInRow="TechTransfer" msprop:Generator_ColumnPropNameInTable="TechTransferColumn" msprop:Generator_UserColumnName="TechTransfer" type="xs:string" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtContractAction" msprop:Generator_UserTableName="dtContractAction" msprop:Generator_RowEvArgName="dtContractActionRowChangeEvent" msprop:Generator_TableVarName="tabledtContractAction" msprop:Generator_TablePropName="dtContractAction" msprop:Generator_RowDeletingName="dtContractActionRowDeleting" msprop:Generator_RowChangingName="dtContractActionRowChanging" msprop:Generator_RowDeletedName="dtContractActionRowDeleted" msprop:Generator_RowEvHandlerName="dtContractActionRowChangeEventHandler" msprop:Generator_TableClassName="dtContractActionDataTable" msprop:Generator_RowChangedName="dtContractActionRowChanged" msprop:Generator_RowClassName="dtContractActionRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ContractNo" msprop:Generator_ColumnVarNameInTable="columnContractNo" msprop:Generator_ColumnPropNameInRow="ContractNo" msprop:Generator_ColumnPropNameInTable="ContractNoColumn" msprop:Generator_UserColumnName="ContractNo" type="xs:string" minOccurs="0" />
+              <xs:element name="SlNo" msprop:Generator_ColumnVarNameInTable="columnSlNo" msprop:Generator_ColumnPropNameInRow="SlNo" msprop:Generator_ColumnPropNameInTable="SlNoColumn" msprop:Generator_UserColumnName="SlNo" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtContractFiles" msprop:Generator_UserTableName="dtContractFiles" msprop:Generator_RowEvArgName="dtContractFilesRowChangeEvent" msprop:Generator_TableVarName="tabledtContractFiles" msprop:Generator_TablePropName="dtContractFiles" msprop:Generator_RowDeletingName="dtContractFilesRowDeleting" msprop:Generator_RowChangingName="dtContractFilesRowChanging" msprop:Generator_RowDeletedName="dtContractFilesRowDeleted" msprop:Generator_RowEvHandlerName="dtContractFilesRowChangeEventHandler" msprop:Generator_TableClassName="dtContractFilesDataTable" msprop:Generator_RowChangedName="dtContractFilesRowChanged" msprop:Generator_RowClassName="dtContractFilesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ContractNo" msprop:Generator_ColumnVarNameInTable="columnContractNo" msprop:Generator_ColumnPropNameInRow="ContractNo" msprop:Generator_ColumnPropNameInTable="ContractNoColumn" msprop:Generator_UserColumnName="ContractNo" type="xs:string" minOccurs="0" />
+              <xs:element name="FileDescription" msprop:Generator_ColumnVarNameInTable="columnFileDescription" msprop:Generator_ColumnPropNameInRow="FileDescription" msprop:Generator_ColumnPropNameInTable="FileDescriptionColumn" msprop:Generator_UserColumnName="FileDescription" type="xs:string" minOccurs="0" />
+              <xs:element name="FileName" msprop:Generator_ColumnVarNameInTable="columnFileName" msprop:Generator_ColumnPropNameInRow="FileName" msprop:Generator_ColumnPropNameInTable="FileNameColumn" msprop:Generator_UserColumnName="FileName" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

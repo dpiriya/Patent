@@ -1,0 +1,22 @@
+﻿.Initial
+{
+	display:block;
+	padding:4px 18px 4px 18px;
+	float:left;
+	background:url(../images/InitialTab.png) no-repeat right top;
+	color:Black;
+	font-weight:bold;
+}
+.Initial:hover
+{
+	color:White;
+	background:url(../images/HoverTab.png) no-repeat right top;	
+}
+.Clicked
+{
+	display:block;
+	padding:4px 18px 4px 18px;
+	float:left;
+	background:url(../Images/SelectedTab.png) no-repeat right top;
+	font-weight:bold;
+}

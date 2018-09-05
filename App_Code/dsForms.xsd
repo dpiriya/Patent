@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsForms" targetNamespace="http://tempuri.org/dsForms.xsd" xmlns:mstns="http://tempuri.org/dsForms.xsd" xmlns="http://tempuri.org/dsForms.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsForms" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsForms" msprop:Generator_DataSetName="dsForms">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtFilingConfirmation" msprop:Generator_UserTableName="dtFilingConfirmation" msprop:Generator_RowDeletedName="dtFilingConfirmationRowDeleted" msprop:Generator_RowChangedName="dtFilingConfirmationRowChanged" msprop:Generator_RowClassName="dtFilingConfirmationRow" msprop:Generator_RowChangingName="dtFilingConfirmationRowChanging" msprop:Generator_RowEvArgName="dtFilingConfirmationRowChangeEvent" msprop:Generator_RowEvHandlerName="dtFilingConfirmationRowChangeEventHandler" msprop:Generator_TableClassName="dtFilingConfirmationDataTable" msprop:Generator_TableVarName="tabledtFilingConfirmation" msprop:Generator_RowDeletingName="dtFilingConfirmationRowDeleting" msprop:Generator_TablePropName="dtFilingConfirmation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FileNo" msprop:Generator_UserColumnName="FileNo" msprop:Generator_ColumnVarNameInTable="columnFileNo" msprop:Generator_ColumnPropNameInRow="FileNo" msprop:Generator_ColumnPropNameInTable="FileNoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="RequestDate" msprop:Generator_UserColumnName="RequestDate" msprop:Generator_ColumnVarNameInTable="columnRequestDate" msprop:Generator_ColumnPropNameInRow="RequestDate" msprop:Generator_ColumnPropNameInTable="RequestDateColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Title" msprop:Generator_UserColumnName="Title" msprop:Generator_ColumnVarNameInTable="columnTitle" msprop:Generator_ColumnPropNameInRow="Title" msprop:Generator_ColumnPropNameInTable="TitleColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Type" msprop:Generator_UserColumnName="Type" msprop:Generator_ColumnVarNameInTable="columnType" msprop:Generator_ColumnPropNameInRow="Type" msprop:Generator_ColumnPropNameInTable="TypeColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_UserColumnName="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="SubStatus" msprop:Generator_UserColumnName="SubStatus" msprop:Generator_ColumnVarNameInTable="columnSubStatus" msprop:Generator_ColumnPropNameInRow="SubStatus" msprop:Generator_ColumnPropNameInTable="SubStatusColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="ApplicationNo" msprop:Generator_UserColumnName="ApplicationNo" msprop:Generator_ColumnVarNameInTable="columnApplicationNo" msprop:Generator_ColumnPropNameInRow="ApplicationNo" msprop:Generator_ColumnPropNameInTable="ApplicationNoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="FilingDate" msprop:Generator_UserColumnName="FilingDate" msprop:Generator_ColumnVarNameInTable="columnFilingDate" msprop:Generator_ColumnPropNameInRow="FilingDate" msprop:Generator_ColumnPropNameInTable="FilingDateColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CompleteDate" msprop:Generator_UserColumnName="CompleteDate" msprop:Generator_ColumnVarNameInTable="columnCompleteDate" msprop:Generator_ColumnPropNameInRow="CompleteDate" msprop:Generator_ColumnPropNameInTable="CompleteDateColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="FirstApplicant" msprop:Generator_UserColumnName="FirstApplicant" msprop:Generator_ColumnVarNameInTable="columnFirstApplicant" msprop:Generator_ColumnPropNameInRow="FirstApplicant" msprop:Generator_ColumnPropNameInTable="FirstApplicantColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="SecondApplicant" msprop:Generator_UserColumnName="SecondApplicant" msprop:Generator_ColumnVarNameInTable="columnSecondApplicant" msprop:Generator_ColumnPropNameInRow="SecondApplicant" msprop:Generator_ColumnPropNameInTable="SecondApplicantColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="ExamRequestDate" msprop:Generator_UserColumnName="ExamRequestDate" msprop:Generator_ColumnVarNameInTable="columnExamRequestDate" msprop:Generator_ColumnPropNameInRow="ExamRequestDate" msprop:Generator_ColumnPropNameInTable="ExamRequestDateColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PublicationRequestDate" msprop:Generator_UserColumnName="PublicationRequestDate" msprop:Generator_ColumnPropNameInRow="PublicationRequestDate" msprop:Generator_ColumnVarNameInTable="columnPublicationRequestDate" msprop:Generator_ColumnPropNameInTable="PublicationRequestDateColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Add6Month" msprop:Generator_UserColumnName="Add6Month" msprop:Generator_ColumnPropNameInRow="Add6Month" msprop:Generator_ColumnVarNameInTable="columnAdd6Month" msprop:Generator_ColumnPropNameInTable="Add6MonthColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Add9Month" msprop:Generator_UserColumnName="Add9Month" msprop:Generator_ColumnPropNameInRow="Add9Month" msprop:Generator_ColumnVarNameInTable="columnAdd9Month" msprop:Generator_ColumnPropNameInTable="Add9MonthColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Add12Month" msprop:Generator_UserColumnName="Add12Month" msprop:Generator_ColumnPropNameInRow="Add12Month" msprop:Generator_ColumnVarNameInTable="columnAdd12Month" msprop:Generator_ColumnPropNameInTable="Add12MonthColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Add24Month" msprop:Generator_UserColumnName="Add24Month" msprop:Generator_ColumnPropNameInRow="Add24Month" msprop:Generator_ColumnVarNameInTable="columnAdd24Month" msprop:Generator_ColumnPropNameInTable="Add24MonthColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Add30Month" msprop:Generator_UserColumnName="Add30Month" msprop:Generator_ColumnPropNameInRow="Add30Month" msprop:Generator_ColumnVarNameInTable="columnAdd30Month" msprop:Generator_ColumnPropNameInTable="Add30MonthColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Attorney" msprop:Generator_UserColumnName="Attorney" msprop:Generator_ColumnPropNameInRow="Attorney" msprop:Generator_ColumnVarNameInTable="columnAttorney" msprop:Generator_ColumnPropNameInTable="AttorneyColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

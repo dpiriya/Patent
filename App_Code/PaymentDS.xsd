@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="PaymentDS" targetNamespace="http://tempuri.org/Payment.xsd" xmlns:mstns="http://tempuri.org/Payment.xsd" xmlns="http://tempuri.org/Payment.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="PaymentDS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="PaymentDS" msprop:Generator_DataSetName="PaymentDS">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="PatentInfo" msprop:Generator_UserTableName="PatentInfo" msprop:Generator_RowDeletedName="PatentInfoRowDeleted" msprop:Generator_RowChangedName="PatentInfoRowChanged" msprop:Generator_RowClassName="PatentInfoRow" msprop:Generator_RowChangingName="PatentInfoRowChanging" msprop:Generator_RowEvArgName="PatentInfoRowChangeEvent" msprop:Generator_RowEvHandlerName="PatentInfoRowChangeEventHandler" msprop:Generator_TableClassName="PatentInfoDataTable" msprop:Generator_TableVarName="tablePatentInfo" msprop:Generator_RowDeletingName="PatentInfoRowDeleting" msprop:Generator_TablePropName="PatentInfo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fileno" msprop:Generator_UserColumnName="Fileno" msprop:Generator_ColumnPropNameInRow="Fileno" msprop:Generator_ColumnVarNameInTable="columnFileno" msprop:Generator_ColumnPropNameInTable="FilenoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Title" msprop:Generator_UserColumnName="Title" msprop:Generator_ColumnPropNameInRow="Title" msprop:Generator_ColumnVarNameInTable="columnTitle" msprop:Generator_ColumnPropNameInTable="TitleColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Inventor" msprop:Generator_UserColumnName="Inventor" msprop:Generator_ColumnPropNameInRow="Inventor" msprop:Generator_ColumnVarNameInTable="columnInventor" msprop:Generator_ColumnPropNameInTable="InventorColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Department" msprop:Generator_UserColumnName="Department" msprop:Generator_ColumnVarNameInTable="columnDepartment" msprop:Generator_ColumnPropNameInRow="Department" msprop:Generator_ColumnPropNameInTable="DepartmentColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="ApplicationNo" msprop:Generator_UserColumnName="ApplicationNo" msprop:Generator_ColumnVarNameInTable="columnApplicationNo" msprop:Generator_ColumnPropNameInRow="ApplicationNo" msprop:Generator_ColumnPropNameInTable="ApplicationNoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="FilingDt" msprop:Generator_UserColumnName="FilingDt" msprop:Generator_ColumnVarNameInTable="columnFilingDt" msprop:Generator_ColumnPropNameInRow="FilingDt" msprop:Generator_ColumnPropNameInTable="FilingDtColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PatentNo" msprop:Generator_UserColumnName="PatentNo" msprop:Generator_ColumnVarNameInTable="columnPatentNo" msprop:Generator_ColumnPropNameInRow="PatentNo" msprop:Generator_ColumnPropNameInTable="PatentNoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="PatentDt" msprop:Generator_UserColumnName="PatentDt" msprop:Generator_ColumnVarNameInTable="columnPatentDt" msprop:Generator_ColumnPropNameInRow="PatentDt" msprop:Generator_ColumnPropNameInTable="PatentDtColumn" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PatentPayment" msprop:Generator_UserTableName="PatentPayment" msprop:Generator_RowDeletedName="PatentPaymentRowDeleted" msprop:Generator_RowChangedName="PatentPaymentRowChanged" msprop:Generator_RowClassName="PatentPaymentRow" msprop:Generator_RowChangingName="PatentPaymentRowChanging" msprop:Generator_RowEvArgName="PatentPaymentRowChangeEvent" msprop:Generator_RowEvHandlerName="PatentPaymentRowChangeEventHandler" msprop:Generator_TableClassName="PatentPaymentDataTable" msprop:Generator_TableVarName="tablePatentPayment" msprop:Generator_RowDeletingName="PatentPaymentRowDeleting" msprop:Generator_TablePropName="PatentPayment">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SlNo" msprop:Generator_UserColumnName="SlNo" msprop:Generator_ColumnPropNameInRow="SlNo" msprop:Generator_ColumnVarNameInTable="columnSlNo" msprop:Generator_ColumnPropNameInTable="SlNoColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="PType" msprop:Generator_UserColumnName="PType" msprop:Generator_ColumnPropNameInRow="PType" msprop:Generator_ColumnVarNameInTable="columnPType" msprop:Generator_ColumnPropNameInTable="PTypeColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Country" msprop:Generator_UserColumnName="Country" msprop:Generator_ColumnPropNameInRow="Country" msprop:Generator_ColumnVarNameInTable="columnCountry" msprop:Generator_ColumnPropNameInTable="CountryColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CostGroup" msprop:Generator_UserColumnName="CostGroup" msprop:Generator_ColumnVarNameInTable="columnCostGroup" msprop:Generator_ColumnPropNameInRow="CostGroup" msprop:Generator_ColumnPropNameInTable="CostGroupColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Activity" msprop:Generator_UserColumnName="Activity" msprop:Generator_ColumnPropNameInRow="Activity" msprop:Generator_ColumnVarNameInTable="columnActivity" msprop:Generator_ColumnPropNameInTable="ActivityColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="PaymentOrChequeDt" msprop:Generator_UserColumnName="PaymentOrChequeDt" msprop:Generator_ColumnPropNameInRow="PaymentOrChequeDt" msprop:Generator_ColumnVarNameInTable="columnPaymentOrChequeDt" msprop:Generator_ColumnPropNameInTable="PaymentOrChequeDtColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PaymentRefOrChequeNo" msprop:Generator_UserColumnName="PaymentRefOrChequeNo" msprop:Generator_ColumnPropNameInRow="PaymentRefOrChequeNo" msprop:Generator_ColumnVarNameInTable="columnPaymentRefOrChequeNo" msprop:Generator_ColumnPropNameInTable="PaymentRefOrChequeNoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="PaymentAmtINR" msprop:Generator_UserColumnName="PaymentAmtINR" msprop:Generator_ColumnPropNameInRow="PaymentAmtINR" msprop:Generator_ColumnVarNameInTable="columnPaymentAmtINR" msprop:Generator_ColumnPropNameInTable="PaymentAmtINRColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Party" msprop:Generator_UserColumnName="Party" msprop:Generator_ColumnPropNameInRow="Party" msprop:Generator_ColumnVarNameInTable="columnParty" msprop:Generator_ColumnPropNameInTable="PartyColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Year" msprop:Generator_UserColumnName="Year" msprop:Generator_ColumnPropNameInRow="Year" msprop:Generator_ColumnVarNameInTable="columnYear" msprop:Generator_ColumnPropNameInTable="YearColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="InvoiceNo" msprop:Generator_UserColumnName="InvoiceNo" msprop:Generator_ColumnPropNameInRow="InvoiceNo" msprop:Generator_ColumnVarNameInTable="columnInvoiceNo" msprop:Generator_ColumnPropNameInTable="InvoiceNoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="InvoiceDt" msprop:Generator_UserColumnName="InvoiceDt" msprop:Generator_ColumnPropNameInRow="InvoiceDt" msprop:Generator_ColumnVarNameInTable="columnInvoiceDt" msprop:Generator_ColumnPropNameInTable="InvoiceDtColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="InventorPayment" msprop:Generator_UserTableName="InventorPayment" msprop:Generator_RowDeletedName="InventorPaymentRowDeleted" msprop:Generator_RowChangedName="InventorPaymentRowChanged" msprop:Generator_RowClassName="InventorPaymentRow" msprop:Generator_RowChangingName="InventorPaymentRowChanging" msprop:Generator_RowEvArgName="InventorPaymentRowChangeEvent" msprop:Generator_RowEvHandlerName="InventorPaymentRowChangeEventHandler" msprop:Generator_TableClassName="InventorPaymentDataTable" msprop:Generator_TableVarName="tableInventorPayment" msprop:Generator_RowDeletingName="InventorPaymentRowDeleting" msprop:Generator_TablePropName="InventorPayment">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FileNo" msprop:Generator_UserColumnName="FileNo" msprop:Generator_ColumnVarNameInTable="columnFileNo" msprop:Generator_ColumnPropNameInRow="FileNo" msprop:Generator_ColumnPropNameInTable="FileNoColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Inventor" msprop:Generator_UserColumnName="Inventor" msprop:Generator_ColumnVarNameInTable="columnInventor" msprop:Generator_ColumnPropNameInRow="Inventor" msprop:Generator_ColumnPropNameInTable="InventorColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="Domestic" msprop:Generator_UserColumnName="Domestic" msprop:Generator_ColumnVarNameInTable="columnDomestic" msprop:Generator_ColumnPropNameInRow="Domestic" msprop:Generator_ColumnPropNameInTable="DomesticColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="International" msprop:Generator_UserColumnName="International" msprop:Generator_ColumnVarNameInTable="columnInternational" msprop:Generator_ColumnPropNameInRow="International" msprop:Generator_ColumnPropNameInTable="InternationalColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PaymentAmtINR" msprop:Generator_UserColumnName="PaymentAmtINR" msprop:Generator_ColumnPropNameInRow="PaymentAmtINR" msprop:Generator_ColumnVarNameInTable="columnPaymentAmtINR" msprop:Generator_ColumnPropNameInTable="PaymentAmtINRColumn" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

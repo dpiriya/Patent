@@ -1,0 +1,15 @@
+[AutoRun]
+icon=favicon.ico
+open=Autorun.exe
+label=DPL7: Forms on CD-ROM
+action=Drafting Patent License Agreements: Forms on CD-ROM
+
+[Content]
+MusicFiles=false
+PictureFiles=false
+VideoFiles=false
+
+[IgnoreContentPaths]
+\
+
+[DeviceInstall]

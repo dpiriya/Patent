@@ -1,0 +1,41 @@
+﻿body {
+}
+.neTable
+{
+	 border-spacing:0px;
+	 border: 2px #585947;
+	 border-style:solid;
+	 border-radius:10px;
+	 vertical-align:middle;
+	 font-family:Arial,MS Serif;
+	 font-size:12px;
+	 font-style:normal;
+	 font-weight:bold;
+	 color:#000000;
+}
+
+/*.neTable td */
+.tdTable
+{
+	 background-color: #fae3c8;
+	 height:35px;
+}
+.tdTable1
+{
+	 background-color:#ffffff;
+	 height:35px;
+}
+
+.calender.ajax_calender_container
+{
+	 border-style:solid;
+	 border-width:1px;
+	 border-color : #e8461a;
+	 background-color:White;
+	 
+}
+
+.submitButton
+{
+  
+}

@@ -1,0 +1,306 @@
+a:link {color:#0000ff;}    /* unvisited link */
+a:visited {color:#666699;} /* visited link */
+a:hover {color:#ff0000;}   /* mouse over link */
+/*a:active {color:#0000FF;}   selected link */
+
+
+
+.ddw6 {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 6px;
+	font-style: normal;
+	line-height: 10px;
+	font-weight: normal;
+	font-variant: normal;
+}
+.ddw9 {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 9px;
+	font-style: normal;
+	line-height: 14px;
+	font-weight: normal;
+	font-variant: normal;
+	text-decoration: none;
+}
+.ddw10, .footnote, .footnotes, .footnote-anchor, .footnote-link, footnote-reference {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 10px;
+	font-style: normal;
+	line-height: 10px;
+	font-weight: normal;
+	font-variant: normal;
+}
+.ddw11 {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 11px;
+	font-style: normal;
+	line-height: 13px;
+	font-weight: normal;
+	font-variant: normal;
+}
+.ddw11_xd {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 11px;
+	font-style: normal;
+	line-height: 16px;
+	font-weight: normal;
+	font-variant: normal;
+	text-decoration: none;
+}
+.ddw12 {
+	text-indent: 50px;
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+}
+.ddw12noindent {
+	text-indent: 0px;
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+}
+
+.ddw12-335 {
+	text-indent: 0px;
+	margin-left: 335px;
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+}
+
+.ddw12-335-center {
+	text-indent: 0px;
+	margin-left: 335px;
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+	text-align: center;
+}
+
+.ddw12noindentcenter {
+	text-indent: 0px;
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+	text-align: center;
+}
+
+.ddw12hang1 {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+	text-indent: -18px;
+	margin-left: 18px;
+}
+
+.ddw12hang2 {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+	text-indent: 0px;
+	margin-left: 18px;
+}
+
+.ddw12hang3 {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+	text-indent: 0px;
+	margin-left: 34px;
+}
+
+.ddw12block {
+	margin-left: 50px;
+	text-indent: 0px;
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+}
+.ddw12blockindent {
+	margin-left: 50px;
+	text-indent: 50px;
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+}
+.ddw12list {
+	margin-left: 50px;
+	text-indent: 0px;
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+}
+.ddw14 {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	line-height: 16px;
+	font-weight: bold;
+}
+.ddw18 {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 18px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: bold;
+}
+.ddw21 {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 21px;
+	font-style: normal;
+	line-height: 21px;
+	font-weight: bold;
+}
+.ddw24 {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	line-height: 24px;
+	font-weight: bold;
+}
+
+sup, sub { line-height: 0 }
+
+hr {color: #000099; background-color: #000099; height: 1px;}
+
+.h2
+	{text-indent:0in;
+	text-align:center;
+	font-size: 14px;
+	line-height: 16px;
+	font-family:"Verdana", "Arial", "Helvetica", sans-serif;
+	font-weight:bold;}
+.h3
+	{
+	margin-left: 0px;
+	font-size:14px;
+	line-height: 16px;
+	font-family:"Verdana", "Arial", "Helvetica", sans-serif;
+	font-weight:bold;
+	padding-top: 18px;}
+.h4
+	{
+	margin-left: 0px;
+	font-size: 14px;
+	line-height: 16px;
+	font-family:"Verdana", "Arial", "Helvetica", sans-serif;
+	font-style: italic;
+	font-weight:bold;}
+.h5
+	{
+	margin-left: 50px;
+	font-size: 14px;
+	line-height: 16px;
+	font-family:"Verdana", "Arial", "Helvetica", sans-serif;
+	font-weight:normal;
+	font-style: italic;}
+.h6
+	{
+	margin-left: 50px;
+	font-size: 14px;
+	line-height: 16px;
+	font-family:"Verdana", "Arial", "Helvetica", sans-serif;
+	font-weight:normal;
+	font-style: normal;}
+.normal {
+	font-style: normal;}
+.contents {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 14px;
+	font-weight: normal;
+	font-variant: normal;
+}
+.contents-leader {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 14px;
+	font-weight: normal;
+	font-variant: normal;
+	background:url('images/dot.gif') repeat-x bottom;
+}
+.field {
+	background-color: #FFFFFF;
+	color: #000099;
+}
+.contents-dual {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 14px;
+	font-weight: normal;
+	font-variant: normal;
+	padding-bottom: 12px;
+}
+
+.blockquote {
+	margin-left: 150px;
+	margin-right: 150px;
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+}
+
+.blockquotecredit{
+	margin-left: 150px;
+	margin-right: 150px;
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+	text-align: right;
+}
+
+.contents2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 13px;
+	font-weight: normal;
+	font-variant: normal;
+}
+.contents2bold {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 13px;
+	font-weight: bold;
+	font-variant: normal;
+	padding-top: 14px;
+}
+
+/*ol.alpha {
+	font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: 18px;
+	font-weight: normal;
+	list-style-type: lower-alpha;
+}*/
