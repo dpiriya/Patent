@@ -18,7 +18,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2965a0a4-a2c3-458b-a529-acbf5489ae62}</ProjectGuid>
     <SourceWebPhysicalPath>$(MSBuildThisFileDirectory)</SourceWebPhysicalPath>
-    <SourceWebVirtualPath>/Patent final coding</SourceWebVirtualPath>
+    <SourceWebVirtualPath>/Patent</SourceWebVirtualPath>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <SourceWebProject>
     </SourceWebProject>

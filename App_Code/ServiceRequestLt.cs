@@ -172,7 +172,7 @@ public class ServiceRequestLt
                     t1.Append(trc4);
 
                     TableCell trc5 = new TableCell();
-                    trc5.Append(new Paragraph(new Run(new Text(dt.Rows[i][9].ToString()))));
+                    trc5.Append(new Paragraph(new Run(new Text(Convert.ToDateTime(dt.Rows[i][9].ToString()).ToString("dd/MM/yyyy")))));
                     t1.Append(trc5);
 
                     TableCell trc6 = new TableCell();
@@ -187,7 +187,7 @@ public class ServiceRequestLt
                 Run rtitle2 = title2.AppendChild(new Run());
                 RunProperties runProperties2 = rtitle2.AppendChild(new RunProperties(new Bold()));
                 rtitle2.AppendChild(new Break());
-                rtitle2.AppendChild(new Text("Inventor Details: IDF " + dt.Rows[0][0].ToString()));
+                rtitle2.AppendChild(new Text("Inventor Details: IDF " + dt.Rows[0][2].ToString()));
                 rtitle2.AppendChild(new Break());
 
                 Table table1 = new Table();
@@ -249,9 +249,10 @@ public class ServiceRequestLt
                 table1.Append(t2);
                 for (int i = 0; dt1.Rows.Count > i; i++)
                 {
+                    int j = i + 1;
                     TableRow tr2 = new TableRow();
                     TableCell trc1 = new TableCell();
-                    trc1.Append(new Paragraph(new Run(new Text(i+1.ToString()))));
+                    trc1.Append(new Paragraph(new Run(new Text(j.ToString()))));
                     tr2.Append(trc1);
 
                     TableCell trc2 = new TableCell();
@@ -306,9 +307,9 @@ public class ServiceRequestLt
                 Paragraph from = body.AppendChild(new Paragraph());
                 Run fromrun = from.AppendChild(new Run());
                 fromrun.Append(new Break());
-                fromrun.Append(new Text("Thanking You - Pankaj Kumar Bhagat"));
+                fromrun.Append(new Text("Yours sincerely"));
                 fromrun.Append(new Break());
-                fromrun.Append(new Text("Cheif Manager, IPM Cell"));
+                fromrun.Append(new Text("Chief Manager, IPM Cell"));
                 fromrun.Append(new Break());
                 fromrun.Append(new Text("Intellectual Property Management Cell"));
                 fromrun.Append(new Break());

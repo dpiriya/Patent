@@ -60,7 +60,7 @@
         </tr>   
         <tr>
             <td>Intimation Date</td>
-            <td><asp:TextBox ID="IntDate" runat="server"></asp:TextBox></td>
+            <td><asp:TextBox ID="IntDate" runat="server" OnTextChanged="IntDate_TextChanged"></asp:TextBox></td>
         </tr>
         <tr>
             <td>Service Provider</td>
@@ -68,20 +68,20 @@
                 <asp:DropDownList ID="dropId" runat="server"></asp:DropDownList>
             </td>
         </tr>
-        <tr>
+        <%--<tr>
             <td>A/C Ref No</td>
             <td>
                 <asp:TextBox ID="txtCompany" runat="server"></asp:TextBox>
             </td>
-        </tr>
+        </tr>--%>
         <tr>
             <td colspan="2">
                 <p>Services to be provided:</p>
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server" width="550px">
                     <ContentTemplate>
-                        <asp:ListView ID="lvIdf" runat="server" InsertItemPosition="LastItem"
+                        <asp:ListView ID="lvIdf" runat="server" InsertItemPosition="LastItem" OnItemDataBound="lvIdf_ItemDataBound"
                             OnItemCreated="lvIdf_ItemCreated" OnItemCanceling="lvIdf_ItemCanceling"
-                            OnItemDeleting="lvIdf_ItemDeleting" OnItemInserting="lvIdf_ItemInserting">
+                            OnItemDeleting="lvIdf_ItemDeleting" OnItemInserting="lvIdf_ItemInserting" OnItemUpdating="lvIdf_ItemUpdating" onitemediting="lvIdf_ItemEditing">
                             <LayoutTemplate>
                                 <table id="Table1" width="inherit" align="center" runat="server" style="text-align: left; border-color: #DEDFDE; border-style: none; border-width: 1px;" cellpadding="5" cellspacing="0" border="1">
                                     <tr id="Tr1" runat="server" style="background-color: #c8d59c">
@@ -123,7 +123,8 @@
                                         <asp:Label ID="ddlStatus" BackColor="Transparent" BorderStyle="None" Width="70px" Text='<%#Eval("Status")%>' runat="server"></asp:Label></td>
                                     <td>
                                         <asp:Label ID="lblRemarks" BackColor="Transparent" BorderStyle="None" Width="70px" TextMode="MultiLine" Text='<%#Eval("Remarks")%>' runat="server"></asp:Label></td>
-                                    <td>
+                                    <td><asp:LinkButton ID="lbEdit" Font-Underline="true" CommandName="edit" runat="server">Edit</asp:LinkButton>
+                                    
                                         <asp:LinkButton ID="lbtnDelete" Font-Underline="true" CommandName="delete" runat="server">Delete</asp:LinkButton>
                                     </td>
                                 </tr>
@@ -151,7 +152,8 @@
                                         <asp:Label ID="ddlStatus" BackColor="Transparent" BorderStyle="None" Width="70px" Text='<%#Eval("Status")%>' runat="server"></asp:Label></td>
                                     <td>
                                         <asp:Label ID="lblRemarks" BackColor="Transparent" BorderStyle="None" Width="70px" TextMode="MultiLine" Text='<%#Eval("Remarks")%>' runat="server"></asp:Label></td>
-                                      <td>
+                                    <td><asp:LinkButton ID="lbEdit" Font-Underline="true" CommandName="edit" runat="server">Edit</asp:LinkButton>
+                                      
                                         <asp:LinkButton ID="lbtnDelete" Font-Underline="true" CommandName="delete" runat="server">Delete</asp:LinkButton>
                                     </td>
                                     <%-- <td>
@@ -163,6 +165,7 @@
                                     </td>--%>
                                 </tr>
                             </AlternatingItemTemplate>
+                            
                             <InsertItemTemplate>
                                 <tr id="Tr4" runat="server">
                                     <td>
@@ -194,6 +197,47 @@
                                     </td>
                                 </tr>
                             </InsertItemTemplate>
+                            <EditItemTemplate>
+                                    <tr id="Tr5" runat="server">
+                                    <td>
+                                        <asp:TextBox ID="lblEdSlNo" Text='<%#Eval("Sno")%>' Width="50px"  runat="server"></asp:TextBox></td>
+                                    <td>
+                                        <asp:DropDownList ID="ddlEdIdfNo" runat="server" AutoPostBack="true" Width="50px" ></asp:DropDownList>
+                                        <asp:Label ID="lblEdIdfNo" runat="server" Text='<%#Eval("FileNo") %>' visible="false"></asp:Label>
+                                    </td>
+
+                                    <td>
+                                        <asp:DropDownList ID="ddlEdAction" BackColor="Transparent" BorderStyle="None" Width="100px"  runat="server"></asp:DropDownList>
+                                        <asp:Label ID="lblEdAction" visible="false" Text='<%#Eval("Action") %>' runat="server"></asp:Label>
+                                    </td>
+                                    <td>
+                                        <asp:DropDownList ID="ddlEdParty" BackColor="Transparent" BorderStyle="None" Width="100px"  runat="server"></asp:DropDownList>
+                                        <asp:Label ID="lblEdParty" Visible="false" Text='<%#Eval("SharingParty")%>'  runat="server"></asp:Label>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtEdShare" BackColor="Transparent" BorderStyle="None" Width="50px" Text='<%#Eval("Share")%>' runat="server"></asp:TextBox></td>
+                                    <td>
+                                        <asp:DropDownList ID="ddlEdMDoc" BackColor="Transparent" BorderStyle="None" Width="70px"  runat="server"></asp:DropDownList>
+                                        <asp:Label ID="lblEdMDoc" Text='<%#Eval("MDocNo")%>' Visible="false" runat="server"></asp:Label>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtEdTargetDt" BackColor="Transparent" BorderStyle="None" Width="80px" Text='<%#Eval("TargetDt")%>' runat="server"></asp:TextBox></td>
+
+                                    <td>
+                                        <asp:TextBox ID="txtEdActualDt" BackColor="Transparent" BorderStyle="None" Width="80px" Text='<%#Eval("ActualDt")%>' runat="server"></asp:TextBox></td>
+                                    <td>
+                                        <asp:DropDownList ID="ddlEdStatus" BackColor="Transparent" BorderStyle="None" Width="70px" runat="server"></asp:DropDownList>
+                                        <asp:Label ID="lblEdStatus" Visible="false" Text='<%#Eval("Status")%>' runat="server"></asp:Label>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtRemarks" BackColor="Transparent" BorderStyle="None" Width="70px" TextMode="MultiLine" Text='<%#Eval("Remarks")%>' runat="server"></asp:TextBox></td>
+
+                                    <td>
+                                        <asp:LinkButton ID="lbtnUpdate" Font-Underline="true" CommandName="Update" runat="server">Update</asp:LinkButton>
+                                        <asp:LinkButton ID="lbtnCancel" Font-Underline="true" CommandName="cancel" runat="server">Cancel</asp:LinkButton>
+                                    </td>
+                                </tr>
+                                </EditItemTemplate>
                         </asp:ListView>
                     </ContentTemplate>
                 </asp:UpdatePanel>

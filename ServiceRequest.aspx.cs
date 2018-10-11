@@ -13,8 +13,9 @@ public partial class ServiceRequest : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection();
     SqlTransaction Trans;
+
     protected void Page_Load(object sender, EventArgs e)
-    {
+    {       
         SqlConnection con1 = new SqlConnection();
         con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
         if (!this.IsPostBack)
@@ -48,8 +49,18 @@ public partial class ServiceRequest : System.Web.UI.Page
     protected string GetSRNO()
     {
         con.Open();
-        SqlCommand cmd = new SqlCommand("SELECT MAX(CAST( SUBSTRING(SRNO, LEN(LEFT(SRNO, CHARINDEX ('/', SRNO))) + 1, LEN(SRNO) - LEN(LEFT(SRNO, CHARINDEX ('/', SRNO)))) AS INT))+1 from tbl_trx_servicerequest ", con);
-        string SRNO = Convert.ToString(cmd.ExecuteScalar());
+        string SRNO;
+        string fy = (DateTime.Today.Month >= 4 ? (DateTime.Today.ToString("yyyy") + "-" + DateTime.Today.AddYears(1).ToString("yy")) : (DateTime.Today.AddYears(-1).ToString("yyyy") + "-" + DateTime.Today.ToString("yy")));
+        SqlCommand cmdfy = new SqlCommand("select count(*) from tbl_trx_servicerequest where SRNo like '%" + fy + "%'", con);
+        if (Convert.ToInt16(cmdfy.ExecuteScalar()) == 0)
+        {
+            SRNO = "1";
+        }
+        else
+        {
+            SqlCommand cmd = new SqlCommand("SELECT MAX(CAST( SUBSTRING(SRNO, LEN(LEFT(SRNO, CHARINDEX ('/', SRNO))) + 1, LEN(SRNO) - LEN(LEFT(SRNO, CHARINDEX ('/', SRNO)))) AS INT))+1 from tbl_trx_servicerequest ", con);
+            SRNO = Convert.ToString(cmd.ExecuteScalar());
+        }
         if (!string.IsNullOrEmpty(SRNO)) SRNO = "S " + (DateTime.Today.Month >= 4 ? (DateTime.Today.ToString("yyyy") + "-" + DateTime.Today.AddYears(1).ToString("yy")) : (DateTime.Today.AddYears(-1).ToString("yyyy") + "-" + DateTime.Today.ToString("yy"))) + "/" + SRNO;
         con.Close();
         return SRNO;
@@ -61,7 +72,7 @@ public partial class ServiceRequest : System.Web.UI.Page
         if (ddl != null)
         {
             SqlCommand cmdA = new SqlCommand();
-            string sql = "select fileno from patdetails order by fileno";
+            string sql = "select RTRIM(fileno) as fileno from patdetails order by fileno";
             SqlDataReader drA;
             cmdA.CommandType = CommandType.Text;
             cmdA.Connection = con;
@@ -333,7 +344,8 @@ public partial class ServiceRequest : System.Web.UI.Page
             {
                 srno = ddlSRNo.SelectedValue;
             }
-            string intDt = IntDate.Text;
+            string intDt = !string.IsNullOrEmpty(IntDate.Text)?Convert.ToDateTime(IntDate.Text).ToString("MM/dd/yyyy"):null ;
+            //DateTime intDate = Convert.ToDateTime(intDt,CultureInfo.InvariantCulture);
             Label lsno = li.FindControl("lblSlNo") as Label;
             int sno = Convert.ToInt16(lsno.Text);
             Label lidf = li.FindControl("lblIdfNo") as Label;
@@ -349,10 +361,10 @@ public partial class ServiceRequest : System.Web.UI.Page
             Label tmdoc = (Label)li.FindControl("lblMDoc");
             string mdoc = tmdoc.Text;
             Label ttargetdt = (Label)li.FindControl("lblTargetDt");
-            string targetdt = string.IsNullOrEmpty(ttargetdt.Text) ? null : ttargetdt.Text;
+            string targetdt = string.IsNullOrEmpty(ttargetdt.Text) ? null :Convert.ToDateTime(ttargetdt.Text).ToString("MM/dd/yyyy");
             //DateTime? targetdt = (ttargetdt.Text!=null)?DateTime.ParseExact(ttargetdt.Text,"dd/MM/yyyy",CultureInfo.InvariantCulture):(DateTime?)null;
             Label tactualdt = (Label)li.FindControl("lblActualDt");
-            string actualdt = string.IsNullOrEmpty(tactualdt.Text) ? null : tactualdt.Text;
+            string actualdt = string.IsNullOrEmpty(tactualdt.Text) ? null : Convert.ToDateTime(tactualdt.Text).ToString("MM/dd/yyyy");
             //DateTime? actualdt =(tactualdt.Text!=null)?DateTime.ParseExact(tactualdt.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture):(DateTime?)null;
             Label tstatus = (Label)li.FindControl("ddlStatus");
             string status = tstatus.Text;
@@ -364,7 +376,7 @@ public partial class ServiceRequest : System.Web.UI.Page
                 Trans = con.BeginTransaction();
                 if (title.Text == "Modify Service Request")
                 {
-                    //SqlCommand cmd = new SqlCommand("insert into tbl_trx_servicerequest values('" + srno + "','" + sno + "','" + idf + "','" + att + "','" + party + "','" + action + "','" + share + "','" + mdoc + "','" + intDt + "',case when ('" + targetdt + "'!=null) then '"+targetdt+"' else null end,case when ('" + actualdt + "'!=null) then '" + actualdt + "' else null end,'" + status + "','" + remarks + "','" + DateTime.Now + "','" + User.Identity.Name + "',null,'')", con);
+                    //SqlCommand outerupdate = new SqlCommand("update tbl_trx_servicerequest (AttorneyID,IntimationDt) values('" + srno + "','" + sno + "','" + idf + "','" + att + "','" + party + "','" + action + "','" + share + "','" + mdoc + "','" + intDt + "',case when ('" + targetdt + "'!=null) then '"+targetdt+"' else null end,case when ('" + actualdt + "'!=null) then '" + actualdt + "' else null end,'" + status + "','" + remarks + "','" + DateTime.Now + "','" + User.Identity.Name + "',null,'')", con);
                     //Trans = con.BeginTransaction();
                     //cmd.Transaction = Trans;
                     //cmd.ExecuteNonQuery();
@@ -375,11 +387,10 @@ public partial class ServiceRequest : System.Web.UI.Page
                         {
                             DataTable dtDel = dt.GetChanges(DataRowState.Deleted);
                             if (dtDel != null)
-                            {
+                            { 
                                 foreach (DataRow dr1 in dtDel.Rows)
-                                {
+                                {                                    
                                     SqlCommand cmddel = new SqlCommand("delete from tbl_trx_servicerequest where SRNo='" + ddlSRNo.SelectedValue + "' and Sno='" + dr1["Sno", DataRowVersion.Original].ToString() + "'", con);
-
                                     cmddel.Transaction = Trans;
                                     cmddel.ExecuteNonQuery();
 
@@ -390,9 +401,16 @@ public partial class ServiceRequest : System.Web.UI.Page
                             {
                                 foreach (DataRow dr1 in dtAdd.Rows)
                                 {
-                                    SqlCommand cmdadd = new SqlCommand("insert into tbl_trx_servicerequest values('" + ddlSRNo.SelectedValue + "','" + dr1["Sno"].ToString() + "','" + dr1["FileNo"].ToString() + "','" + att + "','" + dr1["SharingParty"].ToString() + "','" + dr1["Action"].ToString() + "','" + dr1["Share"].ToString() + "','" + dr1["MDocNo"].ToString() + "',case when ('" + intDt + "'!='') then '" + intDt + "' else null end,case when ('" + dr1["TargetDt"].ToString() + "'!='') then '" + dr1["TargetDt"].ToString() + "' else null end,case when ('" + dr1["Actualdt"].ToString() + "'!='') then '" + dr1["Actualdt"].ToString() + "' else null end,'" + dr1["Status"].ToString() + "','" + dr1["Remarks"].ToString() + "','" + DateTime.Now + "','" + User.Identity.Name + "',null,'')", con);
-                                    cmdadd.Transaction = Trans;
-                                    cmdadd.ExecuteNonQuery();
+                                    SqlCommand cmdmax = new SqlCommand("select max(Sno) from tbl_trx_servicerequest where SRNo='" + ddlSRNo.SelectedValue + "'", con);
+                                    cmdmax.Transaction = Trans;
+                                    cmdmax.ExecuteScalar();
+                                    int check = (cmdmax.ExecuteScalar()!=null)?Convert.ToInt16(cmdmax.ExecuteScalar()):0;
+                                    if (check != Convert.ToInt16(dr1["Sno"]))
+                                    {
+                                        SqlCommand cmdadd = new SqlCommand("insert into tbl_trx_servicerequest values('" + ddlSRNo.SelectedValue + "','" + dr1["Sno"].ToString() + "','" + dr1["FileNo"].ToString() + "','" + att + "','" + dr1["SharingParty"].ToString() + "','" + dr1["Action"].ToString() + "','" + dr1["Share"].ToString() + "','" + dr1["MDocNo"].ToString() + "','" + intDt + "',case when '" + dr1["TargetDt"] + "'!='' then '" + Convert.ToDateTime(dr1["TargetDt"]).ToString("MM/dd/yyyy") + "'end,case when '" + dr1["ActualDt"] + "'!='' then '" + Convert.ToDateTime(dr1["ActualDt"]).ToString("MM/dd/yyyy") + "' end,'" + dr1["Status"].ToString() + "','" + dr1["Remarks"].ToString() + "','" + DateTime.Now + "','" + User.Identity.Name + "',null,'')", con);
+                                        cmdadd.Transaction = Trans;
+                                        cmdadd.ExecuteNonQuery();
+                                    }
                                 }
                             }
                             DataTable dtmod = dt.GetChanges(DataRowState.Modified);
@@ -400,102 +418,102 @@ public partial class ServiceRequest : System.Web.UI.Page
                             {
                                 foreach (DataRow dr1 in dtmod.Rows)
                                 {
-                                    SqlCommand cmdmod = new SqlCommand("update tbl_trx_servicerequest set FileNo=@fileno,Party=@party,Action=@action,SharingParty=@sharingparty,Share=@share,MDocNo=@mdocno,IntimationDt=@intdt,TargetDt=@tdt,ActualDt=@adt,Status=@status,Remarks=@remarks where SRNo='" + txtSRNo.Text + "' and Sno=@sno", con);
+                                    SqlCommand cmdmod = new SqlCommand("update tbl_trx_servicerequest set FileNo='"+dr1["FileNo"].ToString().Trim()+"',Action='"+dr1["Action"].ToString()+"',SharingParty='"+ dr1["SharingParty"].ToString()+ "', Share='"+Convert.ToInt16(dr1["Share"])+"',MDocNo='"+dr1["MDocNo"].ToString()+ "', TargetDt=@tdt ,ActualDt= @adt,Status='"+dr1["Status"].ToString()+ "', Remarks='"+dr1["Remarks"].ToString()+"' where SRNo='" + ddlSRNo.SelectedValue + "' and Sno='"+Convert.ToInt16(dr1["Sno"])+"'", con);
                                     cmdmod.Transaction = Trans;
-                                    SqlParameter pm1 = new SqlParameter();
-                                    pm1.ParameterName = "@fileno";
-                                    pm1.SourceColumn = "FileNo";
-                                    pm1.Value = dr1["FileNo", DataRowVersion.Original];
-                                    pm1.DbType = DbType.String;
-                                    pm1.Direction = ParameterDirection.Input;
+                                    //SqlParameter pm1 = new SqlParameter();
+                                    //pm1.ParameterName = "@fileno";
+                                    //pm1.SourceColumn = "FileNo";
+                                    //pm1.Value = dr1["FileNo", DataRowVersion.Original];
+                                    //pm1.DbType = DbType.String;
+                                    //pm1.Direction = ParameterDirection.Input;
 
-                                    SqlParameter pm2 = new SqlParameter();
-                                    pm2.ParameterName = "@party";
-                                    pm2.SourceColumn = "Party";
-                                    pm2.Value = dr1["Party", DataRowVersion.Original];
-                                    pm2.DbType = DbType.String;
-                                    pm2.Direction = ParameterDirection.Input;
+                                    //SqlParameter pm2 = new SqlParameter();
+                                    //pm2.ParameterName = "@sno";
+                                    //pm2.SourceColumn = "Sno";
+                                    //pm2.Value = dr1["Sno", DataRowVersion.Original];
+                                    //pm2.DbType = DbType.Int16;
+                                    //pm2.Direction = ParameterDirection.Input;
 
-                                    SqlParameter pm3 = new SqlParameter();
-                                    pm3.ParameterName = "@action";
-                                    pm3.SourceColumn = "Action";
-                                    pm3.Value = dr1["Action", DataRowVersion.Original];
-                                    pm3.DbType = DbType.String;
-                                    pm3.Direction = ParameterDirection.Input;
+                                    //SqlParameter pm3 = new SqlParameter();
+                                    //pm3.ParameterName = "@action";
+                                    //pm3.SourceColumn = "Action";
+                                    //pm3.Value = dr1["Action", DataRowVersion.Original];
+                                    //pm3.DbType = DbType.String;
+                                    //pm3.Direction = ParameterDirection.Input;
 
-                                    SqlParameter pm4 = new SqlParameter();
-                                    pm4.ParameterName = "@sharingparty";
-                                    pm4.SourceColumn = "SharingParty";
-                                    pm4.Value = dr1["SharingParty", DataRowVersion.Original];
-                                    pm4.DbType = DbType.String;
-                                    pm4.Direction = ParameterDirection.Input;
+                                    //SqlParameter pm4 = new SqlParameter();
+                                    //pm4.ParameterName = "@sharingparty";
+                                    //pm4.SourceColumn = "SharingParty";
+                                    //pm4.Value = dr1["SharingParty"];
+                                    //pm4.DbType = DbType.String;
+                                    //pm4.Direction = ParameterDirection.Input;
 
-                                    SqlParameter pm5 = new SqlParameter();
-                                    pm5.ParameterName = "@share";
-                                    pm5.SourceColumn = "Share";
-                                    pm5.Value = dr1["Share", DataRowVersion.Original];
-                                    pm5.DbType = DbType.Int16;
-                                    pm5.Direction = ParameterDirection.Input;
+                                    //SqlParameter pm5 = new SqlParameter();
+                                    //pm5.ParameterName = "@share";
+                                    //pm5.SourceColumn = "Share";
+                                    //pm5.Value = dr1["Share"];
+                                    //pm5.DbType = DbType.Int16;
+                                    //pm5.Direction = ParameterDirection.Input;
 
-                                    SqlParameter pm6 = new SqlParameter();
-                                    pm6.ParameterName = "@mdocno";
-                                    pm6.SourceColumn = "MDocNo";
-                                    pm6.Value = dr1["MDocNo", DataRowVersion.Original];
-                                    pm6.DbType = DbType.String;
-                                    pm6.Direction = ParameterDirection.Input;
+                                    //SqlParameter pm6 = new SqlParameter();
+                                    //pm6.ParameterName = "@mdocno";
+                                    //pm6.SourceColumn = "MDocNo";
+                                    //pm6.Value = dr1["MDocNo"];
+                                    //pm6.DbType = DbType.String;
+                                    //pm6.Direction = ParameterDirection.Input;
 
-                                    SqlParameter pm7 = new SqlParameter();
-                                    pm7.ParameterName = "@intdt";
-                                    pm7.SourceColumn = "IntimationDt";
-                                    pm7.Value = dr1["IntimationDt", DataRowVersion.Original];
-                                    pm7.DbType = DbType.Date;
-                                    pm7.Direction = ParameterDirection.Input;
+                                    ////SqlParameter pm7 = new SqlParameter();
+                                    ////pm7.ParameterName = "@intdt";
+                                    ////pm7.SourceColumn = "IntimationDt";
+                                    ////pm7.Value = dr1["IntimationDt", DataRowVersion.Original];
+                                    ////pm7.DbType = DbType.Date;
+                                    ////pm7.Direction = ParameterDirection.Input;
 
                                     SqlParameter pm8 = new SqlParameter();
                                     pm8.ParameterName = "@tdt";
                                     pm8.SourceColumn = "TargetDt";
-                                    pm8.Value = dr1["TargetDt", DataRowVersion.Original];
+                                    pm8.Value = dr1["TargetDt"];
                                     pm8.DbType = DbType.Date;
                                     pm8.Direction = ParameterDirection.Input;
 
                                     SqlParameter pm9 = new SqlParameter();
                                     pm9.ParameterName = "@adt";
                                     pm9.SourceColumn = "ActualDt";
-                                    pm9.Value = dr1["ActualDt", DataRowVersion.Original];
+                                    pm9.Value = dr1["ActualDt"];
                                     pm9.DbType = DbType.Date;
                                     pm9.Direction = ParameterDirection.Input;
 
-                                    SqlParameter pm10 = new SqlParameter();
-                                    pm10.ParameterName = "@status";
-                                    pm10.SourceColumn = "Status";
-                                    pm10.Value = dr1["Status", DataRowVersion.Original];
-                                    pm10.DbType = DbType.String;
-                                    pm10.Direction = ParameterDirection.Input;
+                                    //SqlParameter pm10 = new SqlParameter();
+                                    //pm10.ParameterName = "@status";
+                                    //pm10.SourceColumn = "Status";
+                                    //pm10.Value = dr1["Status"];
+                                    //pm10.DbType = DbType.String;
+                                    //pm10.Direction = ParameterDirection.Input;
 
-                                    SqlParameter pm11 = new SqlParameter();
-                                    pm11.ParameterName = "@remarks";
-                                    pm11.SourceColumn = "Remarks";
-                                    pm11.Value = dr1["Remarks", DataRowVersion.Original];
-                                    pm11.DbType = DbType.String;
-                                    pm11.Direction = ParameterDirection.Input;
+                                    //SqlParameter pm11 = new SqlParameter();
+                                    //pm11.ParameterName = "@remarks";
+                                    //pm11.SourceColumn = "Remarks";
+                                    //pm11.Value = dr1["Remarks"];
+                                    //pm11.DbType = DbType.String;
+                                    //pm11.Direction = ParameterDirection.Input;
 
-                                    cmdmod.Parameters.Add(pm1);
-                                    cmdmod.Parameters.Add(pm2);
-                                    cmdmod.Parameters.Add(pm3);
-                                    cmdmod.Parameters.Add(pm4);
-                                    cmdmod.Parameters.Add(pm5);
-                                    cmdmod.Parameters.Add(pm6);
-                                    cmdmod.Parameters.Add(pm7);
+                                    ////cmdmod.Parameters.Add(pm1);
+                                    //cmdmod.Parameters.Add(pm2);
+                                    //cmdmod.Parameters.Add(pm3);
+                                    //cmdmod.Parameters.Add(pm4);
+                                    //cmdmod.Parameters.Add(pm5);
+                                    //cmdmod.Parameters.Add(pm6);
+                                    ////cmdmod.Parameters.Add(pm7);
                                     cmdmod.Parameters.Add(pm8);
                                     cmdmod.Parameters.Add(pm9);
-                                    cmdmod.Parameters.Add(pm10);
-                                    cmdmod.Parameters.Add(pm11);
+                                    //cmdmod.Parameters.Add(pm10);
+                                    //cmdmod.Parameters.Add(pm11);
                                     cmdmod.ExecuteNonQuery();
                                 }
-                                Trans.Commit();
-                                string str2 = "This Record successfully Modified";
-                                ClientScript.RegisterStartupScript(GetType(), "Success", "<script>alert('" + str2 + "')</script>");
-                                con.Close();
+                                //Trans.Commit();
+                                //string str2 = "This Record successfully Modified";
+                                //ClientScript.RegisterStartupScript(GetType(), "Success", "<script>alert('" + str2 + "')</script>");
+                                //con.Close();
                             }
                             Trans.Commit();
                             ClientScript.RegisterStartupScript(GetType(), "Success", "<script>alert(This Record successfully Modified)</script>");
@@ -513,8 +531,10 @@ public partial class ServiceRequest : System.Web.UI.Page
                 {
                     try
                     {
-                        SqlCommand cmd = new SqlCommand("insert into tbl_trx_servicerequest values('" + srno + "','" + sno + "','" + idf + "','" + att + "','" + party + "','" + action + "','" + share + "','" + mdoc + "',case when ('" + intDt + "'!=null) then '" + intDt + "' else null end,'" + targetdt + "',case when ('" + actualdt + "'!=null) then '" + actualdt + "' else null end,'" + status + "','" + remarks + "','" + DateTime.Now + "','" + User.Identity.Name + "',null,'')", con);
+                        SqlCommand cmd = new SqlCommand("insert into tbl_trx_servicerequest values('" + srno + "','" + sno + "','" + idf + "','" + att + "','" + party + "','" + action + "','" + share + "','" + mdoc + "',case when ('" + intDt + "'!=null) then '" + intDt + "' else null end,'"+targetdt+"','"+actualdt+ "','" + status + "','" + remarks + "','" + DateTime.Now + "','" + User.Identity.Name + "',null,'')", con);
+                        cmd.Transaction = Trans;
                         cmd.ExecuteNonQuery();
+                        Trans.Commit();
                         con.Close();
                         ClientScript.RegisterStartupScript(GetType(), "Success", "<script>alert('Updated Successfully')</script>");
                     }
@@ -537,7 +557,7 @@ public partial class ServiceRequest : System.Web.UI.Page
 
     protected void imgBtnClear_Click(object sender, ImageClickEventArgs e)
     {
-        txtCompany.Text = "";
+        
         txtSRNo.Text = "";
         dropId.SelectedIndex = 0;
         IntDate.Text = "";
@@ -600,6 +620,8 @@ public partial class ServiceRequest : System.Web.UI.Page
 
             con.Close();
         }
+        lvIdf.DataSource=(DataTable)ViewState["SRIdf"];
+        lvIdf.DataBind();
     }
 
     protected void New_Click(object sender, EventArgs e)
@@ -607,6 +629,10 @@ public partial class ServiceRequest : System.Web.UI.Page
         title.Text = "New Service Request";
         txtSRNo.Visible = true;
         ddlSRNo.Visible = false;
+        
+        dropId.SelectedIndex = 0;
+        lvIdf.DataSource = null;
+        lvIdf.DataBind();
     }
 
     protected void ddlSRNo_SelectedIndexChanged(object sender, EventArgs e)
@@ -661,4 +687,178 @@ public partial class ServiceRequest : System.Web.UI.Page
             }
         }
     }
+
+    protected void lvIdf_ItemUpdating(object sender, ListViewUpdateEventArgs e)
+    {
+        string targetdt = null,actualdt = null;
+        TextBox lsno = lvIdf.Items[e.ItemIndex].FindControl("lblEdSlNo") as TextBox;
+        int sno = Convert.ToInt16(lsno.Text);
+        DropDownList lidf = lvIdf.Items[e.ItemIndex].FindControl("ddlEdIdfNo") as DropDownList;
+        string idf = lidf.Text.Trim();
+        // DropDownList dattorney = (DropDownList)li.FindControl("dropId");
+        // string att = dropId.SelectedValue;
+        DropDownList taction = lvIdf.Items[e.ItemIndex].FindControl("ddlEdAction") as DropDownList;
+        string action = taction.Text;
+        DropDownList tparty = (DropDownList)lvIdf.Items[e.ItemIndex].FindControl("ddlEdParty");
+        string party = tparty.SelectedValue;
+        TextBox tshare = (TextBox)lvIdf.Items[e.ItemIndex].FindControl("txtEdShare");
+        string share = tshare.Text;
+        DropDownList tmdoc = (DropDownList)lvIdf.Items[e.ItemIndex].FindControl("ddlEdMDoc");
+        string mdoc = tmdoc.Text;
+        TextBox ttargetdt = (TextBox)lvIdf.Items[e.ItemIndex].FindControl("txtEdTargetDt");
+        targetdt = ttargetdt.Text;// = string.IsNullOrEmpty(ttargetdt.Text) ? null : Convert.ToDateTime(ttargetdt.Text).ToString("MM/dd/yyyy");
+        //DateTime? targetdt = (ttargetdt.Text!=null)?DateTime.ParseExact(ttargetdt.Text,"dd/MM/yyyy",CultureInfo.InvariantCulture):(DateTime?)null;
+        TextBox tactualdt = (TextBox)lvIdf.Items[e.ItemIndex].FindControl("txtEdActualDt");
+        actualdt = tactualdt.Text;
+        //string actualdt = string.IsNullOrEmpty(tactualdt.Text) ? null : Convert.ToDateTime(tactualdt.Text).ToString("MM/dd/yyyy");
+        //DateTime? actualdt =(tactualdt.Text!=null)?DateTime.ParseExact(tactualdt.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture):(DateTime?)null;
+        DropDownList tstatus = (DropDownList)lvIdf.Items[e.ItemIndex].FindControl("ddlEdStatus");
+        string status = tstatus.Text;
+        TextBox tremarks = (TextBox)lvIdf.Items[e.ItemIndex].FindControl("txtRemarks");
+        string remarks = tremarks.Text;
+        DataTable dt= (DataTable)ViewState["SRIdf"];
+        foreach(DataRow dr in dt.Rows)
+        {
+            if(Convert.ToInt16(dr["Sno"])==sno) 
+            {
+                dr["Action"] = action;
+                dr["SharingParty"] = party;
+                dr["Share"] = share;
+                dr["MDocNo"] = mdoc;
+                dr["TargetDt"] =(!string.IsNullOrEmpty(targetdt))? (object)DateTime.Parse(targetdt):DBNull.Value;
+                dr["ActualDt"] =(!string.IsNullOrEmpty(actualdt))? (object)DateTime.Parse(actualdt):DBNull.Value;
+                dr["Status"] = status;
+                dr["Remarks"] = remarks;
+            }
+        }
+        lvIdf.EditIndex = -1;
+        lvIdf.DataSource= (DataTable)ViewState["SRIdf"];
+        lvIdf.DataBind();
+    }
+
+    protected void lvIdf_ItemEditing(object sender, ListViewEditEventArgs e)
+    {
+        //Label daction = (Label)lvIdf.Items[e.NewEditIndex].FindControl("ddlAction");
+        //string action = daction.Text;
+        
+        //DropDownList ddlaction = (DropDownList)lvIdf.EditItem.FindControl("ddlEdAction");
+        //ddlaction.SelectedValue = action;
+        lvIdf.EditIndex = e.NewEditIndex;
+        lvIdf.DataSource = (DataTable)ViewState["SRIdf"];
+        lvIdf.DataBind();
+        
+       
+
+
+       
+    }
+
+    protected void lvIdf_ItemDataBound(object sender, ListViewItemEventArgs e)
+    {
+        if (lvIdf.EditIndex == (e.Item as ListViewItem).DataItemIndex)
+        {
+            DropDownList ddlIdfNo = (DropDownList)e.Item.FindControl("ddlEdIdfNo");
+            if (ddlIdfNo != null)
+            {
+                SqlCommand cmd = new SqlCommand("select RTRIM(fileno) as fileno from patdetails order by fileno", con);
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                ddlIdfNo.DataTextField = "fileno";
+                ddlIdfNo.DataValueField = "fileno";
+                ddlIdfNo.DataSource = dr;
+                ddlIdfNo.DataBind();
+                ddlIdfNo.Items.Insert(0, new ListItem("", ""));                
+                con.Close();
+            }
+            Label lblEdIdf = (Label)e.Item.FindControl("lblEdIdfNo");
+            ddlIdfNo.Items.FindByValue(lblEdIdf.Text.Trim()).Selected = true;
+
+            DropDownList ddlAction = (DropDownList)e.Item.FindControl("ddlEdAction");
+            if (ddlAction != null)
+            {
+                SqlCommand cmd= new SqlCommand("select ItemList from ListItemMaster where Category='action' and Grouping='Service Request'", con);
+                con.Open();
+                SqlDataReader drddl = cmd.ExecuteReader();
+                while (drddl.Read())
+                {
+                    ddlAction.Items.Add(drddl["ItemList"].ToString());
+                }
+                ddlAction.Items.Insert(0, new ListItem("", ""));
+                con.Close();
+            }
+            Label lblAction = (Label)e.Item.FindControl("lblEdAction");
+            ddlAction.Items.FindByValue(lblAction.Text.Trim()).Selected = true;
+
+            DropDownList ddlparty = (DropDownList)e.Item.FindControl("ddlEdParty");
+            if(ddlparty!=null)
+            {
+                con.Open();
+                SqlCommand cmdparty = new SqlCommand("select distinct CompanyName from CompanyMaster", con);
+                SqlDataReader drparty = cmdparty.ExecuteReader();
+                while (drparty.Read())
+                {
+                    ddlparty.Items.Add(drparty["CompanyName"].ToString());
+                }
+                ddlparty.Items.Insert(0, new ListItem("", ""));
+                con.Close();              
+            }
+            Label lblparty = (Label)e.Item.FindControl("lblEdParty");
+            ddlparty.Items.FindByValue(lblparty.Text.Trim()).Selected = true;
+
+            DropDownList ddlmdoc = (DropDownList)e.Item.FindControl("ddlEdMDoc");
+            if(ddlmdoc!=null)
+            {
+                con.Open();
+                SqlCommand cmdmdoc = new SqlCommand("select distinct ContractNo from Agreement", con);
+                SqlDataReader drmdoc = cmdmdoc.ExecuteReader();
+                while (drmdoc.Read())
+                {
+                    ddlmdoc.Items.Add(drmdoc["ContractNo"].ToString());
+                }
+                ddlmdoc.Items.Insert(0, new ListItem("", ""));
+                con.Close();
+            }
+            Label lblmdoc = (Label)e.Item.FindControl("lblEdMDoc");
+            ddlmdoc.Items.FindByValue(lblmdoc.Text.Trim()).Selected = true;
+
+            DropDownList ddlstatus = (DropDownList)e.Item.FindControl("ddlEdStatus");
+            if (ddlstatus!=null)
+            {
+                con.Open();
+                SqlCommand cmdstatus = new SqlCommand("select ItemList from ListItemMaster where Category='Status' and Grouping='Service Request'", con);
+                SqlDataReader drstatus = cmdstatus.ExecuteReader();
+                while (drstatus.Read())
+                {
+                    ddlstatus.Items.Add(drstatus["ItemList"].ToString());
+                }
+                ddlstatus.Items.Insert(0, new ListItem("", ""));
+                con.Close();
+            }
+            Label lblstatus = (Label)e.Item.FindControl("lblEdStatus");
+            ddlstatus.Items.FindByValue(lblstatus.Text.Trim()).Selected = true;
+        }
+    }
+
+    protected void IntDate_TextChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            string srno;
+            if (title.Text == "Modify Service Request")
+            {
+                srno = ddlSRNo.Text;
+                con.Open();
+                SqlCommand Intdtupdate = new SqlCommand("update tbl_trx_servicerequest set IntimationDt='" + IntDate.Text + "' where SRNo='" + srno + "'", con);
+                Intdtupdate.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+        catch(Exception ex)
+        {
+            ClientScript.RegisterStartupScript(GetType(), "Error", "<script>alert('" + ex.Message.ToString() + "')</script>");
+            con.Close();
+        }
+    }
+
+   
 }

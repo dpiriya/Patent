@@ -304,11 +304,11 @@ public partial class IP_Modify : System.Web.UI.Page
                     pm8.Value = txtDtFiling.Text.Trim();
                     try
                     {
-                        SqlCommand cmd1 = new SqlCommand("select count(*) from RenewalFollowup where FileNo = '" + ddlSubFileNo.Text.Trim() + "' and phase = 'Prosecution'", cnp);
+                        SqlCommand cmd1 = new SqlCommand("select count(*) from RenewalFollowup where FileNo = '" + ddlSubFileNo.Text.Trim() + "' and phase = 'Prosecution' and '"+ddlCountry.SelectedValue.Trim()+"'='United States'", cnp);
                         int check =Convert.ToInt16(cmd1.ExecuteScalar());
                         if(check==0)
                         {
-                            SqlCommand cmd2=new SqlCommand("insert into RenewalFollowup(FileNo, SlNo, Description, DueDate, Responsibility, Phase)(select '" + ddlSubFileNo.Text.Trim() + "',[s no], description,[Due Date], responsibility, 'Prosecution' from tbl_mst_prosecution where Indian_Foreign = 'US')", cnp);
+                            SqlCommand cmd2=new SqlCommand("insert into RenewalFollowup(FileNo, SlNo, Description, DueDate, Responsibility, Phase,Indian_Foreign)(select '" + ddlSubFileNo.Text.Trim() + "',[s no], description,[Due Date], responsibility, 'Prosecution',Indian_Foreign from tbl_mst_prosecution where Indian_Foreign = 'US')", cnp);
                             int inserted=Convert.ToInt16(cmd2.ExecuteNonQuery());                            
                             DateTime duedate_pa = Convert.ToDateTime(txtDtFiling.Text).AddMonths(18);
                             DateTime duedate_fer = Convert.ToDateTime(txtDtFiling.Text).AddMonths(24);
@@ -318,16 +318,16 @@ public partial class IP_Modify : System.Web.UI.Page
                             DateTime duedate_pregrant = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
                             DateTime duedate_grant = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
                             //DateTime duedate_pogrant = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
-                            SqlCommand cmd3 = new SqlCommand("update RenewalFollowup set DueDate= case SlNo when 1 then convert(date,'" + duedate_pa + "',103) when 2 then convert(date,'" + duedate_fer + "',103) when 3 then convert(date,'" + duedate_oa1 + "',103) when 4 then convert(date,'" + duedate_oa2 + "',103) when 5 then convert(date,'" + duedate_oa3 + "',103) when 6 then convert(date,'" + duedate_pregrant + "',103) when 7 then convert(date,'" + duedate_grant + "',103) end where fileno='" + ddlSubFileNo.Text.Trim() + "' and phase='prosecution'", cnp);
+                            SqlCommand cmd3 = new SqlCommand("update RenewalFollowup set DueDate= case SlNo when 1 then convert(date,'" + duedate_pa + "',103) when 2 then convert(date,'" + duedate_fer + "',103) when 3 then convert(date,'" + duedate_oa1 + "',103) when 4 then convert(date,'" + duedate_oa2 + "',103) when 5 then convert(date,'" + duedate_oa3 + "',103) when 6 then convert(date,'" + duedate_pregrant + "',103) when 7 then convert(date,'" + duedate_grant + "',103) end where fileno='" + ddlSubFileNo.Text.Trim() + "' and phase='prosecution' and Indian_Foreign='US'", cnp);
                             int updated_rows = Convert.ToInt16(cmd3.ExecuteNonQuery());
                             if (inserted==8 && updated_rows == 8)
                             {
                                 // ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('Failed to update renewal schedule. Kindly update it through P&M action plan')</script>", true);
-                                pminfo.Text = "Renewal followup for Fileno '" + ddlSubFileNo.Text + "' is successfully updated with Duedates";
+                                pminfo.Text = "Renewal followup for Fileno '" + ddlSubFileNo.Text + "' prosecution is successfully updated with Duedates";
                             }   
                             else if(inserted==8 && updated_rows!=8)
                             {
-                                pminfo.Text = "Renewal followup for Fileno '" + ddlSubFileNo.Text + "' is successfully updated. But unable to update Duedates";
+                                pminfo.Text = "Renewal followup for Fileno '" + ddlSubFileNo.Text + "' prosecution is successfully updated. But unable to update Duedates";
                             }
                             else 
                             {
@@ -409,7 +409,40 @@ public partial class IP_Modify : System.Web.UI.Page
             {
                 DateTime dtPat;
                 if (DateTime.TryParse(txtPatDt.Text.Trim(), out dtPat))
+                {
                     pm14.Value = txtPatDt.Text.Trim();
+                    try
+                    {
+                        SqlCommand cmdcount = new SqlCommand("select count(*) from RenewalFollowup where FileNo='" + ddlSubFileNo.Text.Trim() + "' and phase='Prosecution' and '"+ddlCountry+"'='United States'", cnp);
+                        int check = Convert.ToInt16(cmdcount.ExecuteScalar());
+                        if(check==0)
+                        {
+                            SqlCommand cmdinsert = new SqlCommand("insert into RenewalFollowup(FileNo,SlNo,Description,DueDate,Responsibility,Phase,Indian_Foreign)(select '" + ddlSubFileNo.Text.Trim() + "',[s no],description,[Due Date],responsibility,'Maintenance',Indian_Foreign from Renewal_schedule where Indian_Foreign='US')", cnp);
+                            int inserted = Convert.ToInt16(cmdinsert.ExecuteNonQuery());
+                            DateTime duedate_1 = Convert.ToDateTime(txtDtFiling.Text).AddMonths(42);
+                            DateTime duedate_2 = Convert.ToDateTime(txtDtFiling.Text).AddMonths(90);
+                            DateTime duedate_3 = Convert.ToDateTime(txtDtFiling.Text).AddMonths(138);
+                            SqlCommand cmdupdate = new SqlCommand("update RenewalFollowup set DueDate=case SlNo when 1 then convert(date,'" + duedate_1 + "',103) when 2 then convert(date,'" + duedate_2 + "',103) when 3 then convert(date,'" + duedate_3 + "',103) end where fileno='" + ddlSubFileNo.Text.Trim() + "' and phase='Maintenance' and Indian_Foreign='US'", cnp);
+                            int updated_rows = Convert.ToInt16(cmdupdate.ExecuteNonQuery());
+                            if(inserted==3&& updated_rows==3)
+                            {
+                                minfo.Text = "Renewal Followup for Fileno='" + ddlSubFileNo.SelectedValue + "' Maintenance is successfully updated with Duedates";
+                            }
+                            else if (inserted == 8 && updated_rows != 8)
+                            {
+                                minfo.Text = "Renewal followup for Fileno '" + ddlSubFileNo.Text + "' Maintenance is successfully updated. But unable to update Duedates";
+                            }
+                            else
+                            {
+                                minfo.Text = "Failed to update maintenance renewal schedule. Kindly update it through P&M action plan";
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
                 else
                 {
                     ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('Verify Patent Date')</script>");

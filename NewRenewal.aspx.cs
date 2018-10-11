@@ -518,17 +518,17 @@ public partial class Default2 : System.Web.UI.Page
 
                 cnp.Close();
                 cnp.Open();
-                SqlCommand cmd20 = new SqlCommand("Update Renewal_Schedule set [IDF No]='" + dropIDF.SelectedItem.ToString() + "'", cnp);
+                SqlCommand cmd20 = new SqlCommand("Update Renewal_Schedule set [IDF No]='" + dropIDF.SelectedItem.ToString() + "' where Indian_Foreign='Indian'", cnp);
                 cmd20.ExecuteNonQuery();
                 cnp.Close();
 
                 cnp.Open();
-                SqlCommand cmd21 = new SqlCommand("Update Renewal_Schedule set UserName = '" + Membership.GetUser().UserName.ToString() + "'", cnp);
+                SqlCommand cmd21 = new SqlCommand("Update Renewal_Schedule set UserName = '" + Membership.GetUser().UserName.ToString() + "' where Indian_Foreign='Indian'", cnp);
                 cmd21.ExecuteNonQuery();
                 cnp.Close();
 
                 cnp.Open();
-                SqlCommand cmd18 = new SqlCommand("insert into RenewalFollowup select * from Renewal_Schedule", cnp);
+                SqlCommand cmd18 = new SqlCommand("insert into RenewalFollowup select * from Renewal_Schedule where where Indian_Foreign='Indian'", cnp);
                 cmd18.ExecuteNonQuery();
                 cnp.Close();
 

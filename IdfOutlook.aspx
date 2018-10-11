@@ -179,7 +179,7 @@ function Verify()
             <asp:BoundField HeaderText="Examination" 
                 ItemStyle-HorizontalAlign="Left" DataField="examination" ReadOnly="true">
             </asp:BoundField>
-            <asp:BoundField HeaderText="Examination Date" 
+            <asp:BoundField HeaderText="Examination Request Date" 
                 ItemStyle-HorizontalAlign="Left" DataField="exam_dt" DataFormatString="{0:dd/MM/yyyy}" ReadOnly="true">
             </asp:BoundField>
             <asp:BoundField HeaderText="Publication" 

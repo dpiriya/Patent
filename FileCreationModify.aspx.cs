@@ -198,9 +198,10 @@ public partial class FileCreationModify : System.Web.UI.Page
                 if (int.TryParse(dRow["InstID"].ToString(), out tmpVal) == true)
                 {
                     
-                    con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["ICSR2KSCN"].ConnectionString;                    
+                    //string sql = "SELECT CR_CODE,INSTID FROM COORCOD WHERE CR_CODE LIKE '" + coorCode + "'";
                     SqlCommand cmd5 = new SqlCommand();
-                    string sql5 = "SELECT COORCODE FROM FACULTYMASTER WHERE INSTID LIKE '" + dRow["InstID"].ToString() + "'";
+                    string sql5 = "SELECT CR_CODE FROM Foxoffice..COORCOD WHERE INSTID LIKE '%" + dRow["InstID"].ToString() + "%'";
                     cmd5.Connection = con;
                     cmd5.CommandType = CommandType.Text;
                     cmd5.CommandText = sql5;
@@ -1117,9 +1118,9 @@ public partial class FileCreationModify : System.Web.UI.Page
 
     protected string FindInstID(string coorCode)
     {
-        con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+        con.ConnectionString = ConfigurationManager.ConnectionStrings["ICSR2KSCN"].ConnectionString;
         SqlCommand cmd = new SqlCommand();
-        string sql = "SELECT COORCODE,INSTID FROM FACULTYMASTER WHERE COORCODE LIKE '" + coorCode + "'";
+        string sql = "SELECT CR_CODE,INSTID FROM Foxoffice..COORCOD WHERE CR_CODE LIKE '" + coorCode + "'";
         cmd.Connection = con;
         cmd.CommandType = CommandType.Text;
         cmd.CommandText = sql;
@@ -1191,21 +1192,21 @@ public partial class FileCreationModify : System.Web.UI.Page
     }
     protected void FillCoor(DropDownList dlCoor, string tmpDeptCode)
     {
-        con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+        con.ConnectionString = ConfigurationManager.ConnectionStrings["ICSR2KSCN"].ConnectionString;
         SqlCommand cmd = new SqlCommand();
         string sql;
         if (tmpDeptCode == "All")
-            sql = "SELECT DEPTCODE + '  ~  ' + COORNAME AS COORNAME,COORCODE FROM FACULTYMASTER ORDER BY COORNAME";
+            sql = "SELECT  CR_CODE+ '  ~  ' + COOR_NAME AS COORNAME,cr_code FROM FoxOffice..COORCOD ORDER BY COORNAME";
         else
-            sql = "SELECT COORNAME,COORCODE FROM FACULTYMASTER WHERE DEPTCODE LIKE '" + tmpDeptCode + "' ORDER BY COORNAME";
+            sql = "SELECT COOR_NAME,CR_CODE FROM FoxOffice..COORCOD WHERE DEPARTMENT LIKE '" + tmpDeptCode + "' ORDER BY COOR_NAME";
         cmd.Connection = con;
         cmd.CommandType = CommandType.Text;
         cmd.CommandText = sql;
         SqlDataReader dr;
         con.Open();
         dr = cmd.ExecuteReader();
-        dlCoor.DataTextField = "COORNAME";
-        dlCoor.DataValueField = "COORCODE";
+        dlCoor.DataTextField = "COOR_NAME";
+        dlCoor.DataValueField = "CR_CODE";
         dlCoor.DataSource = dr;
         dlCoor.DataBind();
         dlCoor.Items.Insert(0, "");

@@ -338,122 +338,122 @@ public partial class ReceiptModify : System.Web.UI.Page
         {
             lblFileNo.Text = dr.GetString(1);
             lblSerial.Text = slnoLbl.Text.Trim();
-            if (!dr.IsDBNull(3))
+            if (!dr.IsDBNull(6))
             {
-                txtTechTransNo.Text = dr.GetString(3);
+                txtTechTransNo.Text = dr.GetString(6);
             }
             else
             {
                 txtTechTransNo.Text = "";
             }
-            if (!dr.IsDBNull(4))
+            if (!dr.IsDBNull(7))
             {
-                txtPartyName.Text = dr.GetString(4);
+                txtPartyName.Text = dr.GetString(7);
             }
             else
             {
                 txtPartyName.Text = "";
             }
-            if (!dr.IsDBNull(5))
+            if (!dr.IsDBNull(8))
             {
-                txtPartyRefNo.Text = dr.GetString(5);
+                txtPartyRefNo.Text = dr.GetString(8);
             }
             else
             {
                 txtPartyRefNo.Text = "";
             }
-            if (!dr.IsDBNull(6))
+            if (!dr.IsDBNull(9))
             {
-                txtSubDate.Text  = dr.GetDateTime(6).ToShortDateString();
+                txtSubDate.Text  = dr.GetDateTime(9).ToShortDateString();
             }
             else
             {
                 txtSubDate.Text="";
             }
-            if (!dr.IsDBNull(7))
+            if (!dr.IsDBNull(10))
             {
-                txtTransType.Text = dr.GetString(7);
+                txtTransType.Text = dr.GetString(10);
             }
             else
             {
                 txtTransType.Text = "";
             }
-            if (!dr.IsDBNull(8))
+            if (!dr.IsDBNull(11))
             {
-                txtTransDesc.Text = dr.GetString(8);
+                txtTransDesc.Text = dr.GetString(11);
             }
             else
             {
                 txtTransDesc.Text = "";
             }
-            if (!dr.IsDBNull(9))
+            //if (!dr.IsDBNull(12))
+            //{
+            //    ddlPaymentGroup.Text = dr.GetString(9);
+            //}
+            //else
+            //{
+            //    ddlPaymentGroup.Text = "";
+            //}
+            if (!dr.IsDBNull(13))
             {
-                ddlPaymentGroup.Text = dr.GetString(9);
-            }
-            else
-            {
-                ddlPaymentGroup.Text = "";
-            }
-            if (!dr.IsDBNull(10))
-            {
-                txtPaymentDesc.Text = dr.GetString(10);
+                txtPaymentDesc.Text = dr.GetString(13);
             }
             else
             {
                 txtPaymentDesc.Text = "";
             }
-            if (!dr.IsDBNull(11))
+            if (!dr.IsDBNull(14))
             {
-                ddlCurrency.Text = dr.GetString(11);
+                ddlCurrency.Text = dr.GetString(14);
             }
             else
             {
                 ddlCurrency.Text = "";
             }
-            if (!dr.IsDBNull(12))
+            if (!dr.IsDBNull(15))
             {
-                txtCost.Text = dr.GetDecimal(12).ToString();
+                txtCost.Text = dr.GetDecimal(15).ToString();
             }
             else
             {
                 txtCost.Text = "";
             }
 
-            if (!dr.IsDBNull(13))
+            if (!dr.IsDBNull(16))
             {
-                txtExRate.Text = dr.GetDecimal(13).ToString();
+                txtExRate.Text = dr.GetDecimal(16).ToString();
             }
             else
             {
                 txtExRate.Text = "";
             }
-            if (!dr.IsDBNull(14))
+            if (!dr.IsDBNull(17))
             {
-                txtCostINR.Text = dr.GetDecimal(14).ToString();
+                txtCostINR.Text = dr.GetDecimal(17).ToString();
             }
             else
             {
                 txtCostINR.Text = "";
             }
-            if (!dr.IsDBNull(15))
+            if (!dr.IsDBNull(18))
             {
-                txtPaymentDt.Text = dr.GetDateTime(15).ToShortDateString();
+                txtPaymentDt.Text = dr.GetDateTime(18).ToShortDateString();
             }
             else
             {
                 txtPaymentDt.Text = "";
             }
-            if (!dr.IsDBNull(16))
+            if (!dr.IsDBNull(19))
             {
-                txtPaymentRef.Text = dr.GetString(16);
+                txtPaymentRef.Text = dr.GetString(19);
             }
             else
             {
                 txtPaymentRef.Text = "";
             }
-            if (!dr.IsDBNull(17))
+            if (!dr.IsDBNull(20))
             {
-                ddlYear.Text = dr.GetString(17);
+                ddlYear.Text = dr.GetString(20);
             }
             else
             {

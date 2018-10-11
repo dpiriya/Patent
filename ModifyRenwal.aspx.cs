@@ -20,7 +20,7 @@ public partial class Default2 : System.Web.UI.Page
         {
             cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
             SqlCommand cmd = new SqlCommand();
-            string sql = "select fileno from patdetails order by cast(fileno as int) desc";
+            string sql = "select distinct fileno from RenewalFollowup order by fileno desc";
             SqlDataReader dr;
             cmd.CommandType = CommandType.Text;
             cmd.Connection = cnp;
@@ -120,7 +120,7 @@ public partial class Default2 : System.Web.UI.Page
         cmd12.ExecuteNonQuery();
         ClientScript.RegisterStartupScript(GetType(), "success", "<script>alert('This Record Successfully Updated')</script>");
         DataTable dtAction = new DataTable();
-        string sql2 = "select SLNo,FileNo,Description,AmtInFC,AmtInINR,Format(DueDate,'dd-MM-yyyy')as DueDate,Amt_InCond,Format(DueDate_Restoration,'dd-MM-yyyy') as DueDate_Restoration,Responsibility,Format(Intimation_Date,'dd-MM-yyyy') as Intimation_Date,Format(Confirmation_Date,'dd-MM-yyyy') as Confirmation_Date,Format(POPaymentDate,'dd-MM-yyyy') as PoPaymentDate,Status from RenewalFollowup where FileNo='" + ddlIDFNo.SelectedItem.ToString() + "'";
+        string sql2 = "select SLNo,FileNo,Description,AmtInFC,AmtInINR,Format(DueDate,'dd-MM-yyyy')as DueDate,Amt_InCond,Format(DueDate_Restoration,'dd-MM-yyyy') as DueDate_Restoration,Responsibility,Sharing_Party,Format(Intimation_Date,'dd-MM-yyyy') as Intimation_Date,Format(Confirmation_Date,'dd-MM-yyyy') as Confirmation_Date,Share_Received,Format(POPaymentDate,'dd-MM-yyyy') as PoPaymentDate,Status from RenewalFollowup where FileNo='" + ddlIDFNo.SelectedItem.ToString() + "'";
         SqlDataAdapter sda = new SqlDataAdapter(sql2, cnp);
         sda.Fill(dtAction);
         lvAction.DataSource = dtAction;

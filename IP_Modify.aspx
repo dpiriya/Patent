@@ -122,6 +122,11 @@ function Verify()
                 <asp:Label runat="server" ID="pminfo"></asp:Label>
             </td>
         </tr>
+     <tr>
+            <td colspan="4">
+                <asp:Label runat="server" ID="minfo"></asp:Label>
+            </td>
+        </tr>
 </table>
 </asp:Content>
 

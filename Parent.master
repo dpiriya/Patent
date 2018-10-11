@@ -90,6 +90,11 @@
                             <li><a href="ServiceRequest.aspx">ServiceRequest</a></li>                           
                         </ul>
                     </li>
+                    <li><a href="#">Due Diligence</a>
+                        <ul style="text-align:left">
+                            <li><a href="duediligence.aspx">New Entry & Upload</a></li>                                                  
+                        </ul>
+                    </li>
                      <li><a href="#">P&M</a>
                         <ul style="text-align: left">
                            <li><a href="NewRenewal.aspx">P&M Action Plan</a></li>
@@ -99,7 +104,8 @@
                     <li><a href="#">Receipts</a>
                         <ul style="text-align: left">
                             <li><a href="Receipt.aspx">New Receipt</a></li>
-                            <li><a href="ReportSelection.aspx?id=ReceiptModify">Receipt Modification</a></li>
+                           <%-- <li><a href="ReportSelection.aspx?id=ReceiptModify">Receipt Modification</a></li>
+                            <li><a href="Receipt - Copy.aspx">Old Receipt</a></li>--%>
                         </ul>
                     </li>
                     <li><a href="#">Marketing</a>
