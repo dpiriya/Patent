@@ -92,7 +92,8 @@
                     </li>
                     <li><a href="#">Due Diligence</a>
                         <ul style="text-align:left">
-                            <li><a href="duediligence.aspx">New Entry & Upload</a></li>                                                  
+                            <li><a href="duediligence.aspx">New Entry & Upload</a></li>          
+                            <li><a href="duedliligenceModify.aspx">Modify Entry & Detach</a></li>
                         </ul>
                     </li>
                      <li><a href="#">P&M</a>

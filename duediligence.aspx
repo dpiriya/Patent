@@ -43,17 +43,21 @@
         </tr>
         <tr>
             <td>
-                <asp:Label runat="server">Service Request</asp:Label></td>
+                 <asp:Label runat="server">SNo</asp:Label>
+            </td>
             <td>
-                <asp:TextBox runat="server" ID="txtsrno"></asp:TextBox></td>
+                <asp:TextBox ID="txtsno" runat="server"></asp:TextBox>
+            </td>
             <td>
                 <asp:Label runat="server">Request Date</asp:Label></td>
             <td>
                 <asp:TextBox ID="txtrequestdt" runat="server" class="date"></asp:TextBox></td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
+            <td>
+                <asp:Label runat="server">Service Request</asp:Label></td>
+            <td>
+                <asp:TextBox runat="server" ID="txtsrno"></asp:TextBox></td>
             <td>
                 <asp:Label runat="server">Report Date</asp:Label></td>
             <td>

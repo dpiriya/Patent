@@ -103,7 +103,6 @@ public partial class Modify_Service : System.Web.UI.Page
         System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
         con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
         con.Open();
-
         SqlCommand cmd3 = new SqlCommand("Update Attorney set AttorneyName='" + txtAttorneyName.Text + "',Address1='" + txtAddress1.Text + "',Address2='" + txtAddress2.Text + "',Address3='" + txtAddress3.Text + "',City='" + txtCity.Text + "',PinCode='" + txtPincode.Text + "',PhoneNo='" + txtPhone.Text + "',FaxNo='" + txtFax.Text + "',EmailID='" + txtEmail.Text + "',Category='" + ddlCategory.SelectedItem.Text + "',Country='" + ddlCountry.SelectedItem.ToString() + "',Mobile_No='" + txtMobile.Text + "',RangeOfServices='" + TxtRange.Text + "' where AttorneyID='"+dropId.SelectedItem.Text+"'", con);
         cmd3.ExecuteNonQuery();
         con.Close();

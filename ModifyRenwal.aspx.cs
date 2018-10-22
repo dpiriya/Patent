@@ -136,7 +136,7 @@ public partial class Default2 : System.Web.UI.Page
 
         try
         {
-            ListViewDataItem lvd = lvAction.Items[e.ItemIndex];
+            ListViewDataItem lvd = lvAction.Items[e.ItemIndex]; 
             Label tmplabel = lvd.FindControl("lblSlNo") as Label;
             int SlNo = Convert.ToInt32(tmplabel.Text.Trim());
             cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;

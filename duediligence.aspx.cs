@@ -23,7 +23,7 @@ public partial class duediligence : System.Web.UI.Page
             ddlrpt.Items.Add("");
             while (dr.Read())
             {
-                ddlrpt.Items.Add(new ListItem(){ Text = dr.GetString(0), Value = dr.GetString(1)});
+                ddlrpt.Items.Add(new ListItem() { Text = dr.GetString(0), Value = dr.GetString(1) });
             }
             dr.Close();
             SqlCommand cmdidf = new SqlCommand("select distinct FileNo from patdetails", con);
@@ -46,72 +46,81 @@ public partial class duediligence : System.Web.UI.Page
             con.Close();
         }
     }
-    
-    
+
+
     protected void imgBtnSubmit_Click(object sender, ImageClickEventArgs e)
     {
         string path = @"F:\\PatentDocument\\" + ddlidfno.SelectedValue.Trim();
+        string filename = "";
+        string fn="";        
         try
         {
             if (this.fp1.HasFile)
             {
+
                 string ext = System.IO.Path.GetExtension(this.fp1.PostedFile.FileName);
                 if (Directory.Exists(path))
                 {
                     path += "\\DueDiligence\\";
-                    string fn = path + ddlidfno.SelectedValue.Trim() + "_" + ddlrpt.SelectedValue.Trim() + ext;
+                    filename = ddlidfno.SelectedValue.Trim() + "_" + ddlrpt.SelectedValue.Trim() + ext;
+                    fn = path + filename;
+
                     if (Directory.Exists(path))
                     {
-                        this.fp1.SaveAs(fn);
+                        if (File.Exists(fn))
+                        {
+                            File.Delete(fn);
+                            this.fp1.SaveAs(fn);                            
+                        }
+                        else
+                        {
+                            this.fp1.SaveAs(fn);                            
+                        }
                     }
                     else
                     {
                         Directory.CreateDirectory(path);
-                        this.fp1.SaveAs(fn);
-                    }
-                    try
-                    {
-                        con.Open();
-                        SqlCommand cmdsno = new SqlCommand("select * from tbl_trx_duediligence where FileNo='" + ddlidfno.SelectedValue.Trim() + "'", con);
-                        int sno = 1;
-                        if( cmdsno.ExecuteScalar()!=null)
-                        {
-                            sno =Convert.ToInt32(cmdsno.ExecuteScalar());
-                        }                            
-                        SqlCommand cmdsave = new SqlCommand("insert into tbl_trx_duediligence (Sno,FileNo,EntryDt,RequestDt,ReportDt,ReportType,mode,Allocation,Participants,IPCCode,TechnologyAction,Summary,Comment,InventorInput,Followup,CreatedOn,CreatedBy) values('"+sno+"','" + ddlidfno.SelectedValue + "','" + txtentrydt.Text + "','" + txtrequestdt.Text + "','" + txtrptdt.Text + "','" + ddlrpt.SelectedItem.Text + "','" + ddlmode.SelectedValue + "','" + txtallocation.Text + "','" + txtparticipants.Text + "','" + txtipc.Text + "','" + txtaction.Text + "','" + txtsummary.Text + "','" + txtcomment.Text + "','" + txtinput.Text + "','" + txtfollowup.Text + "','" + DateTime.Now + "','" + User.Identity.Name + "')", con);
-                        cmdsave.ExecuteNonQuery();
-                        ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('Inserted Successfully')</script>");
-                        con.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        if (System.IO.File.Exists(fn))
-                        {
-                            System.IO.File.Delete(fn);
-                            ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('Error Occured'+" + ex + ")</script>");
-                            if(con.State==System.Data.ConnectionState.Open)
-                            {
-                                con.Close();
-                            }
-                        }
+                        this.fp1.SaveAs(fn);                        
                     }
                 }
                 else
                 {
-                    ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('Error in choosing the fileno.. Kinldy redo the process')</script>");
+                    ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('Error in choosing the fileno.. File is not uploaded')</script>");
                     return;
                 }
             }
-            else
+            con.Open();
+            //SqlCommand cmdsno = new SqlCommand("select * from tbl_trx_duediligence where FileNo='" + ddlidfno.SelectedValue.Trim() + "'", con);
+            //int sno = 1;
+            //if( cmdsno.ExecuteScalar()!=null)
+            //{
+            //    sno =Convert.ToInt32(cmdsno.ExecuteScalar());
+            //}
+            
+            string allocation = txtallocation.Text;
+            if (ddlmode.SelectedValue == "External")
             {
-                ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('Select a file to upload')</script>");
-                return;
+                allocation = ddlallocation.SelectedValue;
+            }
+            SqlCommand cmdsave = new SqlCommand("insert into tbl_trx_duediligence (Sno,FileNo,EntryDt,Srno,RequestDt,ReportDt,ReportType,mode,Allocation,Participants,IPCCode,TechnologyAction,Summary,Comment,InventorInput,Followup,FilePath,FileName,CreatedOn,CreatedBy) values('" + txtsno.Text + "','" + ddlidfno.SelectedValue + "','" + txtentrydt.Text + "','" + txtsrno.Text + "','" + txtrequestdt.Text + "','" + txtrptdt.Text + "','" + ddlrpt.SelectedItem.Text + "','" + ddlmode.SelectedValue + "','" + allocation + "','" + txtparticipants.Text + "','" + txtipc.Text + "','" + txtaction.Text + "','" + txtsummary.Text + "','" + txtcomment.Text + "','" + txtinput.Text + "','" + txtfollowup.Text + "','" + path + "','" + filename + "','" + DateTime.Now + "','" + User.Identity.Name + "')", con);
+            int inserted = Convert.ToInt16(cmdsave.ExecuteNonQuery());
+            ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('Inserted Successfully')</script>");
+            con.Close();
+            if (inserted != 1 && fp1.HasFile)
+            {
+                if (File.Exists(fn))
+                {
+                    File.Delete(fn);
+                }
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert("+ex.ToString()+")</script>");
-            return;
+            ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('Error Occured'+" + ex + ")</script>");
+            if (con.State == System.Data.ConnectionState.Open)
+            {
+                con.Close();
+            }
         }
     }
 

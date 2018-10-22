@@ -58,7 +58,7 @@ $(document).ready(function(){
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphBody" Runat="Server">
 <h1 style="text-align:center; font-family:Times New Roman; font-size:16px; font-weight:bold ">
-    Indian Patent Search</h1>
+    CoInventor Search</h1>
 <table class="neTable" align="center" width="400">
 <tr style="height:95px;vertical-align:top;"><td align="center">
     <asp:Label ID="Label2" runat="server" Text="Select Field Name"></asp:Label><br />
