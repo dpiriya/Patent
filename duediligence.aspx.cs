@@ -62,7 +62,7 @@ public partial class duediligence : System.Web.UI.Page
                 if (Directory.Exists(path))
                 {
                     path += "\\DueDiligence\\";
-                    filename = ddlidfno.SelectedValue.Trim() + "_" + ddlrpt.SelectedValue.Trim()+txtsno.Text + ext;
+                    filename = ddlidfno.SelectedValue.Trim() + "_" + ddlrpt.SelectedValue.Trim()+"_"+txtsno.Text + ext;
                     fn = path + filename;
 
                     if (Directory.Exists(path))

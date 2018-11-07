@@ -89,9 +89,9 @@
                                 <td>
                                     <asp:Label ID="lblAllocation" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("Allocation")%>'></asp:Label></td>
                                  <td>
-                                    <asp:Label ID="lblreqdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("RequestDt", "{0:MM/dd/yyyy}")%>'></asp:Label></td>
+                                    <asp:Label ID="lblreqdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("RequestDt", "{0:dd/MM/yyyy}")%>'></asp:Label></td>
                                 <td>
-                                    <asp:Label ID="lblrptdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("ReportDt", "{0:MM/dd/yyyy}")%>'></asp:Label></td>
+                                    <asp:Label ID="lblrptdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("ReportDt", "{0:dd/MM/yyyy}")%>'></asp:Label></td>
                                 <td><asp:Label ID="lblcomment" runat="server" BackColor="Transparent" BorderStyle="None" Width="20px" Text='<%#Eval("Comment")%>'></asp:Label></td>
                                 <td>
                                     <asp:LinkButton ID="lbtnFileName" runat="server" BackColor="Transparent" BorderStyle="None" Width="20px" Text='<%#Eval("FileName")%>' OnClientClick="return AddUpload()" CommandName="View"></asp:LinkButton>
@@ -116,9 +116,9 @@
                                 <td>
                                     <asp:Label ID="lblAllocation" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("Allocation")%>'></asp:Label></td>
                                 <td>
-                                    <asp:Label ID="lblreqdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("RequestDt", "{0:MM/dd/yyyy}")%>'></asp:Label></td>
+                                    <asp:Label ID="lblreqdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("RequestDt", "{0:dd/MM/yyyy}")%>'></asp:Label></td>
                                 <td>
-                                    <asp:Label ID="lblrptdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("ReportDt", "{0:MM/dd/yyyy}")%>'></asp:Label></td>
+                                    <asp:Label ID="lblrptdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("ReportDt", "{0:dd/MM/yyyy}")%>'></asp:Label></td>
                                 <td><asp:Label ID="lblcomment" runat="server" BackColor="Transparent" BorderStyle="None" Width="20px" Text='<%#Eval("Comment")%>'></asp:Label></td>
                                 <td>
                                     <asp:LinkButton ID="lbtnFileName" runat="server" BackColor="Transparent" BorderStyle="None" Width="30px" Text='<%#Eval("FileName")%>'  CommandName="View"></asp:LinkButton>

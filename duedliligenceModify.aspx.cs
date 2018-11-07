@@ -184,7 +184,7 @@ public partial class duedliligenceModify : System.Web.UI.Page
                 if (Directory.Exists(path))
                 {
                     path += "\\DueDiligence\\";
-                    string filename = ddlidf.SelectedValue.Trim() + "_" + name+sno.Text + ext;
+                    string filename = ddlidf.SelectedValue.Trim() + "_" + name+"_"+sno.Text + ext;
                     string fn = path + filename;
 
                     if (Directory.Exists(path))

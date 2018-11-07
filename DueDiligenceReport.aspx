@@ -85,9 +85,9 @@
                                 <td>
                                     <asp:Label ID="lbltype" runat="server" BackColor="Transparent" BorderStyle="None" Width="80px" Text='<%#Eval("ReportType")%>'></asp:Label></td>                                
                                 <td>
-                                    <asp:Label ID="lblreqdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("RequestDt", "{0:MM/dd/yyyy}")%>'></asp:Label></td>
+                                    <asp:Label ID="lblreqdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("RequestDt", "{0:dd/MM/yyyy}")%>'></asp:Label></td>
                                 <td>
-                                    <asp:Label ID="lblrptdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("ReportDt", "{0:MM/dd/yyyy}")%>'></asp:Label></td>
+                                    <asp:Label ID="lblrptdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("ReportDt", "{0:dd/MM/yyyy}")%>'></asp:Label></td>
                                 <td>
                                     <asp:Label ID="lblMode" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("Mode")%>'></asp:Label></td>
                                 <td>
@@ -105,9 +105,9 @@
                                 <td>
                                     <asp:Label ID="lbltype" runat="server" BackColor="Transparent" BorderStyle="None" Width="80px" Text='<%#Eval("ReportType")%>'></asp:Label></td>                                
                                 <td>
-                                    <asp:Label ID="lblreqdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("RequestDt", "{0:MM/dd/yyyy}")%>'></asp:Label></td>
+                                    <asp:Label ID="lblreqdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("RequestDt", "{0:dd/MM/yyyy}")%>'></asp:Label></td>
                                 <td>
-                                    <asp:Label ID="lblrptdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("ReportDt", "{0:MM/dd/yyyy}")%>'></asp:Label></td>
+                                    <asp:Label ID="lblrptdt" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("ReportDt", "{0:dd/MM/yyyy}")%>'></asp:Label></td>
                                 <td>
                                     <asp:Label ID="lblMode" runat="server" BackColor="Transparent" BorderStyle="None" Width="40px" Text='<%#Eval("Mode")%>'></asp:Label></td>
                                 <td>
