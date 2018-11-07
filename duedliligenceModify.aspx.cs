@@ -25,6 +25,34 @@ public partial class duedliligenceModify : System.Web.UI.Page
                 ddlidf.Items.Add(new ListItem(dr.GetString(0)));
             }
             dr.Close();
+            SqlCommand cmdrpt = new SqlCommand("select itemList,ItemText from ListItemMaster where Category='DueDiligence' and Grouping='ReportType'", con);
+
+                SqlDataReader dr1 = cmdrpt.ExecuteReader();
+                ddlrpt.Items.Add("");
+                while (dr1.Read())
+                {
+                    ddlrpt.Items.Add(new ListItem() { Text = dr1.GetString(0), Value = dr1.GetString(1) });
+                }
+                dr1.Close();
+                //SqlCommand cmdidf1 = new SqlCommand("select distinct FileNo from patdetails", con);
+                //dr1 = cmdidf1.ExecuteReader();
+                //while (dr1.Read())
+                //{
+                //    ddlidf.Items.Add(new ListItem(dr1.GetString(0)));
+                //}
+                //dr1.Close();
+                ddlmode.Items.Add("External");
+                ddlmode.Items.Add("Inhouse");
+                SqlCommand cmdattorney = new SqlCommand("select attorneyname from attorney order by attorneyname", con);
+                dr1 = cmdattorney.ExecuteReader();
+                ddlallocation.Items.Add("");
+                while (dr1.Read())
+                {
+                    ddlallocation.Items.Add(new ListItem(dr1.GetString(0)));
+                }
+                dr1.Close();
+            
+            
             con.Close();
         }
     }
@@ -49,36 +77,11 @@ public partial class duedliligenceModify : System.Web.UI.Page
         if (e.CommandName == "Modify")
         {
             panUpdate.Visible = true;
-            SqlCommand cmdrpt = new SqlCommand("select itemList,ItemText from ListItemMaster where Category='DueDiligence' and Grouping='ReportType'", con);
             con.Open();
-            SqlDataReader dr1 = cmdrpt.ExecuteReader();
-            ddlrpt.Items.Add("");
-            while (dr1.Read())
-            {
-                ddlrpt.Items.Add(new ListItem() { Text = dr1.GetString(0), Value = dr1.GetString(1) });
-            }
-            dr1.Close();
-            SqlCommand cmdidf = new SqlCommand("select distinct FileNo from patdetails", con);
-            dr1 = cmdidf.ExecuteReader();
-            while (dr1.Read())
-            {
-                ddlidf.Items.Add(new ListItem(dr1.GetString(0)));
-            }
-            dr1.Close();
-            ddlmode.Items.Add("External");
-            ddlmode.Items.Add("Inhouse");
-            SqlCommand cmdattorney = new SqlCommand("select attorneyname from attorney order by attorneyname", con);
-            dr1 = cmdattorney.ExecuteReader();
-            ddlallocation.Items.Add("");
-            while (dr1.Read())
-            {
-                ddlallocation.Items.Add(new ListItem(dr1.GetString(0)));
-            }
-            dr1.Close();
-
+            
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
             SqlCommand cmdedit = new SqlCommand("SELECT sno,EntryDt,RequestDt,ReportDt,ReportType,Mode,Allocation,Participants,IPCCode,TechnologyAction,Summary,Comment,InventorInput,Followup,srno,FileName from tbl_trx_duediligence where FileNo='" + ddlidf.SelectedValue + "' and Sno='"+lsno.Text+"'", con);
-            SqlDataReader dr = cmdedit.ExecuteReader();
+            SqlDataReader dr = cmdedit.ExecuteReader();           
             if (dr.Read())
             {
                 txtSno.Text = (!dr.IsDBNull(0)) ? dr.GetInt32(0).ToString() : "";
@@ -87,7 +90,18 @@ public partial class duedliligenceModify : System.Web.UI.Page
                 txtrptdt.Text = (!dr.IsDBNull(3)) ? dr.GetDateTime(3).ToString("MM/dd/yyyy") : "";
                 if (!dr.IsDBNull(4)) ddlrpt.SelectedItem.Text = dr.GetString(4); else ddlrpt.SelectedIndex = 0;
                 if (!dr.IsDBNull(5)) ddlmode.SelectedValue = dr.GetString(5); else ddlmode.SelectedIndex = 0;
-                if (!dr.IsDBNull(6)) ddlallocation.SelectedItem.Text = dr.GetString(6); else ddlallocation.SelectedIndex = 0;
+                if (ddlmode.SelectedValue == "External")
+                {
+                    txtallocation.Visible = false;
+                    ddlallocation.Visible = true;
+                    if (!dr.IsDBNull(6)) ddlallocation.SelectedItem.Text = dr.GetString(6); else ddlallocation.SelectedIndex = 0;
+                }
+                else if(ddlmode.SelectedValue=="Inhouse")
+                {
+                    ddlallocation.Visible = false;
+                    txtallocation.Visible = true;
+                    if (!dr.IsDBNull(6)) txtallocation.Text = dr.GetString(6); else txtallocation.Text= "";
+                }
                 txtparticipants.Text = (!dr.IsDBNull(7)) ? dr.GetString(7) : "";
                 txtipc.Text = (!dr.IsDBNull(8)) ? dr.GetString(8) : "";
                 txtaction.Text = (!dr.IsDBNull(9)) ? dr.GetString(9) : "";
@@ -170,7 +184,7 @@ public partial class duedliligenceModify : System.Web.UI.Page
                 if (Directory.Exists(path))
                 {
                     path += "\\DueDiligence\\";
-                    string filename = ddlidf.SelectedValue.Trim() + "_" + name + ext;
+                    string filename = ddlidf.SelectedValue.Trim() + "_" + name+sno.Text + ext;
                     string fn = path + filename;
 
                     if (Directory.Exists(path))
@@ -313,7 +327,7 @@ public partial class duedliligenceModify : System.Web.UI.Page
         {
             con.Open();
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
-            SqlCommand cmdupdate = new SqlCommand("update tbl_trx_duediligence set EntryDt='" + txtentrydt.Text + "',Srno='" + txtsrno.Text + "',RequestDt='" + txtrequestdt.Text + "',ReportDt='" + txtrptdt.Text + "',ReportType='" + ddlrpt.SelectedValue + "',Mode='" + ddlmode.SelectedValue + "',Allocation='" + ddlallocation.SelectedValue + "',Participants='" + txtparticipants.Text + "',IPCCode='" + txtipc.Text + "',TechnologyAction='" + txtaction.Text + "',Summary='" + txtsummary.Text + "',Comment='" + txtcomment.Text + "',InventorInput='" + txtinput.Text + "',Followup='" + txtfollowup.Text + "' where FileNo='" + ddlidf.SelectedValue.Trim() + "' and sno='" + txtSno.Text + "'", con);
+            SqlCommand cmdupdate = new SqlCommand("update tbl_trx_duediligence set EntryDt='" + txtentrydt.Text + "',Srno='" + txtsrno.Text + "',RequestDt='" + txtrequestdt.Text + "',ReportDt='" + txtrptdt.Text + "',ReportType='" + ddlrpt.SelectedItem.Text + "',Mode='" + ddlmode.SelectedValue + "',Allocation=case when '" + ddlmode.SelectedValue+"'='External' then '" + ddlallocation.SelectedItem.Text + "' else '"+txtallocation.Text+"' end,Participants='" + txtparticipants.Text + "',IPCCode='" + txtipc.Text + "',TechnologyAction='" + txtaction.Text + "',Summary='" + txtsummary.Text + "',Comment='" + txtcomment.Text + "',InventorInput='" + txtinput.Text + "',Followup='" + txtfollowup.Text + "' where FileNo='" + ddlidf.SelectedValue.Trim() + "' and sno='" + txtSno.Text + "'", con);
             cmdupdate.ExecuteNonQuery();
             ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('Updated Successfully')</script>");
             con.Close();

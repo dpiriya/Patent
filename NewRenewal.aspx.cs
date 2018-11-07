@@ -19,6 +19,7 @@ public partial class Default2 : System.Web.UI.Page
     {
         divBlock.Visible = false;
         divrenewalEntry.Visible = false;
+        divinfo.Visible = true;
         if (!this.IsPostBack)
         {
             cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
@@ -51,6 +52,8 @@ public partial class Default2 : System.Web.UI.Page
                 dropIDF.Items.Add(dr.GetString(0));
             }
             dr.Close();
+            lblblockmsg.Text = "\u25C9" + " Block entry : Not in use. This take place automatically.. see the table below";
+            lblsinglemsg.Text = "\u25C9" + " Single entry : Use for few country filing where block entry option is not available";
        }
     }
 

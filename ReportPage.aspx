@@ -50,7 +50,9 @@
                 <p><a href="FindFiles.aspx?id=PCT_Filing">R208 - PCT/National Face Filing</a></p>
                 <p style="text-align: left"><a href="FindFiles.aspx?id=Foreign">R209 - Foreign Filing Review(Excluding Direct International)</a></p>
                 <p style="text-align: left"><a href="#">R210 - Foreign Filing Review(Direct International)</a></p>
-            </td>
+                <p class="BoxTitle">Due Diligence</p>
+                <p><a href="DueDiligenceReport.aspx">R701 - Due Diligence Report</a></p>
+            </td>           
             <td>
                 <p class="BoxTitle">Service Request & Payment</p>
                 <p><a href="Rpt_SR.aspx">R301 - Service Request</a></p>

@@ -142,6 +142,7 @@
                             <li><a href="ReceiptSearch.aspx">Receipt Search</a></li>
                             <li><a href="ContractSearch.aspx">Contract Search</a></li>
                             <li><a href="CoinventorSearch.aspx">Co-Inventor Search</a></li>
+                            <li><a href="DueDiligenceSearch.aspx">Duediligence Search</a></li>
                         </ul>
                     </li>
                     <li><a href="#">E-Documents</a>

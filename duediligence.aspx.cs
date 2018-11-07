@@ -52,7 +52,7 @@ public partial class duediligence : System.Web.UI.Page
     {
         string path = @"F:\\PatentDocument\\" + ddlidfno.SelectedValue.Trim();
         string filename = "";
-        string fn="";        
+        string fn="";             
         try
         {
             if (this.fp1.HasFile)
@@ -62,7 +62,7 @@ public partial class duediligence : System.Web.UI.Page
                 if (Directory.Exists(path))
                 {
                     path += "\\DueDiligence\\";
-                    filename = ddlidfno.SelectedValue.Trim() + "_" + ddlrpt.SelectedValue.Trim() + ext;
+                    filename = ddlidfno.SelectedValue.Trim() + "_" + ddlrpt.SelectedValue.Trim()+txtsno.Text + ext;
                     fn = path + filename;
 
                     if (Directory.Exists(path))
