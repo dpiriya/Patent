@@ -56,7 +56,7 @@ function Verify()
     <tr><td>Complete Filing Date</td><td><asp:TextBox ID="txtCompleteDt" runat="server"></asp:TextBox>&nbsp;<asp:Image ID="ImgCompleteDt" runat="server" ImageUrl="~/Images/RedCalendar.gif" />
     <asp:CalendarExtender ID="CalendarExtender2" PopupButtonID="imgCompleteDt" TargetControlID="txtCompleteDt" runat="server" Format="dd/MM/yyyy">
         </asp:CalendarExtender></td>
-    <td>Patent Search</td><td><asp:DropDownList ID="ddlPSearch" Width="100px" 
+    <td>Priority Country</td><td><asp:DropDownList ID="ddlPSearch" Width="100px" 
             runat="server"></asp:DropDownList><asp:TextBox ID="txtpatsearchDt" runat="server"></asp:TextBox>&nbsp;<asp:Image ID="imgpatsearchDt" runat="server" ImageUrl="~/Images/RedCalendar.gif" />
     <asp:CalendarExtender ID="CalendarExtender4" PopupButtonID="imgpatsearchDt" TargetControlID="txtpatsearchDt" runat="server" Format="dd/MM/yyyy">
         </asp:CalendarExtender>

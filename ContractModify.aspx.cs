@@ -17,7 +17,7 @@ public partial class ContractModify : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     
     {
-        if (User.IsInRole("Admin") || User.IsInRole("Super User") || User.IsInRole("Marketing"))
+        if (User.IsInRole("Admin") || User.IsInRole("Super User") || User.IsInRole("Marketing") || !User.IsInRole("Intern"))
         {
             if (!this.IsPostBack)
             {
@@ -46,6 +46,15 @@ public partial class ContractModify : System.Web.UI.Page
                 ddlDept.DataBind();
                 ddlDept.Items.Insert(0, new ListItem("", ""));
                 dr.Close();
+                sql = "select ItemList from ListItemMaster where Category='Contract' and Grouping='Status'";
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                dropStatus.DataTextField = "ItemList";
+                dropStatus.DataValueField = "ItemList";
+                dropStatus.DataSource = dr;
+                dropStatus.DataBind();
+                dr.Close();
+                
                 //sql = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY='ContractActionType' ORDER BY ITEMLIST";
                 //cmd.CommandText = sql;
                 //dr = cmd.ExecuteReader();
@@ -57,17 +66,18 @@ public partial class ContractModify : System.Web.UI.Page
                 //con.Close();
                 //ddlActStatus.Items.Add("Progress");
                 //ddlActStatus.Items.Add("Closed");
-               lvAction.DataSource = null;
+                lvAction.DataSource = null;
                 lvAction.DataBind();
                 Tab1.CssClass = "Clicked";
                 MainView.ActiveViewIndex = 0;
                 btnUpload.Visible = false;
                 btnNewAction.Visible = false;
+                con.Close();
             }
         }
         else
         {
-            Server.Transfer("Unautherized.aspx");
+            Server.Transfer("Unauthorized.aspx");
         }
     }
     [WebMethod]

@@ -22,49 +22,56 @@ public partial class Receipt : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-        if (!IsPostBack)
+        if (!User.IsInRole("Intern"))
         {
-            title.Text = "New Receipt";
-            ddlrcpno.Visible = false;
-            con.Open();
-            string RNO;
-            string fy ="RC "+(DateTime.Today.Month >= 4 ? (DateTime.Today.ToString("yyyy") + "-" + DateTime.Today.AddYears(1).ToString("yy")) : (DateTime.Today.AddYears(-1).ToString("yyyy") + "-" + DateTime.Today.ToString("yy")));
-            SqlCommand cmdfy = new SqlCommand("select count(*) from patentreceipt where Rno like '%" + fy + "%'", con);
-            if (Convert.ToInt16(cmdfy.ExecuteScalar()) == 0)
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+            if (!IsPostBack)
             {
-                RNO = "1";
+                title.Text = "New Receipt";
+                ddlrcpno.Visible = false;
+                con.Open();
+                string RNO;
+                string fy = "RC " + (DateTime.Today.Month >= 4 ? (DateTime.Today.ToString("yyyy") + "-" + DateTime.Today.AddYears(1).ToString("yy")) : (DateTime.Today.AddYears(-1).ToString("yyyy") + "-" + DateTime.Today.ToString("yy")));
+                SqlCommand cmdfy = new SqlCommand("select count(*) from patentreceipt where Rno like '%" + fy + "%'", con);
+                if (Convert.ToInt16(cmdfy.ExecuteScalar()) == 0)
+                {
+                    RNO = "1";
+                }
+                else
+                {
+                    SqlCommand cmdrcpt = new SqlCommand("SELECT MAX(CAST(SUBSTRING(Rno, LEN(LEFT(Rno, CHARINDEX('/', Rno))) + 1, LEN(Rno) - LEN(LEFT(Rno, CHARINDEX('/', Rno)))) AS INT)) + 1 from patentreceipt where RNo like '%" + fy + "%'", con);
+                    RNO = cmdrcpt.ExecuteScalar().ToString();
+                    //RNO = Convert.ToString(cmdrcpt.ExecuteScalar());
+                }
+                if (!string.IsNullOrEmpty(RNO)) RNO = "RC " + (DateTime.Today.Month >= 4 ? (DateTime.Today.ToString("yyyy") + "-" + DateTime.Today.AddYears(1).ToString("yy")) : (DateTime.Today.AddYears(-1).ToString("yyyy") + "-" + DateTime.Today.ToString("yy"))) + "/" + RNO;
+                txtrcpno.Text = RNO;
+                txtrcpno.ReadOnly = true;
+                SqlCommand cmdsrc = new SqlCommand("select ItemList from ListItemMaster WHERE Category='Source' and Grouping='Receipt'", con);
+                SqlDataReader dr = cmdsrc.ExecuteReader();
+                ddlsrc.Items.Add("");
+                while (dr.Read())
+                {
+                    ddlsrc.Items.Add(new ListItem(dr.GetString(0)));
+                }
+                dr.Close();
+                SqlCommand cmdparty = new SqlCommand("select distinct CompanyName from CompanyMaster", con);
+                dr = cmdparty.ExecuteReader();
+                while (dr.Read())
+                {
+                    ddlparty.Items.Add(dr["CompanyName"].ToString());
+                }
+                ddlparty.Items.Insert(0, new ListItem("", ""));
+                dr.Close();
+                con.Close();
+                ReceiptDS ds = new ReceiptDS();
+                lvIdf.DataSource = ds.Tables["tbl_sec_receiptfileno"];
+                lvIdf.DataBind();
+                ViewState["rcpt"] = ds.Tables["tbl_sec_receiptfileno"];
             }
-            else
-            {
-                SqlCommand cmdrcpt = new SqlCommand("SELECT MAX(CAST(SUBSTRING(Rno, LEN(LEFT(Rno, CHARINDEX('/', Rno))) + 1, LEN(Rno) - LEN(LEFT(Rno, CHARINDEX('/', Rno)))) AS INT)) + 1 from patentreceipt where RNo like '%" + fy + "%'", con);
-                 RNO = cmdrcpt.ExecuteScalar().ToString();
-                //RNO = Convert.ToString(cmdrcpt.ExecuteScalar());
-            }
-            if (!string.IsNullOrEmpty(RNO)) RNO = "RC " + (DateTime.Today.Month >= 4 ? (DateTime.Today.ToString("yyyy") + "-" + DateTime.Today.AddYears(1).ToString("yy")) : (DateTime.Today.AddYears(-1).ToString("yyyy") + "-" + DateTime.Today.ToString("yy"))) + "/" + RNO;
-            txtrcpno.Text = RNO;
-            txtrcpno.ReadOnly = true;
-            SqlCommand cmdsrc = new SqlCommand("select ItemList from ListItemMaster WHERE Category='Source' and Grouping='Receipt'", con);
-            SqlDataReader dr = cmdsrc.ExecuteReader();
-            ddlsrc.Items.Add("");
-            while (dr.Read())
-            {
-                ddlsrc.Items.Add(new ListItem(dr.GetString(0)));
-            }
-            dr.Close();
-            SqlCommand cmdparty = new SqlCommand("select distinct CompanyName from CompanyMaster", con);
-            dr = cmdparty.ExecuteReader();
-            while (dr.Read())
-            {
-                ddlparty.Items.Add(dr["CompanyName"].ToString());
-            }
-            ddlparty.Items.Insert(0, new ListItem("", ""));
-            dr.Close();
-            con.Close();
-            ReceiptDS ds = new ReceiptDS();
-            lvIdf.DataSource = ds.Tables["tbl_sec_receiptfileno"];
-            lvIdf.DataBind();
-            ViewState["rcpt"] = ds.Tables["tbl_sec_receiptfileno"];
+        }
+        else
+        {
+            Server.Transfer("Unauthorized.aspx");
         }
     }
 
@@ -204,9 +211,9 @@ public partial class Receipt : System.Web.UI.Page
         int sum = 0;
         if (dt.Rows.Count > 0)
         {
-            foreach(DataRow dr in dt.Rows)
+            foreach (DataRow dr in dt.Rows)
             {
-                sum+=Convert.ToInt32(dr["SplitAmtINR"]);
+                sum += Convert.ToInt32(dr["SplitAmtINR"]);
             }
         }
         if (sum == Convert.ToInt32(txtamt.Text))
@@ -225,8 +232,8 @@ public partial class Receipt : System.Web.UI.Page
                 if (cmdmax.ExecuteScalar() == null)
                 {
                     decimal amt = Convert.ToInt32(txtamt.Text);
-                    decimal transamt =(txttransamt.Text!="")? Convert.ToInt32(txttransamt.Text):0;
-                    SqlCommand cmdprimary = new SqlCommand("insert into tbl_primary_receipt (ReceiptNo,ReceiptDt,Source,Party,PartyRefNo,ReceiptRef,ReceiptDesc,AmountINR,IntimationRef,IntimationDt,Comment,Accno,IPAccno,TransferAmt,TransferDt,CreatedOn,CreatedBy,ModifiedOn,ModifiedBy) values('" + txtrcpno.Text + "','" + txtrcpdt.Text + "','" + ddlsrc.SelectedValue + "','" + ddlparty.SelectedValue + "','" + txtpartyref.Text + "','" + txtrcpref.Text + "','" + txtrcpdesc.Text + "','"+amt + "','" + txtintref.Text + "','" + txtintdt.Text + "','" + txtcmt.Text + "','" + txtsaccno.Text + "','" + txtipaccno.Text + "','" +transamt + "','" + txttransdt.Text + "','" + DateTime.Now + "','" + User.Identity.Name + "',null,null)", con);
+                    decimal transamt = (txttransamt.Text != "") ? Convert.ToInt32(txttransamt.Text) : 0;
+                    SqlCommand cmdprimary = new SqlCommand("insert into tbl_primary_receipt (ReceiptNo,ReceiptDt,Source,Party,PartyRefNo,ReceiptRef,ReceiptDesc,AmountINR,IntimationRef,IntimationDt,Comment,Accno,IPAccno,TransferAmt,TransferDt,CreatedOn,CreatedBy,ModifiedOn,ModifiedBy) values('" + txtrcpno.Text + "','" + txtrcpdt.Text + "','" + ddlsrc.SelectedValue + "','" + ddlparty.SelectedValue + "','" + txtpartyref.Text + "','" + txtrcpref.Text + "','" + txtrcpdesc.Text + "','" + amt + "','" + txtintref.Text + "','" + txtintdt.Text + "','" + txtcmt.Text + "','" + txtsaccno.Text + "','" + txtipaccno.Text + "','" + transamt + "','" + txttransdt.Text + "','" + DateTime.Now + "','" + User.Identity.Name + "',null,null)", con);
                     cmdprimary.Transaction = Trans;
                     cmdprimary.ExecuteNonQuery();
                     ClientScript.RegisterStartupScript(GetType(), "Success", "<script>alert('This Record successfully inserted into primary receipt table')</script>");

@@ -23,7 +23,7 @@ public partial class MarketModify : System.Web.UI.Page
     {
         if (User.Identity.IsAuthenticated)
         {
-            if (User.IsInRole("Admin") || User.IsInRole("Super User") || User.IsInRole("Marketing"))
+            if (User.IsInRole("Admin") || User.IsInRole("Super User") || User.IsInRole("Marketing") ||!User.IsInRole("Intern"))
             {
                 if (!this.IsPostBack)
                 {
@@ -56,7 +56,7 @@ public partial class MarketModify : System.Web.UI.Page
             }
             else
             {
-                Server.Transfer("Unautherized.aspx"); 
+                Server.Transfer("Unauthorized.aspx"); 
             }
         }
     }

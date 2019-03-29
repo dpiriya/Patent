@@ -19,12 +19,19 @@ public partial class DocumentUpload : System.Web.UI.Page
     SqlTransaction Trans;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!this.IsPostBack)
+        if (!User.IsInRole("Intern"))
         {
-            ddlFileType.Items.Add(new ListItem("",""));
-            ddlFileType.Items.Add(new ListItem("IDF","IDF"));
-            ddlFileType.Items.Add(new ListItem("Marketing", "Marketing"));
-            imgBtnInsert.Visible = (!User.IsInRole("View"));
+            if (!this.IsPostBack)
+            {
+                ddlFileType.Items.Add(new ListItem("", ""));
+                ddlFileType.Items.Add(new ListItem("IDF", "IDF"));
+                ddlFileType.Items.Add(new ListItem("Marketing", "Marketing"));
+                imgBtnInsert.Visible = (!User.IsInRole("View"));
+            }
+        }
+        else
+        {
+            Server.Transfer("Unauthorized.aspx");
         }
     }
     protected void imgBtnInsert_Click(object sender, ImageClickEventArgs e)
@@ -66,8 +73,8 @@ public partial class DocumentUpload : System.Web.UI.Page
                 docInfo = ddlDocInfo.SelectedItem.Text.Trim();
             }
             else
-            { 
-                docInfo = txtDocInfo.Text.Trim(); 
+            {
+                docInfo = txtDocInfo.Text.Trim();
             }
             SqlParameter pm3 = new SqlParameter();
             pm3.ParameterName = "@FileDescription";
@@ -114,7 +121,7 @@ public partial class DocumentUpload : System.Web.UI.Page
             cmd.Parameters.Add(pm7);
 
             cmd.ExecuteNonQuery();
-            
+
             try
             {
                 HttpPostedFile file1 = FileUpload1.PostedFile;
@@ -153,7 +160,7 @@ public partial class DocumentUpload : System.Web.UI.Page
             Trans.Commit();
             con.Close();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             ClientScript.RegisterStartupScript(GetType(), "Error", "<script>alert('" + ex.Message.ToString() + "')</script>");
             Trans.Rollback();
@@ -166,7 +173,7 @@ public partial class DocumentUpload : System.Web.UI.Page
     {
         ddlFileNo.Text = "";
         ddlDocInfo.Text = "";
-        txtDocInfo.Text="";
+        txtDocInfo.Text = "";
         txtComment.Text = "";
     }
     protected void ddlFileType_SelectedIndexChanged(object sender, EventArgs e)
@@ -202,7 +209,7 @@ public partial class DocumentUpload : System.Web.UI.Page
             dr.Close();
             con.Close();
         }
-        else if(ddlFileType.SelectedIndex == 2)
+        else if (ddlFileType.SelectedIndex == 2)
         {
             string sql = "select mktgProjectNo from marketingProject order by cast(substring(mktgProjectNo,3,len(mktgProjectNo)) as int)";
             SqlDataReader dr;

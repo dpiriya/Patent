@@ -15,8 +15,10 @@ public partial class ServiceRequest : System.Web.UI.Page
     SqlTransaction Trans;
 
     protected void Page_Load(object sender, EventArgs e)
-    {       
-        SqlConnection con1 = new SqlConnection();
+    {
+        if (!User.IsInRole("Intern"))
+        {
+            SqlConnection con1 = new SqlConnection();
         con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
         if (!this.IsPostBack)
         {
@@ -44,7 +46,11 @@ public partial class ServiceRequest : System.Web.UI.Page
             IntDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
             con.Close();
         }
-
+        }
+        else
+        {
+            Server.Transfer("Unauthorized.aspx");
+        }
     }
     protected string GetSRNO()
     {

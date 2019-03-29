@@ -23,66 +23,73 @@ public partial class FileCreationModify : System.Web.UI.Page
     string deptFlag;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (User.Identity.IsAuthenticated)
+        if (!User.IsInRole("Intern"))
         {
-            if (!this.IsPostBack)
+            if (User.Identity.IsAuthenticated)
             {
-                this.Title = "File Modification";
-
-                cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-                SqlCommand cmd2 = new SqlCommand();
-                SqlDataReader dr;
-                string sql2 = "select iprname from ipr_category order by iprname";
-                cmd2.CommandType = CommandType.Text;
-                cmd2.Connection = cnp;
-                cmd2.CommandText = sql2;
-                cnp.Open();
-                dr = cmd2.ExecuteReader();
-                ddlIPR.Items.Clear();
-                ddlIPR.Items.Add("");
-                while (dr.Read())
+                if (!this.IsPostBack)
                 {
-                    ddlIPR.Items.Add(new ListItem(dr.GetString(0).Trim(),dr.GetString(0).Trim()));
-                }
-                dr.Close();
-                ddlIFiling.Items.Clear();
-                ddlIFiling.Items.Add("");
-                ddlIFiling.Items.Add(new ListItem("IIT Madras", "IIT Madras"));
-                ddlIFiling.Items.Add(new ListItem("ICSR", "ICSR"));
-                ddlIFiling.Items.Add(new ListItem("PCF", "PCF"));
-                ddlIFiling.Items.Add(new ListItem("PARTNER", "PARTNER"));
+                    this.Title = "File Modification";
 
-                SqlCommand cmd4 = new SqlCommand();
-                string sql4 = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'INVENTORTYPE' ORDER BY SLNO";
-                cmd4.CommandText = sql4;
-                cmd4.Connection = cnp;
-                cmd4.CommandType = CommandType.Text;
-                dr = cmd4.ExecuteReader();
-                ddlType1.DataTextField = "ItemList";
-                ddlType1.DataValueField = "ItemList";
-                ddlType1.DataSource = dr;
-                ddlType1.DataBind();
-                ddlType1.Items.Insert(0, "");
-                cnp.Close();
-                ddlType1.SelectedIndex = 0;
-                Inventor ds = new Inventor();
-                lvInventor.DataSource = ds.Tables["CoInventors"];
-                lvInventor.DataBind();
-                ViewState["CoInventor"] = ds.Tables["CoInventors"];
-                ddlSource.Items.Add("No");
-                ddlSource.Items.Add("Yes");
-                ddlSource.SelectedIndex = 0;                
-                dsFileCreation dsSource = new dsFileCreation();
-                lvProjectList.DataSource = dsSource.Tables["dtInventionSource"];
-                lvProjectList.DataBind();
-                ViewState["InventionSource"] = dsSource.Tables["dtInventionSource"];
-                deptFlag = "";
-                imgBtnInsert.Visible = (!User.IsInRole("View"));
+                    cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                    SqlCommand cmd2 = new SqlCommand();
+                    SqlDataReader dr;
+                    string sql2 = "select iprname from ipr_category order by iprname";
+                    cmd2.CommandType = CommandType.Text;
+                    cmd2.Connection = cnp;
+                    cmd2.CommandText = sql2;
+                    cnp.Open();
+                    dr = cmd2.ExecuteReader();
+                    ddlIPR.Items.Clear();
+                    ddlIPR.Items.Add("");
+                    while (dr.Read())
+                    {
+                        ddlIPR.Items.Add(new ListItem(dr.GetString(0).Trim(), dr.GetString(0).Trim()));
+                    }
+                    dr.Close();
+                    ddlIFiling.Items.Clear();
+                    ddlIFiling.Items.Add("");
+                    ddlIFiling.Items.Add(new ListItem("IIT Madras", "IIT Madras"));
+                    ddlIFiling.Items.Add(new ListItem("ICSR", "ICSR"));
+                    ddlIFiling.Items.Add(new ListItem("PCF", "PCF"));
+                    ddlIFiling.Items.Add(new ListItem("PARTNER", "PARTNER"));
+
+                    SqlCommand cmd4 = new SqlCommand();
+                    string sql4 = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'INVENTORTYPE' ORDER BY SLNO";
+                    cmd4.CommandText = sql4;
+                    cmd4.Connection = cnp;
+                    cmd4.CommandType = CommandType.Text;
+                    dr = cmd4.ExecuteReader();
+                    ddlType1.DataTextField = "ItemList";
+                    ddlType1.DataValueField = "ItemList";
+                    ddlType1.DataSource = dr;
+                    ddlType1.DataBind();
+                    ddlType1.Items.Insert(0, "");
+                    cnp.Close();
+                    ddlType1.SelectedIndex = 0;
+                    Inventor ds = new Inventor();
+                    lvInventor.DataSource = ds.Tables["CoInventors"];
+                    lvInventor.DataBind();
+                    ViewState["CoInventor"] = ds.Tables["CoInventors"];
+                    ddlSource.Items.Add("No");
+                    ddlSource.Items.Add("Yes");
+                    ddlSource.SelectedIndex = 0;
+                    dsFileCreation dsSource = new dsFileCreation();
+                    lvProjectList.DataSource = dsSource.Tables["dtInventionSource"];
+                    lvProjectList.DataBind();
+                    ViewState["InventionSource"] = dsSource.Tables["dtInventionSource"];
+                    deptFlag = "";
+                    imgBtnInsert.Visible = (!User.IsInRole("View"));
+                }
+            }
+            else
+            {
+                Response.Redirect("Login.aspx");
             }
         }
         else
         {
-            Response.Redirect("Login.aspx");
+            Server.Transfer("Unauthorized.aspx");
         }
     }
     

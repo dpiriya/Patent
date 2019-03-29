@@ -17,77 +17,84 @@ public partial class IP : System.Web.UI.Page
     SqlConnection cnp = new SqlConnection();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!this.IsPostBack)
+        if (!User.IsInRole("Intern"))
         {
-            cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-            SqlCommand cmd = new SqlCommand();
-            string sql = "select fileno from patdetails order by cast(fileno as int) desc";
-            SqlDataReader dr;
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            cnp.Open();
-            dr = cmd.ExecuteReader();
-            ddlFileNo.Items.Clear();
-            ddlFileNo.Items.Add("");
-            while (dr.Read())
+            if (!this.IsPostBack)
             {
-                ddlFileNo.Items.Add(dr.GetString(0));
-            }
-            dr.Close();
-            
-            sql = "select iprname from ipr_category order by iprname";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlType.Items.Clear();
-            ddlType.DataValueField = "iprname";
-            ddlType.DataTextField = "iprname";
-            ddlType.DataSource = dr;
-            ddlType.DataBind();
-            ddlType.Items.Insert(0, "");
-            dr.Close();
-            
-            sql = "select country from ipCountry where country is not null order by country";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlCountry.Items.Clear();
-            ddlCountry.DataValueField = "country";
-            ddlCountry.DataTextField = "country";
-            ddlCountry.DataSource = dr;
-            ddlCountry.DataBind();
-            ddlCountry.Items.Insert(0, "");
-            dr.Close();
+                cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                SqlCommand cmd = new SqlCommand();
+                string sql = "select fileno from patdetails order by cast(fileno as int) desc";
+                SqlDataReader dr;
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                cnp.Open();
+                dr = cmd.ExecuteReader();
+                ddlFileNo.Items.Clear();
+                ddlFileNo.Items.Add("");
+                while (dr.Read())
+                {
+                    ddlFileNo.Items.Add(dr.GetString(0));
+                }
+                dr.Close();
 
-            sql = "select attorneyName from (select attorneyName from Attorney union select attorneyName from ipAttorney) as t order by t.attorneyName";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlAttorney.Items.Clear();
-            ddlAttorney.DataValueField = "attorneyname";
-            ddlAttorney.DataTextField = "attorneyname";
-            ddlAttorney.DataSource = dr;
-            ddlAttorney.DataBind();
-            ddlAttorney.Items.Insert(0, "");
-            dr.Close();
-            sql = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'STATUS' AND (GROUPING IS NULL OR GROUPING  LIKE 'Non Patent' OR GROUPING  LIKE 'INTERNATIONAL') ORDER BY ITEMLIST";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlStatus.Items.Clear();
-            ddlStatus.Items.Add("");
-            while (dr.Read())
-            {
-                ddlStatus.Items.Add(dr.GetString(0));
+                sql = "select iprname from ipr_category order by iprname";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlType.Items.Clear();
+                ddlType.DataValueField = "iprname";
+                ddlType.DataTextField = "iprname";
+                ddlType.DataSource = dr;
+                ddlType.DataBind();
+                ddlType.Items.Insert(0, "");
+                dr.Close();
+
+                sql = "select country from ipCountry where country is not null order by country";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlCountry.Items.Clear();
+                ddlCountry.DataValueField = "country";
+                ddlCountry.DataTextField = "country";
+                ddlCountry.DataSource = dr;
+                ddlCountry.DataBind();
+                ddlCountry.Items.Insert(0, "");
+                dr.Close();
+
+                sql = "select attorneyName from (select attorneyName from Attorney union select attorneyName from ipAttorney) as t order by t.attorneyName";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlAttorney.Items.Clear();
+                ddlAttorney.DataValueField = "attorneyname";
+                ddlAttorney.DataTextField = "attorneyname";
+                ddlAttorney.DataSource = dr;
+                ddlAttorney.DataBind();
+                ddlAttorney.Items.Insert(0, "");
+                dr.Close();
+                sql = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'STATUS' AND (GROUPING IS NULL OR GROUPING  LIKE 'Non Patent' OR GROUPING  LIKE 'INTERNATIONAL') ORDER BY ITEMLIST";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlStatus.Items.Clear();
+                ddlStatus.Items.Add("");
+                while (dr.Read())
+                {
+                    ddlStatus.Items.Add(dr.GetString(0));
+                }
+                dr.Close();
+                cnp.Close();
+                imgBtnInsert.Visible = (!User.IsInRole("View"));
             }
-            dr.Close();                        
-            cnp.Close();
-            imgBtnInsert.Visible = (!User.IsInRole("View"));
+        }
+        else
+        {
+            Server.Transfer("Unauthorized.aspx");
         }
     }
     

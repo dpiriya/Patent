@@ -17,88 +17,95 @@ public partial class Payment : System.Web.UI.Page
     SqlConnection con = new SqlConnection();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!this.IsPostBack)
+        if (!User.IsInRole("Intern"))
         {
-            con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-            SqlCommand cmd = new SqlCommand();
-            string sql = "select fileno from patdetails order by cast(fileno as int) desc";
-            SqlDataReader dr;
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = con;
-            cmd.CommandText = sql;
-            con.Open();
-            dr = cmd.ExecuteReader();
-            ddlFileNo.Items.Clear();
-            ddlFileNo.Items.Add("");
-            while (dr.Read())
+            if (!this.IsPostBack)
             {
-                ddlFileNo.Items.Add(dr.GetString(0));
-            }
-            dr.Close();
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                SqlCommand cmd = new SqlCommand();
+                string sql = "select fileno from patdetails order by cast(fileno as int) desc";
+                SqlDataReader dr;
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = con;
+                cmd.CommandText = sql;
+                con.Open();
+                dr = cmd.ExecuteReader();
+                ddlFileNo.Items.Clear();
+                ddlFileNo.Items.Add("");
+                while (dr.Read())
+                {
+                    ddlFileNo.Items.Add(dr.GetString(0));
+                }
+                dr.Close();
 
-            sql = "select ItemList from listitemMaster where Category like 'Consignee' order by ItemList";
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlPMode.DataTextField = "ItemList";
-            ddlPMode.DataValueField = "ItemList";
-            ddlPMode.DataSource = dr;
-            ddlPMode.DataBind();
-            ddlPMode.Items.Insert(0, new ListItem("", ""));
-            dr.Close();
+                sql = "select ItemList from listitemMaster where Category like 'Consignee' order by ItemList";
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlPMode.DataTextField = "ItemList";
+                ddlPMode.DataValueField = "ItemList";
+                ddlPMode.DataSource = dr;
+                ddlPMode.DataBind();
+                ddlPMode.Items.Insert(0, new ListItem("", ""));
+                dr.Close();
 
-            sql = "select * from (select attorneyName from Attorney union select attorneyName from ipAttorney ) as t order by t.attorneyName";
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlParty.Items.Add("");
-            while (dr.Read())
-            {
-                ddlParty.Items.Add(dr.GetString(0));
-            }
-            dr.Close();
-            string tYear;
-            int lYear;
-            if (DateTime.Now.Month >= 4) lYear = DateTime.Now.Year; else lYear = DateTime.Now.Year - 1;
-            ddlYear.Items.Add("");
-            for (int i = lYear; i >= 1980; i--)
-            {
-                tYear = i.ToString() + " - " + (i + 1).ToString();
-                ddlYear.Items.Add(tYear);
-            }
-            sql = "select Country from ipCountry";
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlCountry.Items.Add("");
-            ddlCountry.Items.Add("India");
-            while (dr.Read())
-            {
-                ddlCountry.Items.Add(dr.GetString(0));
-            }
-            dr.Close();
+                sql = "select * from (select attorneyName from Attorney union select attorneyName from ipAttorney ) as t order by t.attorneyName";
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlParty.Items.Add("");
+                while (dr.Read())
+                {
+                    ddlParty.Items.Add(dr.GetString(0));
+                }
+                dr.Close();
+                string tYear;
+                int lYear;
+                if (DateTime.Now.Month >= 4) lYear = DateTime.Now.Year; else lYear = DateTime.Now.Year - 1;
+                ddlYear.Items.Add("");
+                for (int i = lYear; i >= 1980; i--)
+                {
+                    tYear = i.ToString() + " - " + (i + 1).ToString();
+                    ddlYear.Items.Add(tYear);
+                }
+                sql = "select Country from ipCountry";
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlCountry.Items.Add("");
+                ddlCountry.Items.Add("India");
+                while (dr.Read())
+                {
+                    ddlCountry.Items.Add(dr.GetString(0));
+                }
+                dr.Close();
 
-            sql = "select currencyCode,countryName from currency where status is not null order by status";
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlCurrency.Items.Add("");
-            while (dr.Read())
-            {
-                ddlCurrency.Items.Add(new ListItem(dr.GetString(0) + " - " + dr.GetString(1), dr.GetString(0)));
-            }
-            dr.Close();
+                sql = "select currencyCode,countryName from currency where status is not null order by status";
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlCurrency.Items.Add("");
+                while (dr.Read())
+                {
+                    ddlCurrency.Items.Add(new ListItem(dr.GetString(0) + " - " + dr.GetString(1), dr.GetString(0)));
+                }
+                dr.Close();
 
-            sql = "select ItemList from listitemMaster where Category like 'CostGroup' and Grouping='Payment' order by ItemList";
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlCostGrp.DataTextField = "ItemList";
-            ddlCostGrp.DataValueField = "ItemList";
-            ddlCostGrp.DataSource = dr;
-            ddlCostGrp.DataBind();
-            ddlCostGrp.Items.Insert(0, new ListItem("", ""));
-            dr.Close();
-            con.Close();
-            imgBtnSubmit.Visible = (!User.IsInRole("View"));
+                sql = "select ItemList from listitemMaster where Category like 'CostGroup' and Grouping='Payment' order by ItemList";
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlCostGrp.DataTextField = "ItemList";
+                ddlCostGrp.DataValueField = "ItemList";
+                ddlCostGrp.DataSource = dr;
+                ddlCostGrp.DataBind();
+                ddlCostGrp.Items.Insert(0, new ListItem("", ""));
+                dr.Close();
+                con.Close();
+                imgBtnSubmit.Visible = (!User.IsInRole("View"));
+            }
+        }
+        else
+        {
+            Server.Transfer("Unauthorized.aspx");
         }
     }
-    
+
     public void Clear()
     {
         ddlFileNo.Text = "";
@@ -119,7 +126,7 @@ public partial class Payment : System.Web.UI.Page
         txtRemark.Text = "";
         ddlFileNo.Enabled = true;
     }
-    
+
     protected void imgBtnSubmit_Click(object sender, ImageClickEventArgs e)
     {
         if (ddlFileNo.Text.Trim() == "")
@@ -137,7 +144,7 @@ public partial class Payment : System.Web.UI.Page
             "case when @Activity='' then null else @Activity end,case when @PaymentOrChequeDt='' then null else convert(smalldatetime,@PaymentOrChequeDt,103) end,case when @PaymentRefOrChequeNo='' then null else @PaymentRefOrChequeNo end," +
             "@PaymentAmtINR,case when @ExRate='' then null else @ExRate end,case when @Party='' then null else @Party end, case when @Year='' then null else @Year end,case when @costGroup='' then null else @costGroup end,case when @Remark='' then null else @Remark end, " +
             "@paymentAmtForeign,case when @currency='' then null else @currency end, case when @InvoiceNo='' then null else @InvoiceNo end, case when @InvoiceDt='' then null else convert(smalldatetime,@InvoiceDt,103) end)";
-            
+
             cmd.CommandText = sql;
             cmd.CommandType = CommandType.Text;
             cmd.Connection = con;
@@ -212,7 +219,7 @@ public partial class Payment : System.Web.UI.Page
             SqlParameter pm9 = new SqlParameter();
             pm9.ParameterName = "@PaymentAmtINR";
             pm9.SourceColumn = "PaymentAmtINR";
-            pm9.Value = txtChequeAmt.Text.Trim()=="" ? 0 : Convert.ToDecimal(txtChequeAmt.Text.Trim());
+            pm9.Value = txtChequeAmt.Text.Trim() == "" ? 0 : Convert.ToDecimal(txtChequeAmt.Text.Trim());
             pm9.DbType = DbType.Decimal;
             pm9.Direction = ParameterDirection.Input;
 
@@ -297,9 +304,9 @@ public partial class Payment : System.Web.UI.Page
             cmd.Parameters.Add(pm16);
             cmd.Parameters.Add(pm17);
             cmd.Parameters.Add(pm18);
-           
+
             cmd.ExecuteNonQuery();
-            
+
             ClientScript.RegisterStartupScript(GetType(), "Success", "<script>alert('This Record successfully Added')</script>");
             con.Close();
         }
@@ -315,7 +322,7 @@ public partial class Payment : System.Web.UI.Page
     {
         Clear();
     }
-   
+
     protected void ddlFileNo_SelectedIndexChanged1(object sender, EventArgs e)
     {
         ddlFileNo.Enabled = false;

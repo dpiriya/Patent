@@ -17,41 +17,48 @@ using Ionic.Zip;
 public partial class DocumentViewer : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection();
-    string[] tColumn = new[] { "Fileno", "Upload Date", "Modified Date","File Type"};
-    string[] tColumnVal = new[] {"FileNo","EntryDt","ModifiedDt","FileDescription"};
+    string[] tColumn = new[] { "Fileno", "Upload Date", "Modified Date", "File Type" };
+    string[] tColumnVal = new[] { "FileNo", "EntryDt", "ModifiedDt", "FileDescription" };
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!this.IsPostBack)
+        if (!User.IsInRole("Intern"))
         {
-            /*SqlCommand cmd = new SqlCommand();
-            con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-            string sql = "select FileDescription from patentfiledetails group by FileDescription order by FileDescription";
-            con.Open();
-            cmd.CommandText = sql;
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = con;
-            SqlDataReader dr;
-            dr = cmd.ExecuteReader();
-            while (dr.Read())
+            if (!this.IsPostBack)
             {
-                ddlValue.Items.Add(dr.GetString(0));
+                /*SqlCommand cmd = new SqlCommand();
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                string sql = "select FileDescription from patentfiledetails group by FileDescription order by FileDescription";
+                con.Open();
+                cmd.CommandText = sql;
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = con;
+                SqlDataReader dr;
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    ddlValue.Items.Add(dr.GetString(0));
+                }
+                con.Close();*/
+                if (User.IsInRole("Admin"))
+                {
+                    btnDownload.Enabled = true;
+                    trFile.Visible = true;
+                }
+                else
+                {
+                    btnDownload.Enabled = false;
+                    trFile.Visible = false;
+                }
+                lstColumn.Items.Clear();
+                for (int i = 0; i <= tColumn.GetUpperBound(0); i++)
+                {
+                    lstColumn.Items.Add(new ListItem(tColumn[i], tColumnVal[i]));
+                }
             }
-            con.Close();*/
-            if (User.IsInRole("Admin"))
-            {
-                btnDownload.Enabled = true;
-                trFile.Visible = true;              
-            }
-            else
-            {
-                btnDownload.Enabled = false;
-                trFile.Visible = false;
-            }
-            lstColumn.Items.Clear();
-            for (int i = 0; i <= tColumn.GetUpperBound(0); i++)
-            {
-                lstColumn.Items.Add(new ListItem(tColumn[i], tColumnVal[i]));
-            }
+        }
+        else
+        {
+            Server.Transfer("Unauthorized.aspx");
         }
     }
     protected void btnReport_Click(object sender, EventArgs e)
@@ -88,7 +95,7 @@ public partial class DocumentViewer : System.Web.UI.Page
             Session["DocumentView"] = dt;
             gvFileDetails.DataSource = dt;
             gvFileDetails.DataBind();
-            
+
             con.Close();
         }
         catch (Exception ex)
@@ -97,7 +104,7 @@ public partial class DocumentViewer : System.Web.UI.Page
             con.Close();
         }
     }
-    
+
     protected void btnClear_Click(object sender, EventArgs e)
     {
         txtValue.Text = "";
@@ -123,7 +130,7 @@ public partial class DocumentViewer : System.Web.UI.Page
                 filter = filter.Remove(pos);
             }
             txtFilter.Text = filter;
-            
+
         }
     }
     protected void gvFileDetails_Sorting(object sender, GridViewSortEventArgs e)
@@ -168,7 +175,7 @@ public partial class DocumentViewer : System.Web.UI.Page
         GridViewRow item = gvFileDetails.Rows[e.NewSelectedIndex];
         string Fileno = item.Cells[1].Text;
         LinkButton lbFileName = gvFileDetails.Rows[e.NewSelectedIndex].FindControl("lbtnEdit") as LinkButton;
-        
+
         string strPath = "";
         string strFileName = "";
         strPath = @"F:\PatentDocument\" + Fileno.Trim() + @"\";
@@ -221,8 +228,8 @@ public partial class DocumentViewer : System.Web.UI.Page
     }
     protected void gvFileDetails_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        
-        
+
+
     }
     protected void gvFileDetails_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
@@ -236,7 +243,7 @@ public partial class DocumentViewer : System.Web.UI.Page
             LinkButton lb = (LinkButton)item.FindControl("lbtnEdit");
             string fileName = lb.Text.Trim();
             con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-            string sql = "delete from patentfiledetails where fileno = '" + fileNo.Trim() + "' and fileDescription = '" + fileDescription.Trim()+"' and fileName = '" + fileName.Trim()+"'";
+            string sql = "delete from patentfiledetails where fileno = '" + fileNo.Trim() + "' and fileDescription = '" + fileDescription.Trim() + "' and fileName = '" + fileName.Trim() + "'";
             con.Open();
             trans = con.BeginTransaction();
             cmd.Transaction = trans;
@@ -315,7 +322,7 @@ public partial class DocumentViewer : System.Web.UI.Page
                 foreach (DataRow drow in dt.Rows)
                 {
                     string filepath = @"F:\PatentDocument\" + drow[0] + @"\" + drow[1];
-                    if(chkGroup.Checked==true)
+                    if (chkGroup.Checked == true)
                         zip.AddFile(filepath, drow[0].ToString());
                     else
                         zip.AddFile(filepath, "files");
@@ -324,7 +331,7 @@ public partial class DocumentViewer : System.Web.UI.Page
                 Response.BufferOutput = false;
                 string downFileName;
                 if (txtFileName.Text.Trim() == "") downFileName = "PatentDocument"; else downFileName = txtFileName.Text.Trim();
-                string zipName = string.Format("{1}_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-hhmmss"),downFileName);
+                string zipName = string.Format("{1}_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-hhmmss"), downFileName);
                 Response.ContentType = "application/zip";
                 Response.AppendHeader("Content-Disposition", "attachment;filename=" + zipName);
                 zip.Save(Response.OutputStream);
@@ -339,5 +346,5 @@ public partial class DocumentViewer : System.Web.UI.Page
             con.Close();
         }
 
-    }    
+    }
 }

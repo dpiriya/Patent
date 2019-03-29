@@ -162,7 +162,7 @@ public partial class ReportSelection4 : System.Web.UI.Page
         txtValue.Text = "";
         if (id == "Contract")
         {
-            if (lstField.SelectedIndex == 1 || lstField.SelectedIndex == 6 || lstField.SelectedIndex == 7 || lstField.SelectedIndex == 9)
+            if (lstField.SelectedIndex == 1 || lstField.SelectedIndex == 6 || lstField.SelectedIndex == 7 || lstField.SelectedIndex == 9 || lstField.SelectedIndex==16)
             {
                 ddlListItem.Visible = true;
                 txtValue.Visible = false;

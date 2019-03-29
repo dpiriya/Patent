@@ -81,43 +81,55 @@ public partial class IndianPatent : System.Web.UI.Page
             ddlExam.Items.Add(new ListItem("Yes", "Yes"));
             ddlExam.Items.Add(new ListItem("No", "No"));
 
+            sql = "select Country from IPCountry order by Country";
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = cnp;
+            cmd.CommandText = sql;
+            dr = cmd.ExecuteReader();
+            ddlPSearch.Items.Clear();
             ddlPSearch.Items.Add("");
-            ddlPSearch.Items.Add(new ListItem("TSI1 - Tech search - Int1", "TSI1"));
-            ddlPSearch.Items.Add(new ListItem("TSI2 - Tech search - Int2", "TSI2"));
-            ddlPSearch.Items.Add(new ListItem("TSI3 - Tech search - Int3", "TSI3"));
-            ddlPSearch.Items.Add(new ListItem("TCEKO - KPMG Phase 0", "TCEK0"));
-            ddlPSearch.Items.Add(new ListItem("TCEK1 - KPMG Phase 1", "TCEK1"));
-            ddlPSearch.Items.Add(new ListItem("TCEK2 - KPMG Phase 2", "TCEK2"));
-            ddlPSearch.Items.Add(new ListItem("TCEK3 - KPMG Phase 3", "TCEK3"));
-            ddlPSearch.Items.Add(new ListItem("TCEKP - KPMG TCE Pre-PCT", "TCEKP"));
-            ddlPSearch.Items.Add(new ListItem("TSAP - Tech search - Attroney(Provisional)", "TSAP"));
-            ddlPSearch.Items.Add(new ListItem("TSAC - Tech search - Attroney(Complete)", "TSAC"));
-            ddlPSearch.Items.Add(new ListItem("TSAP + TSI2", "TSAP + TSI2"));
-            ddlPSearch.Items.Add(new ListItem("TSAC + TCEK0", "TSAC + TCEK0"));
-            ddlPSearch.Items.Add(new ListItem("BCIL TCE", "TCEBL"));
-            ddlPSearch.Items.Add(new ListItem("NRDC TCE", "TCEND"));
-            ddlPSearch.Items.Add(new ListItem("IP Matrix TCE", "TCEIP"));
+            while (dr.Read())
+            {
+                ddlPSearch.Items.Add(dr.GetString(0));
+            }
+            dr.Close();
+            //ddlPSearch.Items.Add("");
+            //ddlPSearch.Items.Add(new ListItem("TSI1 - Tech search - Int1", "TSI1"));
+            //ddlPSearch.Items.Add(new ListItem("TSI2 - Tech search - Int2", "TSI2"));
+            //ddlPSearch.Items.Add(new ListItem("TSI3 - Tech search - Int3", "TSI3"));
+            //ddlPSearch.Items.Add(new ListItem("TCEKO - KPMG Phase 0", "TCEK0"));
+            //ddlPSearch.Items.Add(new ListItem("TCEK1 - KPMG Phase 1", "TCEK1"));
+            //ddlPSearch.Items.Add(new ListItem("TCEK2 - KPMG Phase 2", "TCEK2"));
+            //ddlPSearch.Items.Add(new ListItem("TCEK3 - KPMG Phase 3", "TCEK3"));
+            //ddlPSearch.Items.Add(new ListItem("TCEKP - KPMG TCE Pre-PCT", "TCEKP"));
+            //ddlPSearch.Items.Add(new ListItem("TSAP - Tech search - Attroney(Provisional)", "TSAP"));
+            //ddlPSearch.Items.Add(new ListItem("TSAC - Tech search - Attroney(Complete)", "TSAC"));
+            //ddlPSearch.Items.Add(new ListItem("TSAP + TSI2", "TSAP + TSI2"));
+            //ddlPSearch.Items.Add(new ListItem("TSAC + TCEK0", "TSAC + TCEK0"));
+            //ddlPSearch.Items.Add(new ListItem("BCIL TCE", "TCEBL"));
+            //ddlPSearch.Items.Add(new ListItem("NRDC TCE", "TCEND"));
+            //ddlPSearch.Items.Add(new ListItem("IP Matrix TCE", "TCEIP"));
 
-            ddlPSearch.Items.Add(new ListItem("TSI2+TSI3", "TSI2+TSI3"));
-            ddlPSearch.Items.Add(new ListItem("TSI2+TSAP+TSI3", "TSI2+TSAP+TSI3"));
-            ddlPSearch.Items.Add(new ListItem("TSI2+TSAC+TSI3", "TSI2+TSAC+TSI3"));
+            //ddlPSearch.Items.Add(new ListItem("TSI2+TSI3", "TSI2+TSI3"));
+            //ddlPSearch.Items.Add(new ListItem("TSI2+TSAP+TSI3", "TSI2+TSAP+TSI3"));
+            //ddlPSearch.Items.Add(new ListItem("TSI2+TSAC+TSI3", "TSI2+TSAC+TSI3"));
 
-            ddlPSearch.Items.Add(new ListItem("TSI3+TCEKP", "TSI3+TCEKP"));
-            ddlPSearch.Items.Add(new ListItem("TSAP+TSI3+TCEKP", "TSAP+TSI3+TCEKP"));
-            ddlPSearch.Items.Add(new ListItem("TSI2+TSAP+TSI3+TCEKP", "TSI2+TSAP+TSI3+TCEKP"));
-            ddlPSearch.Items.Add(new ListItem("TSI2+TSI3+TCEKP", "TSI2+TSI3+TCEKP"));
+            //ddlPSearch.Items.Add(new ListItem("TSI3+TCEKP", "TSI3+TCEKP"));
+            //ddlPSearch.Items.Add(new ListItem("TSAP+TSI3+TCEKP", "TSAP+TSI3+TCEKP"));
+            //ddlPSearch.Items.Add(new ListItem("TSI2+TSAP+TSI3+TCEKP", "TSI2+TSAP+TSI3+TCEKP"));
+            //ddlPSearch.Items.Add(new ListItem("TSI2+TSI3+TCEKP", "TSI2+TSI3+TCEKP"));
 
-            ddlPSearch.Items.Add(new ListItem("TSI3+BCIL TCE", "TSI3+BCIL TCE"));
-            ddlPSearch.Items.Add(new ListItem("TSAP+TSI3+BCIL TCE", "TSAP+TSI3+BCIL TCE"));
-            ddlPSearch.Items.Add(new ListItem("TSI2+TSAP+TSI3+BCIL TCE", "TSI2+TSAP+TSI3+BCIL TCE"));
-            ddlPSearch.Items.Add(new ListItem("TSI2+TSI3+BCIL TCE", "TSI2+TSI3+BCIL TCE"));
+            //ddlPSearch.Items.Add(new ListItem("TSI3+BCIL TCE", "TSI3+BCIL TCE"));
+            //ddlPSearch.Items.Add(new ListItem("TSAP+TSI3+BCIL TCE", "TSAP+TSI3+BCIL TCE"));
+            //ddlPSearch.Items.Add(new ListItem("TSI2+TSAP+TSI3+BCIL TCE", "TSI2+TSAP+TSI3+BCIL TCE"));
+            //ddlPSearch.Items.Add(new ListItem("TSI2+TSI3+BCIL TCE", "TSI2+TSI3+BCIL TCE"));
 
-            ddlPSearch.Items.Add(new ListItem("TSI3+NRDC TCE", "TSI3+NRDC TCE"));
-            ddlPSearch.Items.Add(new ListItem("TSAP+TSI3+NRDC TCE", "TSAP+TSI3+NRDC TCE"));
-            ddlPSearch.Items.Add(new ListItem("TSI2+TSAP+TSI3+NRDC TCE", "TSI2+TSAP+TSI3+NRDC TCE"));
-            ddlPSearch.Items.Add(new ListItem("TSI2+TSI3+NRDC TCE", "TSI2+TSI3+NRDC TCE"));
+            //ddlPSearch.Items.Add(new ListItem("TSI3+NRDC TCE", "TSI3+NRDC TCE"));
+            //ddlPSearch.Items.Add(new ListItem("TSAP+TSI3+NRDC TCE", "TSAP+TSI3+NRDC TCE"));
+            //ddlPSearch.Items.Add(new ListItem("TSI2+TSAP+TSI3+NRDC TCE", "TSI2+TSAP+TSI3+NRDC TCE"));
+            //ddlPSearch.Items.Add(new ListItem("TSI2+TSI3+NRDC TCE", "TSI2+TSI3+NRDC TCE"));
 
-            ddlPSearch.Items.Add(new ListItem("TSA", "TSA"));
+            //ddlPSearch.Items.Add(new ListItem("TSA", "TSA"));
 
             //ddlPSearch.Items.Add(new ListItem("No", "No"));
 
@@ -156,7 +168,7 @@ public partial class IndianPatent : System.Web.UI.Page
         cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
         SqlCommand cmd = new SqlCommand();
         string sql = "select Attorney,applcn_no,filing_dt,publication,pub_dt,status,sub_status,pat_no,pat_dt," +
-        "examination,exam_dt,PatentSearch,type,CompleteDt from patdetails where fileno='" + ddlFileNo.SelectedItem.Text + "'";
+        "examination,exam_dt,PatentSearch,type,CompleteDt,Patent_searchDt from patdetails where fileno='" + ddlFileNo.SelectedItem.Text + "'";
         SqlDataReader dr;
         cmd.CommandType = CommandType.Text;
         cmd.Connection = cnp;
@@ -243,6 +255,11 @@ public partial class IndianPatent : System.Web.UI.Page
                 }
             }
             else { txtCompleteDt.Text = ""; }
+            if(!dr.IsDBNull(14))
+            {
+                txtpatsearchDt.Text = dr.GetDateTime(14).ToShortDateString();
+                
+            }
         }
         dr.Close();
         cnp.Close();
@@ -548,7 +565,7 @@ public partial class IndianPatent : System.Web.UI.Page
                                 DateTime duedate_oa2 = duedate_oa1.AddMonths(3);
                                 DateTime duedate_oa3 = duedate_oa2.AddMonths(5);
                                 DateTime duedate_grant = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
-                                SqlCommand cmd3 = new SqlCommand("update RenewalFollowup set DueDate= case SlNo when 1 then  convert(date,'" + duedate_ep + "',103) when 2 then convert(date,'" + duedate_pa + "',103) when 3 then convert(date,'" + duedate_fer + "',103) when 4 then convert(date,'" + duedate_oa1 + "',103) when 5 then convert(date,'" + duedate_oa2 + "',103) when 6 then convert(date,'" + duedate_oa3 + "',103) when 8 then convert(date,'" + duedate_grant + "',103) end where fileno='" + ddlFileNo.Text.Trim() + "' and phase='prosecution'", cnp);
+                                SqlCommand cmd3 = new SqlCommand("update RenewalFollowup set set Status='Pending', DueDate= case SlNo when 1 then  convert(date,'" + duedate_ep + "',103) when 2 then convert(date,'" + duedate_pa + "',103) when 3 then convert(date,'" + duedate_fer + "',103) when 4 then convert(date,'" + duedate_oa1 + "',103) when 5 then convert(date,'" + duedate_oa2 + "',103) when 6 then convert(date,'" + duedate_oa3 + "',103) when 8 then convert(date,'" + duedate_grant + "',103) end where fileno='" + ddlFileNo.Text.Trim() + "' and phase='prosecution'", cnp);
                                 int updated_rows = Convert.ToInt32(cmd3.ExecuteNonQuery());
                                 if (updated_rows != 8)
                                 {

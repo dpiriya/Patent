@@ -40,8 +40,17 @@ public partial class Default2 : System.Web.UI.Page
                     ddlAgreeType.DataSource = dr1;
                     ddlAgreeType.DataBind();
                     ddlAgreeType.Items.Insert(0, new ListItem("", ""));
+                    dr1.Close();
+                    sql = "select ItemList from ListItemMaster where Category='Contract' and Grouping='Status'";
+                    cmd.CommandText = sql;
+                    dr1 = cmd.ExecuteReader();
+                    drop1.DataTextField = "ItemList";
+                    drop1.DataValueField = "ItemList";
+                    drop1.DataSource = dr1;
+                    drop1.DataBind();
+                    dr1.Close();
                 }
-
+                con.Close();
             }
 
 

@@ -15,45 +15,51 @@ using System.Data.SqlClient;
 public partial class IndianAttorney : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection();
-      
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (!User.IsInRole("Intern"))
         {
-            con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-            txtAttorneyID.Text = findMaxNo();
-            imgBtnSubmit.Visible = (!User.IsInRole("View"));
-            SqlCommand cmd = new SqlCommand();
-            string sql = "select country from ipCountry where country is not null order by country";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = con;
-            SqlDataReader dr;
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlCountry.Items.Clear();
-            ddlCountry.DataValueField = "country";
-            ddlCountry.DataTextField = "country";
-            ddlCountry.DataSource = dr;
-            ddlCountry.DataBind();
-            ddlCountry.Items.Insert(0, "India");     
-            dr.Close();
+            if (!IsPostBack)
+            {
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                txtAttorneyID.Text = findMaxNo();
+                imgBtnSubmit.Visible = (!User.IsInRole("View"));
+                SqlCommand cmd = new SqlCommand();
+                string sql = "select country from ipCountry where country is not null order by country";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = con;
+                SqlDataReader dr;
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlCountry.Items.Clear();
+                ddlCountry.DataValueField = "country";
+                ddlCountry.DataTextField = "country";
+                ddlCountry.DataSource = dr;
+                ddlCountry.DataBind();
+                ddlCountry.Items.Insert(0, "India");
+                dr.Close();
+            }
         }
-       
-       // SqlCommand cmd = new SqlCommand();
-       //string sql = "select country from ipCountry where country is not null order by country";
-       // cmd.CommandType = CommandType.Text;
-       // cmd.Connection = con;
-       // SqlDataReader dr;
-       // cmd.CommandText = sql;
-       // dr = cmd.ExecuteReader();
-       // ddlCountry.Items.Clear();
-       // ddlCountry.DataValueField = "country";
-       // ddlCountry.DataTextField = "country";
-       // ddlCountry.DataSource = dr;
-       // ddlCountry.DataBind();
-       // ddlCountry.Items.Insert(0, "");
-       // dr.Close();
+        else
+        {
+            Server.Transfer("Unauthorized.aspx");
+        }
+        // SqlCommand cmd = new SqlCommand();
+        //string sql = "select country from ipCountry where country is not null order by country";
+        // cmd.CommandType = CommandType.Text;
+        // cmd.Connection = con;
+        // SqlDataReader dr;
+        // cmd.CommandText = sql;
+        // dr = cmd.ExecuteReader();
+        // ddlCountry.Items.Clear();
+        // ddlCountry.DataValueField = "country";
+        // ddlCountry.DataTextField = "country";
+        // ddlCountry.DataSource = dr;
+        // ddlCountry.DataBind();
+        // ddlCountry.Items.Insert(0, "");
+        // dr.Close();
     }
     protected string findMaxNo()
     {

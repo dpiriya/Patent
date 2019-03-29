@@ -17,76 +17,82 @@ public partial class IP_Modify : System.Web.UI.Page
     SqlConnection cnp = new SqlConnection();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!this.IsPostBack)
+        if (!User.IsInRole("Intern"))
         {
-            cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-            SqlCommand cmd = new SqlCommand();
-            string sql = "SELECT FILENO FROM INTERNATIONAL GROUP BY FILENO ORDER BY CAST(FILENO AS INT) DESC";
-            SqlDataReader dr;
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            cnp.Open();
-            dr = cmd.ExecuteReader();
-            ddlFileNo.Items.Clear();
-            ddlFileNo.Items.Add("");
-            while (dr.Read())
+            if (!this.IsPostBack)
             {
-                ddlFileNo.Items.Add(dr.GetString(0));
+                cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                SqlCommand cmd = new SqlCommand();
+                string sql = "SELECT FILENO FROM INTERNATIONAL GROUP BY FILENO ORDER BY CAST(FILENO AS INT) DESC";
+                SqlDataReader dr;
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                cnp.Open();
+                dr = cmd.ExecuteReader();
+                ddlFileNo.Items.Clear();
+                ddlFileNo.Items.Add("");
+                while (dr.Read())
+                {
+                    ddlFileNo.Items.Add(dr.GetString(0));
+                }
+                dr.Close();
+                sql = "select iprname from ipr_category order by iprname";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlType.Items.Clear();
+                ddlType.DataValueField = "iprname";
+                ddlType.DataTextField = "iprname";
+                ddlType.DataSource = dr;
+                ddlType.DataBind();
+                ddlType.Items.Insert(0, "");
+                dr.Close();
+                sql = "select country from ipCountry where country is not null order by country";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlCountry.Items.Clear();
+                ddlCountry.DataValueField = "country";
+                ddlCountry.DataTextField = "country";
+                ddlCountry.DataSource = dr;
+                ddlCountry.DataBind();
+                ddlCountry.Items.Insert(0, "");
+                dr.Close();
+                sql = "select attorneyname from (select attorneyname from attorney union select attorneyname from ipattorney) as t  order by t.attorneyname";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlAttorney.Items.Clear();
+                ddlAttorney.DataValueField = "attorneyname";
+                ddlAttorney.DataTextField = "attorneyname";
+                ddlAttorney.DataSource = dr;
+                ddlAttorney.DataBind();
+                ddlAttorney.Items.Insert(0, "");
+                dr.Close();
+                sql = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'STATUS' AND (GROUPING IS NULL OR GROUPING  LIKE 'Non Patent' OR GROUPING  LIKE 'INTERNATIONAL') ORDER BY ITEMLIST";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlStatus.Items.Clear();
+                ddlStatus.Items.Add("");
+                while (dr.Read())
+                {
+                    ddlStatus.Items.Add(dr.GetString(0));
+                }
+                dr.Close();
+                cnp.Close();
+                imgBtnInsert.Visible = (!User.IsInRole("View"));
             }
-            dr.Close();
-            sql = "select iprname from ipr_category order by iprname";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlType.Items.Clear();
-            ddlType.DataValueField = "iprname";
-            ddlType.DataTextField = "iprname";
-            ddlType.DataSource = dr;
-            ddlType.DataBind();
-            ddlType.Items.Insert(0, "");
-            dr.Close();
-            sql = "select country from ipCountry where country is not null order by country";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlCountry.Items.Clear();
-            ddlCountry.DataValueField = "country";
-            ddlCountry.DataTextField = "country";
-            ddlCountry.DataSource = dr;
-            ddlCountry.DataBind();
-            ddlCountry.Items.Insert(0, "");
-            dr.Close();
-            sql = "select attorneyname from (select attorneyname from attorney union select attorneyname from ipattorney) as t  order by t.attorneyname";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlAttorney.Items.Clear();
-            ddlAttorney.DataValueField = "attorneyname";
-            ddlAttorney.DataTextField = "attorneyname";
-            ddlAttorney.DataSource = dr;
-            ddlAttorney.DataBind();
-            ddlAttorney.Items.Insert(0, "");
-            dr.Close();
-            sql = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'STATUS' AND (GROUPING IS NULL OR GROUPING  LIKE 'Non Patent' OR GROUPING  LIKE 'INTERNATIONAL') ORDER BY ITEMLIST";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlStatus.Items.Clear();
-            ddlStatus.Items.Add("");
-            while (dr.Read())
-            {
-                ddlStatus.Items.Add(dr.GetString(0));
-            }
-            dr.Close();
-            cnp.Close();
-            imgBtnInsert.Visible = (!User.IsInRole("View"));
         }
-
+        else
+        {
+            Server.Transfer("Unauthorized.aspx");
+        }
     }
 
     protected void Clear()
@@ -139,7 +145,7 @@ public partial class IP_Modify : System.Web.UI.Page
         System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
         cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
         SqlCommand cmd1 = new SqlCommand();
-        string sql1 = "select RequestDt,Country,Partner,PartnerNo,Type,Attorney,ApplicationNo,FilingDt,PublicationNo,PublicationDt,Status,SubStatus,PatentNo,PatentDt,Remark from INTERNATIONAL where fileno='" + ddlFileNo.SelectedItem.Value.Trim() + "' and subFileNo='" + ddlSubFileNo.SelectedItem.Text.Trim() + "'" ;
+        string sql1 = "select RequestDt,Country,Partner,PartnerNo,Type,Attorney,ApplicationNo,FilingDt,PublicationNo,PublicationDt,Status,SubStatus,PatentNo,PatentDt,Remark from INTERNATIONAL where fileno='" + ddlFileNo.SelectedItem.Value.Trim() + "' and subFileNo='" + ddlSubFileNo.SelectedItem.Text.Trim() + "'";
         cmd1.CommandText = sql1;
         cmd1.CommandType = CommandType.Text;
         cmd1.Connection = cnp;
@@ -179,13 +185,13 @@ public partial class IP_Modify : System.Web.UI.Page
             { txtPubDt.Text = sdr.GetDateTime(9).ToShortDateString(); }
             else { txtPubDt.Text = ""; }
             if (!sdr.IsDBNull(10))
-            { 
-                ddlStatus.Text = sdr.GetString(10).ToString(); 
+            {
+                ddlStatus.Text = sdr.GetString(10).ToString();
                 ddlStatus_SelectedIndexChanged(sender, e);
             }
-            else 
-            { 
-                ddlStatus.Text = ""; 
+            else
+            {
+                ddlStatus.Text = "";
             }
             if (!sdr.IsDBNull(11))
             { ddlSubStatus.Text = sdr.GetString(11).ToString(); }
@@ -229,7 +235,7 @@ public partial class IP_Modify : System.Web.UI.Page
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = cnp;
             cnp.Open();
-            
+
             SqlParameter pm1 = new SqlParameter();
             pm1.ParameterName = "@requestDt";
             pm1.SourceColumn = "requestDt";
@@ -302,46 +308,53 @@ public partial class IP_Modify : System.Web.UI.Page
                 if (DateTime.TryParse(txtDtFiling.Text.Trim(), out DtFiling))
                 {
                     pm8.Value = txtDtFiling.Text.Trim();
-                    try
+                    if (ddlCountry.SelectedValue.Trim() == "United States")
                     {
-                        SqlCommand cmd1 = new SqlCommand("select count(*) from RenewalFollowup where FileNo = '" + ddlSubFileNo.Text.Trim() + "' and phase = 'Prosecution' and '"+ddlCountry.SelectedValue.Trim()+"'='United States'", cnp);
-                        int check =Convert.ToInt16(cmd1.ExecuteScalar());
-                        if(check==0)
+                        try
                         {
-                            SqlCommand cmd2=new SqlCommand("insert into RenewalFollowup(FileNo, SlNo, Description, DueDate, Responsibility, Phase,Indian_Foreign)(select '" + ddlSubFileNo.Text.Trim() + "',[s no], description,[Due Date], responsibility, 'Prosecution',Indian_Foreign from tbl_mst_prosecution where Indian_Foreign = 'US')", cnp);
-                            int inserted=Convert.ToInt16(cmd2.ExecuteNonQuery());                            
-                            DateTime duedate_pa = Convert.ToDateTime(txtDtFiling.Text).AddMonths(18);
-                            DateTime duedate_fer = Convert.ToDateTime(txtDtFiling.Text).AddMonths(24);
-                            DateTime duedate_oa1 = Convert.ToDateTime(txtDtFiling.Text).AddMonths(30);
-                            DateTime duedate_oa2 = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
-                            DateTime duedate_oa3 = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
-                            DateTime duedate_pregrant = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
-                            DateTime duedate_grant = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
-                            //DateTime duedate_pogrant = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
-                            SqlCommand cmd3 = new SqlCommand("update RenewalFollowup set DueDate= case SlNo when 1 then convert(date,'" + duedate_pa + "',103) when 2 then convert(date,'" + duedate_fer + "',103) when 3 then convert(date,'" + duedate_oa1 + "',103) when 4 then convert(date,'" + duedate_oa2 + "',103) when 5 then convert(date,'" + duedate_oa3 + "',103) when 6 then convert(date,'" + duedate_pregrant + "',103) when 7 then convert(date,'" + duedate_grant + "',103) end where fileno='" + ddlSubFileNo.Text.Trim() + "' and phase='prosecution' and Indian_Foreign='US'", cnp);
-                            int updated_rows = Convert.ToInt16(cmd3.ExecuteNonQuery());
-                            if (inserted==8 && updated_rows == 8)
+                            SqlCommand cmd1 = new SqlCommand("select count(*) from RenewalFollowup where FileNo = '" + ddlSubFileNo.Text.Trim() + "' and phase = 'Prosecution' and '" + ddlCountry.SelectedValue.Trim() + "'='United States'", cnp);
+                            int check = Convert.ToInt16(cmd1.ExecuteScalar());
+                            if (check == 0)
                             {
-                                // ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('Failed to update renewal schedule. Kindly update it through P&M action plan')</script>", true);
-                                pminfo.Text = "Renewal followup for Fileno '" + ddlSubFileNo.Text + "' prosecution is successfully updated with Duedates";
-                            }   
-                            else if(inserted==8 && updated_rows!=8)
-                            {
-                                pminfo.Text = "Renewal followup for Fileno '" + ddlSubFileNo.Text + "' prosecution is successfully updated. But unable to update Duedates";
+                                SqlCommand cmd2 = new SqlCommand("insert into RenewalFollowup(FileNo, SlNo, Description, DueDate, Responsibility, Phase,Indian_Foreign)(select '" + ddlSubFileNo.Text.Trim() + "',[s no], description,[Due Date], responsibility, 'Prosecution',Indian_Foreign from tbl_mst_prosecution where Indian_Foreign = 'US')", cnp);
+                                int inserted = Convert.ToInt16(cmd2.ExecuteNonQuery());
+                                DateTime duedate_pa = Convert.ToDateTime(txtDtFiling.Text).AddMonths(18);
+                                DateTime duedate_fer = Convert.ToDateTime(txtDtFiling.Text).AddMonths(24);
+                                DateTime duedate_oa1 = Convert.ToDateTime(txtDtFiling.Text).AddMonths(30);
+                                DateTime duedate_oa2 = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
+                                DateTime duedate_oa3 = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
+                                DateTime duedate_pregrant = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
+                                DateTime duedate_grant = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
+                                //DateTime duedate_pogrant = Convert.ToDateTime(txtDtFiling.Text).AddMonths(36);
+                                SqlCommand cmd3 = new SqlCommand("update RenewalFollowup set DueDate= case SlNo when 1 then convert(date,'" + duedate_pa + "',103) when 2 then convert(date,'" + duedate_fer + "',103) when 3 then convert(date,'" + duedate_oa1 + "',103) when 4 then convert(date,'" + duedate_oa2 + "',103) when 5 then convert(date,'" + duedate_oa3 + "',103) when 6 then convert(date,'" + duedate_pregrant + "',103) when 7 then convert(date,'" + duedate_grant + "',103) end where fileno='" + ddlSubFileNo.Text.Trim() + "' and phase='prosecution' and Indian_Foreign='US'", cnp);
+                                int updated_rows = Convert.ToInt16(cmd3.ExecuteNonQuery());
+                                if (inserted == 8 && updated_rows == 8)
+                                {
+                                    // ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('Failed to update renewal schedule. Kindly update it through P&M action plan')</script>", true);
+                                    pminfo.Text = "Renewal followup for Fileno '" + ddlSubFileNo.Text + "' prosecution is successfully updated with Duedates";
+                                }
+                                else if (inserted == 8 && updated_rows != 8)
+                                {
+                                    pminfo.Text = "Renewal followup for Fileno '" + ddlSubFileNo.Text + "' prosecution is successfully updated. But unable to update Duedates";
+                                }
+                                else
+                                {
+                                    pminfo.Text = "Failed to update renewal schedule. Kindly update it through P&M action plan";
+                                }
                             }
-                            else 
+                            else
                             {
-                                pminfo.Text = "Failed to update renewal schedule. Kindly update it through P&M action plan";
+                                pminfo.Text = "Renewal followup for Fileno '" + ddlSubFileNo.Text + "' is already exists";
                             }
-                    }
-                        else
+                        }
+                        catch (Exception ex)
                         {
-                            pminfo.Text = "Renewal followup for Fileno '" + ddlSubFileNo.Text + "' is already exists";
+                            ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('" + ex + "')</script>");
                         }
                     }
-                    catch(Exception ex)
+                    else
                     {
-                        ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('"+ex+"')</script>");
+                        ClientScript.RegisterStartupScript(GetType(), "Information", "<script>alert('Enter P&M Actionplan Manually for countries other than US')</script>");                       
                     }
                 }
                 else
@@ -413,9 +426,9 @@ public partial class IP_Modify : System.Web.UI.Page
                     pm14.Value = txtPatDt.Text.Trim();
                     try
                     {
-                        SqlCommand cmdcount = new SqlCommand("select count(*) from RenewalFollowup where FileNo='" + ddlSubFileNo.Text.Trim() + "' and phase='Prosecution' and '"+ddlCountry+"'='United States'", cnp);
+                        SqlCommand cmdcount = new SqlCommand("select count(*) from RenewalFollowup where FileNo='" + ddlSubFileNo.Text.Trim() + "' and phase='Prosecution' and '" + ddlCountry + "'='United States'", cnp);
                         int check = Convert.ToInt16(cmdcount.ExecuteScalar());
-                        if(check==0)
+                        if (check == 0)
                         {
                             SqlCommand cmdinsert = new SqlCommand("insert into RenewalFollowup(FileNo,SlNo,Description,DueDate,Responsibility,Phase,Indian_Foreign)(select '" + ddlSubFileNo.Text.Trim() + "',[s no],description,[Due Date],responsibility,'Maintenance',Indian_Foreign from Renewal_schedule where Indian_Foreign='US')", cnp);
                             int inserted = Convert.ToInt16(cmdinsert.ExecuteNonQuery());
@@ -424,7 +437,7 @@ public partial class IP_Modify : System.Web.UI.Page
                             DateTime duedate_3 = Convert.ToDateTime(txtDtFiling.Text).AddMonths(138);
                             SqlCommand cmdupdate = new SqlCommand("update RenewalFollowup set DueDate=case SlNo when 1 then convert(date,'" + duedate_1 + "',103) when 2 then convert(date,'" + duedate_2 + "',103) when 3 then convert(date,'" + duedate_3 + "',103) end where fileno='" + ddlSubFileNo.Text.Trim() + "' and phase='Maintenance' and Indian_Foreign='US'", cnp);
                             int updated_rows = Convert.ToInt16(cmdupdate.ExecuteNonQuery());
-                            if(inserted==3&& updated_rows==3)
+                            if (inserted == 3 && updated_rows == 3)
                             {
                                 minfo.Text = "Renewal Followup for Fileno='" + ddlSubFileNo.SelectedValue + "' Maintenance is successfully updated with Duedates";
                             }

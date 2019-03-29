@@ -98,10 +98,10 @@ public partial class Default2 : System.Web.UI.Page
             using (SqlCommand cmd1 = new SqlCommand())
             {
                 string sql2 = string.Empty, sql3 = string.Empty, sql4 = string.Empty;
-                string sql1 = "select FileNo,Description,Responsibility,Format(DueDate, 'dd-MM-yyyy') as DueDate,AmtInFC,AmtInINR,Status,Format(POPaymentDate, 'dd-MM-yyyy') as POPaymentDate from RenewalFollowup";
+                string sql1 = "select FileNo,Description,Responsibility,Format(DueDate, 'dd-MM-yyyy') as DueDate,AmtInINR,Sharing_Party,Intimation_Date,Confirmation_Date,Share_Received from RenewalFollowup";
                 if (txtFDate.Text != "" && txtTDate.Text != "")
                 {
-                    sql2 = "where DueDate between '" + txtFDate.Text + "'and '" + txtTDate.Text + "'";
+                    sql2 = " where DueDate between '" + txtFDate.Text + "'and '" + txtTDate.Text + "'";
                 }
                 if (ddlResponsibility.SelectedItem.Text != "All")
                 {
@@ -115,7 +115,7 @@ public partial class Default2 : System.Web.UI.Page
                 }
                 if (ddlPhase.SelectedItem.Text != "Both")
                 {
-                    sql4 = (sql2 != string.Empty && sql3 != string.Empty) ? " and " : " where ";
+                    sql4 = (sql2 != string.Empty || sql3 != string.Empty) ? " and " : " where ";
                     sql4 += "Phase='" + ddlPhase.SelectedValue + "'";
                 }
                 string sql = sql1 + sql2 + sql3 + sql4;

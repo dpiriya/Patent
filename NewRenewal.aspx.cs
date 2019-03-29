@@ -17,44 +17,51 @@ public partial class Default2 : System.Web.UI.Page
     string a;
     protected void Page_Load(object sender, EventArgs e)
     {
-        divBlock.Visible = false;
-        divrenewalEntry.Visible = false;
-        divinfo.Visible = true;
-        if (!this.IsPostBack)
+        if (!User.IsInRole("Intern"))
         {
-            cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-            SqlCommand cmd = new SqlCommand();
-            string sql = "select fileno from patdetails order by cast(fileno as int) desc";
-            SqlDataReader dr;
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            cnp.Open();
-            dr = cmd.ExecuteReader();
-            ddlIDFNo.Items.Clear();
-            ddlIDFNo.Items.Add("");
-            dropIDF.Items.Add("");
-            while (dr.Read())
+            divBlock.Visible = false;
+            divrenewalEntry.Visible = false;
+            divinfo.Visible = true;
+            if (!this.IsPostBack)
             {
-                ddlIDFNo.Items.Add(dr.GetString(0));
-                dropIDF.Items.Add(dr.GetString(0));
+                cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                SqlCommand cmd = new SqlCommand();
+                string sql = "select fileno from patdetails order by cast(fileno as int) desc";
+                SqlDataReader dr;
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                cnp.Open();
+                dr = cmd.ExecuteReader();
+                ddlIDFNo.Items.Clear();
+                ddlIDFNo.Items.Add("");
+                dropIDF.Items.Add("");
+                while (dr.Read())
+                {
+                    ddlIDFNo.Items.Add(dr.GetString(0));
+                    dropIDF.Items.Add(dr.GetString(0));
+                }
+                dr.Close();
+                string sql1 = "select SubFileNo from International";
+                //SqlDataReader dr1;
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql1;
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    ddlIDFNo.Items.Add(dr.GetString(0));
+                    dropIDF.Items.Add(dr.GetString(0));
+                }
+                dr.Close();
+                lblblockmsg.Text = "\u25C9" + " Block entry : Not in use. This take place automatically.. see the table below";
+                lblsinglemsg.Text = "\u25C9" + " Single entry : Use for few country filing where block entry option is not available";
             }
-            dr.Close();
-            string sql1 = "select SubFileNo from International";
-            //SqlDataReader dr1;
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql1;
-            dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                ddlIDFNo.Items.Add(dr.GetString(0));
-                dropIDF.Items.Add(dr.GetString(0));
-            }
-            dr.Close();
-            lblblockmsg.Text = "\u25C9" + " Block entry : Not in use. This take place automatically.. see the table below";
-            lblsinglemsg.Text = "\u25C9" + " Single entry : Use for few country filing where block entry option is not available";
-       }
+        }
+        else
+        {
+            Server.Transfer("Unauthorized.aspx");
+        }
     }
 
 
@@ -64,128 +71,128 @@ public partial class Default2 : System.Web.UI.Page
     }
     //protected void ddlIDFNo_SelectedIndexChanged(object sender, EventArgs e)
     //{
-       
-           // string Fileno11;
-           // cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-           //// string idf = ddlIDFNo.SelectedItem.ToString();
-           // SqlCommand cmd1 = new SqlCommand();
-           // string sql1 = "select Country,ApplicationNo,FilingDt,FileNo from International where subFileNo='" + ddlIDFNo.SelectedItem.ToString() +"'";
-           // SqlDataReader dr;
-           // cmd1.CommandType = CommandType.Text;
-           // cmd1.Connection = cnp;
-           // cmd1.CommandText = sql1;
-           // cnp.Open();
 
-           // dr = cmd1.ExecuteReader();
-           // if (dr.Read())
-           // {
-           //     txtCountry.Text = dr[0].ToString();
-           //     txtApllicationNo.Text = dr[1].ToString();
-           //     txtFilingDtInt.Text = dr[2].ToString();
-           //     textFile.Text = dr[3].ToString();
-           // }
-           // cnp.Close();
-           // dr.Close();
+    // string Fileno11;
+    // cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+    //// string idf = ddlIDFNo.SelectedItem.ToString();
+    // SqlCommand cmd1 = new SqlCommand();
+    // string sql1 = "select Country,ApplicationNo,FilingDt,FileNo from International where subFileNo='" + ddlIDFNo.SelectedItem.ToString() +"'";
+    // SqlDataReader dr;
+    // cmd1.CommandType = CommandType.Text;
+    // cmd1.Connection = cnp;
+    // cmd1.CommandText = sql1;
+    // cnp.Open();
 
-           // string sql12 = "select Title,FirstApplicant,Inventor1,Applcn_no,Filing_dt,Pat_no,Pat_dt,Status,Sub_Status from patdetails where FileNo='" + ddlIDFNo.SelectedItem.Value.Trim() + "'";
-           // SqlDataReader dr1;
-           // cmd1.CommandType = CommandType.Text;
-           // cmd1.Connection = cnp;
-           // cmd1.CommandText = sql12;
-           // cnp.Open();
-           // dr1 = cmd1.ExecuteReader();
+    // dr = cmd1.ExecuteReader();
+    // if (dr.Read())
+    // {
+    //     txtCountry.Text = dr[0].ToString();
+    //     txtApllicationNo.Text = dr[1].ToString();
+    //     txtFilingDtInt.Text = dr[2].ToString();
+    //     textFile.Text = dr[3].ToString();
+    // }
+    // cnp.Close();
+    // dr.Close();
 
-           // if (dr1.Read())
-           // {
-           //     txttitle.Text = dr1[0].ToString();
-           //     txtApplicant.Text = dr1[1].ToString();
-           //     txtInventor.Text = dr1[2].ToString();
-           //     txtApplnNo.Text = dr1[3].ToString();
-           //     txtFilingDt.Text = dr1[4].ToString();
-           //     txtPatentNo.Text = dr1[5].ToString();
-           //     txtPatentDate.Text = dr1[6].ToString();
-           //     txtStatus.Text = dr1[7].ToString();
-           //     txtSubStatus.Text = dr1[8].ToString();
-           // }
+    // string sql12 = "select Title,FirstApplicant,Inventor1,Applcn_no,Filing_dt,Pat_no,Pat_dt,Status,Sub_Status from patdetails where FileNo='" + ddlIDFNo.SelectedItem.Value.Trim() + "'";
+    // SqlDataReader dr1;
+    // cmd1.CommandType = CommandType.Text;
+    // cmd1.Connection = cnp;
+    // cmd1.CommandText = sql12;
+    // cnp.Open();
+    // dr1 = cmd1.ExecuteReader();
 
-
-           // cnp.Close();
-
-           // string sql4 = "select Title,FirstApplicant,Inventor1,Applcn_no,Filing_dt,Pat_no,Pat_dt,Status,Sub_Status from patdetails where FileNo='" + textFile.Text + "'";
-           // SqlDataReader dr11;
-           // cmd1.CommandType = CommandType.Text;
-           // cmd1.Connection = cnp;
-           // cmd1.CommandText = sql4;
-           // cnp.Open();
-           // dr11 = cmd1.ExecuteReader();
-
-           // if (dr11.Read())
-           // {
-           //     txttitle.Text = dr11[0].ToString();
-           //     txtApplicant.Text = dr11[1].ToString();
-           //     txtInventor.Text = dr11[2].ToString();
-           //     txtApplnNo.Text = dr11[3].ToString();
-           //     txtFilingDt.Text = dr11[4].ToString();
-           //     txtPatentNo.Text = dr11[5].ToString();
-           //     txtPatentDate.Text = dr11[6].ToString();
-           //     txtStatus.Text = dr11[7].ToString();
-           //     txtSubStatus.Text = dr11[8].ToString();
-           // }
+    // if (dr1.Read())
+    // {
+    //     txttitle.Text = dr1[0].ToString();
+    //     txtApplicant.Text = dr1[1].ToString();
+    //     txtInventor.Text = dr1[2].ToString();
+    //     txtApplnNo.Text = dr1[3].ToString();
+    //     txtFilingDt.Text = dr1[4].ToString();
+    //     txtPatentNo.Text = dr1[5].ToString();
+    //     txtPatentDate.Text = dr1[6].ToString();
+    //     txtStatus.Text = dr1[7].ToString();
+    //     txtSubStatus.Text = dr1[8].ToString();
+    // }
 
 
-           // cnp.Close();
+    // cnp.Close();
 
-           // //SqlCommand cmd3 = new SqlCommand();
-           // //string sql3 = "select Title,FirstApplicant,Inventor1,Applcn_no,Filing_dt,Pat_no,Pat_dt,Status,Sub_Status from patdetails where FileNo='" + ddlIDFNo.SelectedItem.Value.Trim() + "'";
-           // //SqlDataReader dr3;
-           // //cmd3.CommandType = CommandType.Text;
-           // //cmd3.Connection = cnp;
-           // //cmd3.CommandText = sql3;
-           // //cnp.Open();
-           // //dr3 = cmd3.ExecuteReader();
-           // //if (dr3.Read())
-           // //{
-           // //    txttitle.Text = dr3[0].ToString();
-           // //    txtApplicant.Text = dr3[1].ToString();
-           // //    txtInventor.Text = dr3[2].ToString();
-           // //    txtApplnNo.Text = dr3[3].ToString();
-           // //    txtFilingDt.Text = dr3[4].ToString();
-           // //    txtPatentNo.Text = dr3[5].ToString();
-           // //    txtPatentDate.Text = dr3[6].ToString();
-           // //    txtStatus.Text = dr3[7].ToString();
-           // //    txtSubStatus.Text = dr3[8].ToString();
-           // //}
-           // //cnp.Close();
+    // string sql4 = "select Title,FirstApplicant,Inventor1,Applcn_no,Filing_dt,Pat_no,Pat_dt,Status,Sub_Status from patdetails where FileNo='" + textFile.Text + "'";
+    // SqlDataReader dr11;
+    // cmd1.CommandType = CommandType.Text;
+    // cmd1.Connection = cnp;
+    // cmd1.CommandText = sql4;
+    // cnp.Open();
+    // dr11 = cmd1.ExecuteReader();
 
-           // SqlCommand cmd11 = new SqlCommand("select count(*) from RenewalFollowup where FileNo='" + ddlIDFNo.SelectedItem.Value.Trim() + "'", cnp);
-           // cnp.Open();
-           // count = Convert.ToInt32(cmd11.ExecuteScalar());
-           // if (count < 18)
-           // {
-           //     txtSlno.Text = Convert.ToInt32(count + 1).ToString();
-           // }
-           // else
-           // {
-           //     ClientScript.RegisterStartupScript(GetType(), "Success", "<script>alert('This Record already exist')</script>");
-           // }
+    // if (dr11.Read())
+    // {
+    //     txttitle.Text = dr11[0].ToString();
+    //     txtApplicant.Text = dr11[1].ToString();
+    //     txtInventor.Text = dr11[2].ToString();
+    //     txtApplnNo.Text = dr11[3].ToString();
+    //     txtFilingDt.Text = dr11[4].ToString();
+    //     txtPatentNo.Text = dr11[5].ToString();
+    //     txtPatentDate.Text = dr11[6].ToString();
+    //     txtStatus.Text = dr11[7].ToString();
+    //     txtSubStatus.Text = dr11[8].ToString();
+    // }
 
-           // ddlIDFNo.Enabled = false;
-           // txttitle.Enabled = false;
-           // txtApplicant.Enabled = false;
-           // txtInventor.Enabled = false;
-           // txtApplnNo.Enabled = false;
-           // txtFilingDt.Enabled = false;
-           // txtPatentNo.Enabled = false;
-           // txtPatentDate.Enabled = false;
-           // txtCountry.Enabled = false;
-           // txtApllicationNo.Enabled = false;
-           // txtFilingDtInt.Enabled = false;
-           // txtApplnNo.Enabled = false;
-           // txtStatus.Enabled = false;
-           // txtSubStatus.Enabled = false;
-           // divrenewalEntry.Visible = true;
-        //}
-    
+
+    // cnp.Close();
+
+    // //SqlCommand cmd3 = new SqlCommand();
+    // //string sql3 = "select Title,FirstApplicant,Inventor1,Applcn_no,Filing_dt,Pat_no,Pat_dt,Status,Sub_Status from patdetails where FileNo='" + ddlIDFNo.SelectedItem.Value.Trim() + "'";
+    // //SqlDataReader dr3;
+    // //cmd3.CommandType = CommandType.Text;
+    // //cmd3.Connection = cnp;
+    // //cmd3.CommandText = sql3;
+    // //cnp.Open();
+    // //dr3 = cmd3.ExecuteReader();
+    // //if (dr3.Read())
+    // //{
+    // //    txttitle.Text = dr3[0].ToString();
+    // //    txtApplicant.Text = dr3[1].ToString();
+    // //    txtInventor.Text = dr3[2].ToString();
+    // //    txtApplnNo.Text = dr3[3].ToString();
+    // //    txtFilingDt.Text = dr3[4].ToString();
+    // //    txtPatentNo.Text = dr3[5].ToString();
+    // //    txtPatentDate.Text = dr3[6].ToString();
+    // //    txtStatus.Text = dr3[7].ToString();
+    // //    txtSubStatus.Text = dr3[8].ToString();
+    // //}
+    // //cnp.Close();
+
+    // SqlCommand cmd11 = new SqlCommand("select count(*) from RenewalFollowup where FileNo='" + ddlIDFNo.SelectedItem.Value.Trim() + "'", cnp);
+    // cnp.Open();
+    // count = Convert.ToInt32(cmd11.ExecuteScalar());
+    // if (count < 18)
+    // {
+    //     txtSlno.Text = Convert.ToInt32(count + 1).ToString();
+    // }
+    // else
+    // {
+    //     ClientScript.RegisterStartupScript(GetType(), "Success", "<script>alert('This Record already exist')</script>");
+    // }
+
+    // ddlIDFNo.Enabled = false;
+    // txttitle.Enabled = false;
+    // txtApplicant.Enabled = false;
+    // txtInventor.Enabled = false;
+    // txtApplnNo.Enabled = false;
+    // txtFilingDt.Enabled = false;
+    // txtPatentNo.Enabled = false;
+    // txtPatentDate.Enabled = false;
+    // txtCountry.Enabled = false;
+    // txtApllicationNo.Enabled = false;
+    // txtFilingDtInt.Enabled = false;
+    // txtApplnNo.Enabled = false;
+    // txtStatus.Enabled = false;
+    // txtSubStatus.Enabled = false;
+    // divrenewalEntry.Visible = true;
+    //}
+
     protected void imgBtnInsert_Click(object sender, ImageClickEventArgs e)
     {
         System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
@@ -483,7 +490,7 @@ public partial class Default2 : System.Web.UI.Page
             divBlock.Visible = false;
         }
 
-   
+
         else
         {
             divrenewalEntry.Visible = false;
@@ -635,133 +642,133 @@ public partial class Default2 : System.Web.UI.Page
 
 
 
-      
+
 
 
 
     }
     protected void btnFind_Click(object sender, EventArgs e)
     {
-         //string Fileno11;
-            cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-           // string idf = ddlIDFNo.SelectedItem.ToString();
-            SqlCommand cmd1 = new SqlCommand();
-            string sql1 = "select Country,ApplicationNo,FilingDt,FileNo from International where subFileNo='" + ddlIDFNo.SelectedItem.ToString() +"'";
-            SqlDataReader dr;
-            cmd1.CommandType = CommandType.Text;
-            cmd1.Connection = cnp;
-            cmd1.CommandText = sql1;
-            cnp.Open();
+        //string Fileno11;
+        cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+        // string idf = ddlIDFNo.SelectedItem.ToString();
+        SqlCommand cmd1 = new SqlCommand();
+        string sql1 = "select Country,ApplicationNo,FilingDt,FileNo from International where subFileNo='" + ddlIDFNo.SelectedItem.ToString() + "'";
+        SqlDataReader dr;
+        cmd1.CommandType = CommandType.Text;
+        cmd1.Connection = cnp;
+        cmd1.CommandText = sql1;
+        cnp.Open();
 
-            dr = cmd1.ExecuteReader();
-            if (dr.Read())
-            {
-                txtCountry.Text = dr[0].ToString();
-                txtApllicationNo.Text = dr[1].ToString();
-                txtFilingDtInt.Text = dr[2].ToString();
-                textFile.Text = dr[3].ToString();
-            }
-            cnp.Close();
-            dr.Close();
+        dr = cmd1.ExecuteReader();
+        if (dr.Read())
+        {
+            txtCountry.Text = dr[0].ToString();
+            txtApllicationNo.Text = dr[1].ToString();
+            txtFilingDtInt.Text = dr[2].ToString();
+            textFile.Text = dr[3].ToString();
+        }
+        cnp.Close();
+        dr.Close();
 
-            string sql12 = "select Title,FirstApplicant,Inventor1,Applcn_no,Filing_dt,Pat_no,Pat_dt,Status,Sub_Status from patdetails where FileNo='" + ddlIDFNo.SelectedItem.Value.Trim() + "'";
-            SqlDataReader dr1;
-            cmd1.CommandType = CommandType.Text;
-            cmd1.Connection = cnp;
-            cmd1.CommandText = sql12;
-            cnp.Open();
-            dr1 = cmd1.ExecuteReader();
+        string sql12 = "select Title,FirstApplicant,Inventor1,Applcn_no,Filing_dt,Pat_no,Pat_dt,Status,Sub_Status from patdetails where FileNo='" + ddlIDFNo.SelectedItem.Value.Trim() + "'";
+        SqlDataReader dr1;
+        cmd1.CommandType = CommandType.Text;
+        cmd1.Connection = cnp;
+        cmd1.CommandText = sql12;
+        cnp.Open();
+        dr1 = cmd1.ExecuteReader();
 
-            if (dr1.Read())
-            {
-                txttitle.Text = dr1[0].ToString();
-                txtApplicant.Text = dr1[1].ToString();
-                txtInventor.Text = dr1[2].ToString();
-                txtApplnNo.Text = dr1[3].ToString();
-                txtFilingDt.Text = dr1[4].ToString();
-                txtPatentNo.Text = dr1[5].ToString();
-                txtPatentDate.Text = dr1[6].ToString();
-                txtStatus.Text = dr1[7].ToString();
-                txtSubStatus.Text = dr1[8].ToString();
-            }
-
-
-            cnp.Close();
-
-            string sql4 = "select Title,FirstApplicant,Inventor1,Applcn_no,Filing_dt,Pat_no,Pat_dt,Status,Sub_Status from patdetails where FileNo='" + textFile.Text + "'";
-            SqlDataReader dr11;
-            cmd1.CommandType = CommandType.Text;
-            cmd1.Connection = cnp;
-            cmd1.CommandText = sql4;
-            cnp.Open();
-            dr11 = cmd1.ExecuteReader();
-
-            if (dr11.Read())
-            {
-                txttitle.Text = dr11[0].ToString();
-                txtApplicant.Text = dr11[1].ToString();
-                txtInventor.Text = dr11[2].ToString();
-                txtApplnNo.Text = dr11[3].ToString();
-                txtFilingDt.Text = dr11[4].ToString();
-                txtPatentNo.Text = dr11[5].ToString();
-                txtPatentDate.Text = dr11[6].ToString();
-                txtStatus.Text = dr11[7].ToString();
-                txtSubStatus.Text = dr11[8].ToString();
-            }
-
-
-            cnp.Close();
-
-            //SqlCommand cmd3 = new SqlCommand();
-            //string sql3 = "select Title,FirstApplicant,Inventor1,Applcn_no,Filing_dt,Pat_no,Pat_dt,Status,Sub_Status from patdetails where FileNo='" + ddlIDFNo.SelectedItem.Value.Trim() + "'";
-            //SqlDataReader dr3;
-            //cmd3.CommandType = CommandType.Text;
-            //cmd3.Connection = cnp;
-            //cmd3.CommandText = sql3;
-            //cnp.Open();
-            //dr3 = cmd3.ExecuteReader();
-            //if (dr3.Read())
-            //{
-            //    txttitle.Text = dr3[0].ToString();
-            //    txtApplicant.Text = dr3[1].ToString();
-            //    txtInventor.Text = dr3[2].ToString();
-            //    txtApplnNo.Text = dr3[3].ToString();
-            //    txtFilingDt.Text = dr3[4].ToString();
-            //    txtPatentNo.Text = dr3[5].ToString();
-            //    txtPatentDate.Text = dr3[6].ToString();
-            //    txtStatus.Text = dr3[7].ToString();
-            //    txtSubStatus.Text = dr3[8].ToString();
-            //}
-            //cnp.Close();
-
-            SqlCommand cmd11 = new SqlCommand("select count(*) from RenewalFollowup where FileNo='" + ddlIDFNo.SelectedItem.Value.Trim() + "'", cnp);
-            cnp.Open();
-            count = Convert.ToInt32(cmd11.ExecuteScalar());
-            if (count < 18)
-            {
-                txtSlno.Text = Convert.ToInt32(count + 1).ToString();
-            }
-            else
-            {
-                ClientScript.RegisterStartupScript(GetType(), "Success", "<script>alert('This Record already exist')</script>");
-            }
-
-            ddlIDFNo.Enabled = false;
-            txttitle.Enabled = false;
-            txtApplicant.Enabled = false;
-            txtInventor.Enabled = false;
-            txtApplnNo.Enabled = false;
-            txtFilingDt.Enabled = false;
-            txtPatentNo.Enabled = false;
-            txtPatentDate.Enabled = false;
-            txtCountry.Enabled = false;
-            txtApllicationNo.Enabled = false;
-            txtFilingDtInt.Enabled = false;
-            txtApplnNo.Enabled = false;
-            txtStatus.Enabled = false;
-            txtSubStatus.Enabled = false;
-            divrenewalEntry.Visible = true;
+        if (dr1.Read())
+        {
+            txttitle.Text = dr1[0].ToString();
+            txtApplicant.Text = dr1[1].ToString();
+            txtInventor.Text = dr1[2].ToString();
+            txtApplnNo.Text = dr1[3].ToString();
+            txtFilingDt.Text = dr1[4].ToString();
+            txtPatentNo.Text = dr1[5].ToString();
+            txtPatentDate.Text = dr1[6].ToString();
+            txtStatus.Text = dr1[7].ToString();
+            txtSubStatus.Text = dr1[8].ToString();
         }
 
+
+        cnp.Close();
+
+        string sql4 = "select Title,FirstApplicant,Inventor1,Applcn_no,Filing_dt,Pat_no,Pat_dt,Status,Sub_Status from patdetails where FileNo='" + textFile.Text + "'";
+        SqlDataReader dr11;
+        cmd1.CommandType = CommandType.Text;
+        cmd1.Connection = cnp;
+        cmd1.CommandText = sql4;
+        cnp.Open();
+        dr11 = cmd1.ExecuteReader();
+
+        if (dr11.Read())
+        {
+            txttitle.Text = dr11[0].ToString();
+            txtApplicant.Text = dr11[1].ToString();
+            txtInventor.Text = dr11[2].ToString();
+            txtApplnNo.Text = dr11[3].ToString();
+            txtFilingDt.Text = dr11[4].ToString();
+            txtPatentNo.Text = dr11[5].ToString();
+            txtPatentDate.Text = dr11[6].ToString();
+            txtStatus.Text = dr11[7].ToString();
+            txtSubStatus.Text = dr11[8].ToString();
+        }
+
+
+        cnp.Close();
+
+        //SqlCommand cmd3 = new SqlCommand();
+        //string sql3 = "select Title,FirstApplicant,Inventor1,Applcn_no,Filing_dt,Pat_no,Pat_dt,Status,Sub_Status from patdetails where FileNo='" + ddlIDFNo.SelectedItem.Value.Trim() + "'";
+        //SqlDataReader dr3;
+        //cmd3.CommandType = CommandType.Text;
+        //cmd3.Connection = cnp;
+        //cmd3.CommandText = sql3;
+        //cnp.Open();
+        //dr3 = cmd3.ExecuteReader();
+        //if (dr3.Read())
+        //{
+        //    txttitle.Text = dr3[0].ToString();
+        //    txtApplicant.Text = dr3[1].ToString();
+        //    txtInventor.Text = dr3[2].ToString();
+        //    txtApplnNo.Text = dr3[3].ToString();
+        //    txtFilingDt.Text = dr3[4].ToString();
+        //    txtPatentNo.Text = dr3[5].ToString();
+        //    txtPatentDate.Text = dr3[6].ToString();
+        //    txtStatus.Text = dr3[7].ToString();
+        //    txtSubStatus.Text = dr3[8].ToString();
+        //}
+        //cnp.Close();
+
+        SqlCommand cmd11 = new SqlCommand("select count(*) from RenewalFollowup where FileNo='" + ddlIDFNo.SelectedItem.Value.Trim() + "'", cnp);
+        cnp.Open();
+        count = Convert.ToInt32(cmd11.ExecuteScalar());
+        if (count < 18)
+        {
+            txtSlno.Text = Convert.ToInt32(count + 1).ToString();
+        }
+        else
+        {
+            ClientScript.RegisterStartupScript(GetType(), "Success", "<script>alert('This Record already exist')</script>");
+        }
+
+        ddlIDFNo.Enabled = false;
+        txttitle.Enabled = false;
+        txtApplicant.Enabled = false;
+        txtInventor.Enabled = false;
+        txtApplnNo.Enabled = false;
+        txtFilingDt.Enabled = false;
+        txtPatentNo.Enabled = false;
+        txtPatentDate.Enabled = false;
+        txtCountry.Enabled = false;
+        txtApllicationNo.Enabled = false;
+        txtFilingDtInt.Enabled = false;
+        txtApplnNo.Enabled = false;
+        txtStatus.Enabled = false;
+        txtSubStatus.Enabled = false;
+        divrenewalEntry.Visible = true;
     }
+
+}
 

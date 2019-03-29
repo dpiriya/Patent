@@ -22,7 +22,9 @@
             <td align="center">IDF NO<asp:DropDownList ID="ddlIDFNo" runat="server"
                 AutoPostBack="true" EnableViewState="true">
             </asp:DropDownList>
-
+                <asp:DropDownList ID="ddlphase" runat="server"
+                AutoPostBack="true" EnableViewState="true">
+            </asp:DropDownList>
                 <asp:Button
                     ID="btnFind" runat="server" CssClass="submitButton" Text="Find"
                     OnClick="btnFind_Click" />&nbsp;&nbsp;

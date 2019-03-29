@@ -17,10 +17,18 @@ public partial class InterAttorney : System.Web.UI.Page
     SqlConnection con = new SqlConnection();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+
+        if (!User.IsInRole("Intern"))
         {
-            txtAttorneyID.Text= findMaxNo();
-            imgBtnSubmit.Visible = (!User.IsInRole("View"));
+            if (!IsPostBack)
+            {
+                txtAttorneyID.Text = findMaxNo();
+                imgBtnSubmit.Visible = (!User.IsInRole("View"));
+            }
+        }
+        else
+        {
+            Server.Transfer("Unauthorized.aspx");
         }
     }
     protected string findMaxNo()

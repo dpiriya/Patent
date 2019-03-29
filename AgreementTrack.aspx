@@ -24,7 +24,7 @@
             runat="server" Width="197px">
     </asp:DropDownList></td>
    <td>Status:&nbsp;&nbsp<asp:DropDownList ID="drop1" runat="server">
-      <asp:ListItem>Draft-Party </asp:ListItem>
+      <%--<asp:ListItem>Draft-Party </asp:ListItem>
         <asp:ListItem>Draft-Legal</asp:ListItem>
         <asp:ListItem>Draft-IP Cell</asp:ListItem>
         <asp:ListItem>Executed-Subsisting</asp:ListItem>
@@ -33,6 +33,7 @@
         <asp:ListItem>Executed-Suspended</asp:ListItem>
         <asp:ListItem>Renewal Due</asp:ListItem>
         <asp:ListItem>To be amended</asp:ListItem>
+       <asp:ListItem>Closed</asp:ListItem>--%>
         </asp:DropDownList></td></tr>
    <tr>
     <td align="center">

@@ -15,7 +15,7 @@ public partial class Contract : System.Web.UI.Page
     SqlConnection con = new SqlConnection();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (User.IsInRole("Admin") || User.IsInRole("Super User") || User.IsInRole("Marketing"))
+        if (User.IsInRole("Admin") || User.IsInRole("Super User") || User.IsInRole("Marketing")||!User.IsInRole("Intern"))
         {
             if (!this.IsPostBack)
             {
@@ -45,6 +45,14 @@ public partial class Contract : System.Web.UI.Page
                 ddlDept.DataBind();
                 ddlDept.Items.Insert(0, new ListItem("", ""));
                 dr.Close();
+                sql = "select ItemList from ListItemMaster where Category='Contract' and Grouping='Status'";
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                dropstatus.DataTextField = "ItemList";
+                dropstatus.DataValueField = "ItemList";
+                dropstatus.DataSource = dr;
+                dropstatus.DataBind();
+                dr.Close();
                 con.Close();
                 dsContract ds = new dsContract();
                 imgBtnInsert.Visible = (!User.IsInRole("View"));
@@ -54,7 +62,7 @@ public partial class Contract : System.Web.UI.Page
         }
         else
         {
-            Server.Transfer("Unautherized.aspx");
+            Server.Transfer("Unauthorized.aspx");
         }
         con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
         con.Open();

@@ -17,74 +17,81 @@ public partial class Commercial : System.Web.UI.Page
     SqlConnection cnp = new SqlConnection();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (!User.IsInRole("Intern"))
         {
-            cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-            SqlCommand cmd = new SqlCommand();
-            string sql = "select fileno from patdetails order by cast(fileno as int) desc";
-            SqlDataReader dr;
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            cnp.Open();
-            dr = cmd.ExecuteReader();
-            ddlFileNo.Items.Clear();
-            ddlFileNo.DataTextField = "fileno";
-            ddlFileNo.DataValueField = "fileno";
-            ddlFileNo.DataSource = dr;
-            ddlFileNo.DataBind();
-            ddlFileNo.Items.Insert(0, "");
-            dr.Close();
-
-            sql = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'COMMERCIAL' ORDER BY ITEMLIST";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlCommercial.Items.Add("");
-            while (dr.Read())
+            if (!IsPostBack)
             {
-                ddlCommercial.Items.Add(dr.GetString(0));
-            }
-            dr.Close();
+                cnp.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                SqlCommand cmd = new SqlCommand();
+                string sql = "select fileno from patdetails order by cast(fileno as int) desc";
+                SqlDataReader dr;
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                cnp.Open();
+                dr = cmd.ExecuteReader();
+                ddlFileNo.Items.Clear();
+                ddlFileNo.DataTextField = "fileno";
+                ddlFileNo.DataValueField = "fileno";
+                ddlFileNo.DataSource = dr;
+                ddlFileNo.DataBind();
+                ddlFileNo.Items.Insert(0, "");
+                dr.Close();
 
-            sql = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'INDUSTRY' ORDER BY ITEMLIST";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlIndustry.Items.Add("");
-            while (dr.Read())
-            {
-                ddlIndustry.Items.Add(dr.GetString(0));
-            }
-            dr.Close();
-            
-            sql = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'COMMERCIALIZED' ORDER BY ITEMLIST";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlRoyal.DataTextField = "ItemList";
-            ddlRoyal.DataValueField = "ItemList";
-            ddlRoyal.DataSource = dr;
-            ddlRoyal.DataBind();
-            ddlRoyal.Items.Insert(0, new ListItem("", ""));
-            dr.Close();
+                sql = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'COMMERCIAL' ORDER BY ITEMLIST";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlCommercial.Items.Add("");
+                while (dr.Read())
+                {
+                    ddlCommercial.Items.Add(dr.GetString(0));
+                }
+                dr.Close();
 
-            sql = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'ABSTRACT' ORDER BY SLNO";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = cnp;
-            cmd.CommandText = sql;
-            dr = cmd.ExecuteReader();
-            ddlAbstract.Items.Add("");
-            while (dr.Read())
-            {
-                ddlAbstract.Items.Add(dr.GetString(0));
+                sql = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'INDUSTRY' ORDER BY ITEMLIST";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlIndustry.Items.Add("");
+                while (dr.Read())
+                {
+                    ddlIndustry.Items.Add(dr.GetString(0));
+                }
+                dr.Close();
+
+                sql = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'COMMERCIALIZED' ORDER BY ITEMLIST";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlRoyal.DataTextField = "ItemList";
+                ddlRoyal.DataValueField = "ItemList";
+                ddlRoyal.DataSource = dr;
+                ddlRoyal.DataBind();
+                ddlRoyal.Items.Insert(0, new ListItem("", ""));
+                dr.Close();
+
+                sql = "SELECT ITEMLIST FROM LISTITEMMASTER WHERE CATEGORY LIKE 'ABSTRACT' ORDER BY SLNO";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cnp;
+                cmd.CommandText = sql;
+                dr = cmd.ExecuteReader();
+                ddlAbstract.Items.Add("");
+                while (dr.Read())
+                {
+                    ddlAbstract.Items.Add(dr.GetString(0));
+                }
+                dr.Close();
+                cnp.Close();
+                imgBtnInsert.Visible = (!User.IsInRole("View"));
             }
-            dr.Close();
-            cnp.Close();
-            imgBtnInsert.Visible = (!User.IsInRole("View"));
+        }
+        else
+        {
+            Server.Transfer("Unauthorized.aspx");
         }
     }
     protected void imgBtnInsert_Click(object sender, ImageClickEventArgs e)
@@ -115,7 +122,7 @@ public partial class Commercial : System.Web.UI.Page
             SqlParameter pm2 = new SqlParameter();
             pm2.ParameterName = "@InventionNo";
             pm2.SourceColumn = "InventionNo";
-            if (txtInventionNo.Text.Trim()=="") pm2.Value = DBNull.Value; else pm2.Value = txtInventionNo.Text.Trim();
+            if (txtInventionNo.Text.Trim() == "") pm2.Value = DBNull.Value; else pm2.Value = txtInventionNo.Text.Trim();
             pm2.DbType = DbType.String;
             pm2.Direction = ParameterDirection.Input;
 
@@ -174,7 +181,7 @@ public partial class Commercial : System.Web.UI.Page
             SqlParameter pm7 = new SqlParameter();
             pm7.ParameterName = "@abstract";
             pm7.SourceColumn = "abstract";
-            if(ddlAbstract.SelectedItem.Text.Trim()=="") pm7.Value = DBNull.Value; else pm7.Value = ddlAbstract.SelectedItem.Text.Trim();
+            if (ddlAbstract.SelectedItem.Text.Trim() == "") pm7.Value = DBNull.Value; else pm7.Value = ddlAbstract.SelectedItem.Text.Trim();
             pm7.DbType = DbType.String;
             pm7.Direction = ParameterDirection.Input;
 
@@ -283,7 +290,7 @@ public partial class Commercial : System.Web.UI.Page
         ddlFileNo.Text = "";
         ddlCommercial.Text = "";
         txtCommercial.Text = "";
-        txtInventionNo.Text = ""; 
+        txtInventionNo.Text = "";
         txtVFromDt.Text = "";
         txtVToDt.Text = "";
         ddlIndustry.Text = "";
@@ -295,7 +302,7 @@ public partial class Commercial : System.Web.UI.Page
         ddlRoyal.Text = "";
         txtLicense.Text = "";
         txtTechTransNo.Text = "";
-        txtRemark.Text = "";        
+        txtRemark.Text = "";
     }
     protected void ddlFileNo_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -324,16 +331,16 @@ public partial class Commercial : System.Web.UI.Page
             { txtInventionNo.Text = dr.GetString(1); }
             else { txtInventionNo.Text = ""; }
             if (!dr.IsDBNull(2))
-            { 
-                txtVFromDt.Text = dr.GetDateTime(2).ToShortDateString(); 
+            {
+                txtVFromDt.Text = dr.GetDateTime(2).ToShortDateString();
             }
             else if (!dr.IsDBNull(13))
             {
-                txtVFromDt.Text = dr.GetDateTime(13).ToShortDateString(); 
+                txtVFromDt.Text = dr.GetDateTime(13).ToShortDateString();
             }
             else
             {
-                txtVFromDt.Text ="";
+                txtVFromDt.Text = "";
             }
             if (!dr.IsDBNull(3))
             { txtVToDt.Text = dr.GetDateTime(3).ToShortDateString(); }
@@ -367,7 +374,7 @@ public partial class Commercial : System.Web.UI.Page
             else { txtDevelop.Text = ""; }
             if (!dr.IsDBNull(14))
             { txtIndustry3.Text = dr.GetString(14); }
-            else { txtIndustry3.Text = ""; }           
+            else { txtIndustry3.Text = ""; }
         }
         dr.Close();
         cnp.Close();

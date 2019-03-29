@@ -64,7 +64,7 @@
                         <ul style="text-align: left">
                             <li><a href="FileCreation.aspx">New IDF</a></li>
                             <li><a href="FileCreationModify.aspx">Modification IDF Details</a></li>
-                            <li><a href="IndianPatent.aspx">Updation-Due Diligence,Filing,Prosecution</a></li>
+                            <li><a href="IndianPatent.aspx">Updation-Filing,Prosecution</a></li>
                             <li><a href="Commercial.aspx">Updation-Commercialization</a></li>
                         </ul>
                     </li>

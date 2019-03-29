@@ -10,7 +10,7 @@ using System.Configuration;
 using System.IO;
 
 public partial class DueDiligenceReport : System.Web.UI.Page
-{   
+{
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -23,7 +23,8 @@ public partial class DueDiligenceReport : System.Web.UI.Page
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    string sql = "select column_name from information_schema.columns where table_name like 'tbl_trx_duediligence'";
+                    string sql = "select column_name from information_schema.columns where table_name like 'tbl_trx_duediligence' and COLUMN_NAME in ('FileNo','EntryDt','SRNo','RequestDt','ReportType','Mode','Allocation')";
+                    // string sql = "select column_name from information_schema.columns where table_name like 'tbl_trx_duediligence'";
                     cmd.CommandText = sql;
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = con;
@@ -40,89 +41,90 @@ public partial class DueDiligenceReport : System.Web.UI.Page
     }
     protected void imgBtnReport_Click(object sender, EventArgs e)
     {
+        lvSearch.Visible = true;
         lvSearchb.Visible = false;
-        string mVal;        
-            if (lstField.SelectedIndex == -1)
+        string mVal;
+        if (lstField.SelectedIndex == -1)
+        {
+            using (SqlConnection con = new SqlConnection())
             {
-                using (SqlConnection con = new SqlConnection())
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand())
                 {
-                    con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-                        string sql = "select * from tbl_trx_duediligence";
-                        cmd.CommandText = sql;
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = con;
-                        SqlDataReader dr;
-                        dr = cmd.ExecuteReader();
-                        DataTable dt = new DataTable();
-                        dt.Load(dr);
-                        GenerateExcel ge = new GenerateExcel();
-                        ge.MakeExcel(dt, "Duediligence");
+                    string sql = "select * from tbl_trx_duediligence";
+                    cmd.CommandText = sql;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = con;
+                    SqlDataReader dr;
+                    dr = cmd.ExecuteReader();
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+                    GenerateExcel ge = new GenerateExcel();
+                    ge.MakeExcel(dt, "Duediligence");
                     lvSearch.DataSource = dt;
                     lvSearch.DataBind();
 
-                        dr.Close();
-                    }
+                    dr.Close();
                 }
             }
-            if (lstField.SelectedIndex == 7)
+        }
+        if (lstField.SelectedIndex == 7)
+        {
+            mVal = "= '" + ddlListItem.SelectedItem.Text.Trim() + "'";
+        }      
+        else if (lstField.SelectedIndex == 2)
+        {
+            // mVal = "= '" + ddlListItem.SelectedItem.Text.Trim() + "'";
+            //   mVal = "= '" + ddlListItem.SelectedItem.value.Trim() + "'";
+            mVal = "= '" + ddlListItem.SelectedItem.Value.ToString() + "'";
+            using (SqlConnection con = new SqlConnection())
             {
-                mVal = "= '" + ddlListItem.SelectedItem.Text.Trim() + "'";
-            }           
-            else if (lstField.SelectedIndex == 2)
-            {
-                // mVal = "= '" + ddlListItem.SelectedItem.Text.Trim() + "'";
-                //   mVal = "= '" + ddlListItem.SelectedItem.value.Trim() + "'";
-                mVal = "= '" + ddlListItem.SelectedItem.Value.ToString() + "'";
-                using (SqlConnection con = new SqlConnection())
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand())
                 {
-                    con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-                        string sql = "select * from tbl_trx_duediligence where FileNo " + mVal;
-                        cmd.CommandText = sql;
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = con;
-                        SqlDataReader dr;
-                        dr = cmd.ExecuteReader();
-                        DataTable dt = new DataTable();
-                        dt.Load(dr);
+                    string sql = "select * from tbl_trx_duediligence where FileNo " + mVal;
+                    cmd.CommandText = sql;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = con;
+                    SqlDataReader dr;
+                    dr = cmd.ExecuteReader();
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
                     lvSearch.DataSource = dt;
                     lvSearch.DataBind();
-                        dr.Close();
-                    }
+                    dr.Close();
+                }
 
-                }
             }
-            else
+        }
+        else
+        {
+            mVal = " like '%" + txtValue.Text.Trim() + "%'";
+        }
+        if (lstField.SelectedIndex != -1)
+        {
+            using (SqlConnection con = new SqlConnection())
             {
-                mVal = " like '%" + txtValue.Text.Trim() + "%'";
-            }
-            if (lstField.SelectedIndex != -1)
-            {
-                using (SqlConnection con = new SqlConnection())
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand())
                 {
-                    con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-                        string sql = "select * from tbl_trx_duediligence where " + lstField.SelectedItem.Text.Trim() + mVal;
-                        cmd.CommandText = sql;
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = con;
-                        SqlDataReader dr;
-                        dr = cmd.ExecuteReader();
-                        DataTable dt = new DataTable();
-                        dt.Load(dr);
+                    string sql = "select * from tbl_trx_duediligence where " + lstField.SelectedItem.Text.Trim() + mVal;
+                    cmd.CommandText = sql;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = con;
+                    SqlDataReader dr;
+                    dr = cmd.ExecuteReader();
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
                     lvSearch.DataSource = dt;
                     lvSearch.DataBind();
-                        dr.Close();
-                    }
+                    dr.Close();
                 }
-            }        
+            }
+        }
     }
     protected void imgBtnClear_Click(object sender, EventArgs e)
     {
@@ -137,62 +139,69 @@ public partial class DueDiligenceReport : System.Web.UI.Page
     protected void lstField_SelectedIndexChanged(object sender, EventArgs e)
     {
         ddlListItem.Items.Clear();
-        txtValue.Text = "";       
-            if (lstField.SelectedIndex == 7)
+        txtValue.Text = "";
+        if (lstField.SelectedIndex == 4)
+        {
+            ddlListItem.Visible = true;
+            txtValue.Visible = false;
+            string sql = "select distinct(" + lstField.SelectedItem.Text.Trim() + ") from tbl_trx_duediligence order by " + lstField.SelectedItem.Text.Trim();
+            using (SqlConnection con = new SqlConnection())
             {
-                ddlListItem.Visible = true;
-                txtValue.Visible = false;
-                string sql = "select distinct(" + lstField.SelectedItem.Text.Trim() + ") from tbl_trx_duediligence order by " + lstField.SelectedItem.Text.Trim();
-                using (SqlConnection con = new SqlConnection())
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand())
                 {
-                    con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-                        cmd.CommandText = sql;
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = con;
-                        SqlDataReader dr;
-                        dr = cmd.ExecuteReader();
-                        ddlListItem.DataTextField = lstField.SelectedItem.Text.Trim();
-                        ddlListItem.DataValueField = lstField.SelectedItem.Text.Trim();
-                        ddlListItem.DataSource = dr;
-                        ddlListItem.DataBind();
-                        dr.Close();
-                    }
+                    cmd.CommandText = sql;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = con;
+                    SqlDataReader dr;
+                    dr = cmd.ExecuteReader();
+                    ddlListItem.DataTextField = lstField.SelectedItem.Text.Trim();
+                    ddlListItem.DataValueField = lstField.SelectedItem.Text.Trim();
+                    ddlListItem.DataSource = dr;
+                    ddlListItem.DataBind();
+                    dr.Close();
                 }
             }
-
-            else if (lstField.SelectedIndex == 2)
+        }
+        else if (lstField.SelectedIndex == 3)
+        {
+            ddlListItem.Visible = true;
+            txtValue.Visible = false;
+            ddlListItem.Items.Clear();
+            ddlListItem.Items.Add("Inhouse");
+            ddlListItem.Items.Add("External");
+        }
+        else if (lstField.SelectedIndex == 2)
+        {
+            ddlListItem.Visible = true;
+            txtValue.Visible = false;
+            string sql = "select distinct fileno from tbl_trx_duediligence order by FileNo";
+            using (SqlConnection con = new SqlConnection())
             {
-                ddlListItem.Visible = true;
-                txtValue.Visible = false;
-                string sql = "select distinct fileno from tbl_trx_duediligence order by FileNo";
-                using (SqlConnection con = new SqlConnection())
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
+                con.Open();
+                using (SqlCommand cmd1 = new SqlCommand())
                 {
-                    con.ConnectionString = ConfigurationManager.ConnectionStrings["PATENTCN"].ConnectionString;
-                    con.Open();
-                    using (SqlCommand cmd1 = new SqlCommand())
-                    {
-                        cmd1.CommandText = sql;
-                        cmd1.CommandType = CommandType.Text;
-                        cmd1.Connection = con;
-                        SqlDataReader dr1;
-                        dr1 = cmd1.ExecuteReader();
-                        ddlListItem.DataTextField = "fileno";
-                        ddlListItem.DataValueField = "fileno";
-                        ddlListItem.DataSource = dr1;
-                        ddlListItem.DataBind();
-                        dr1.Close();
-                    }
+                    cmd1.CommandText = sql;
+                    cmd1.CommandType = CommandType.Text;
+                    cmd1.Connection = con;
+                    SqlDataReader dr1;
+                    dr1 = cmd1.ExecuteReader();
+                    ddlListItem.DataTextField = "fileno";
+                    ddlListItem.DataValueField = "fileno";
+                    ddlListItem.DataSource = dr1;
+                    ddlListItem.DataBind();
+                    dr1.Close();
+                }
                 con.Close();
-                }
             }
-            else
-            {
-                ddlListItem.Visible = false;
-                txtValue.Visible = true;
-            }        
+        }
+        else
+        {
+            ddlListItem.Visible = false;
+            txtValue.Visible = true;
+        }
     }
     //protected void gvResult_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
     //{
@@ -262,6 +271,7 @@ public partial class DueDiligenceReport : System.Web.UI.Page
     protected void imgBtnReportb_Click(object sender, EventArgs e)
     {
         lvSearchb.Visible = true;
+        lvSearch.Visible = false;
         string mVal;
         if (lstField.SelectedIndex == -1)
         {
